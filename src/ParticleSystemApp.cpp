@@ -46,6 +46,7 @@ public:
     Vec2f       mForceCenter;
     ci::Area    mParticlesArea;
     
+    Color   mParticleColor;
     float   mParticleRadiusMin, mParticleRadiusMax;
     
     float   mAttrFactor;
@@ -59,9 +60,7 @@ public:
     
     bool    mUseAttraction;
     bool    mUseRepulsion;
-    bool    mUseSeperation;
-    bool    mUseAlignment;
-    bool    mUseCohesion;
+    bool    mUseFlocking;
     bool    mAddParticleWithTouch;
 };
 
@@ -69,6 +68,7 @@ void ParticleSystemApp::prepareSettings( Settings * settings )
 {
     settings->setWindowSize( 1280, 720 );
     settings->enableMultiTouch( false );
+    settings->setFullScreen( true );
     settings->enableHighDensityDisplay();
     settings->setResizable( true );
     settings->setBorderless( false );
@@ -79,10 +79,9 @@ void ParticleSystemApp::setup()
     gl::enableAlphaBlending();
     gl::clear( Color::black() );
     
-    configFilename = "config.xml";
-    
     mParticleTexture = gl::Texture( loadImage( loadResource( RES_PARTICLE_IMAGE ) ) );
     
+    mParticleColor = Color::white();
     mParticleRadiusMin = .6f;
     mParticleRadiusMax = 6.f;
     
@@ -93,43 +92,44 @@ void ParticleSystemApp::setup()
     mRepulsionFactor = -10.f;
     mRepulsionRadius = 35.f;
     
-    mUseSeperation = true;
+    mUseFlocking = true;
     mSeperationFactor = 1.2f;
-    mUseAlignment = true;
     mAlignmentFactor = .9f;
-    mUseCohesion = true;
     mCohesionFactor = .4f;
     mAddParticleWithTouch = true;
     
     mNumParticles = 40;
     
-    mParams = params::InterfaceGl( getWindow(), "Parameters", toPixels( Vec2i( GUI_WIDTH, 260 ) ) );
+    configFilename = "config.xml";
+    mParams = params::InterfaceGl( getWindow(), "Parameters", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - PARTICLE_AREA_PADDING * 2.f ) ) );
     mConfig = new config::Config( & mParams );
     
-    mParams.addParam( "Configuration file name", & configFilename );
-    mParams.addButton( "Save config", bind( & ParticleSystemApp::saveConfig, this) );
-    mParams.addButton( "Load config", bind( & ParticleSystemApp::loadConfig, this) );
+    mParams.addText( "Particles", "label=`Particles Settings`" );
+    mConfig->addParam( "Add on Touch", & mAddParticleWithTouch , "key=q" );
+    mConfig->addParam( "Minimum Particle Radius", & mParticleRadiusMin, "min=0.01f max=1.f step=.01f keyIncr=a keyDecr=A" );
+    mConfig->addParam( "Maximum Particle Radius", & mParticleRadiusMax, "min=1.f max=20.f step=.1f" );
+    mConfig->addParam( "Particle Color" , & mParticleColor );
     mParams.addSeparator();
     
-    mParams.addText( "text", "label=`Particle Radius Randomness`" );
-    mConfig->addParam( "Add Particle on Touch", & mAddParticleWithTouch , "key=q" );
-    mConfig->addParam( "Minimum", & mParticleRadiusMin, "min=0.01f max=1.f step=.01f keyIncr=a keyDecr=A" );
-    mConfig->addParam( "Maximum", & mParticleRadiusMax, "min=1.f max=20.f step=.1f" );
-    mParams.addSeparator();
-    
-    mConfig->addParam( "Use Attraction", & mUseAttraction, "key=w" );
+    mParams.addText( "Forces", "label=`Forces`" );
+    mConfig->addParam( "Attraction Enabled", & mUseAttraction, "key=w" );
     mConfig->addParam( "Attraction Factor", & mAttrFactor, "min=0.f max=10.f step=.01f" );
     mParams.addSeparator();
-    mConfig->addParam( "Use Repulsion", & mUseRepulsion, "key=e" );
+    mConfig->addParam( "Repulsion Enabled", & mUseRepulsion, "key=e" );
     mConfig->addParam( "Repulsion Factor", & mRepulsionFactor, "min=-10.f max=10.f step=.01f" );
     mConfig->addParam( "Repulsion Radius", & mRepulsionRadius, "min=0.f max=800.f" );
     mParams.addSeparator();
-    mConfig->addParam( "Use Seperation", & mUseSeperation, "" );
-    mConfig->addParam( "Seperation", & mSeperationFactor, "min=-5.f max=5.f step=0.01" );
-    mConfig->addParam( "Use Alignment", & mUseAlignment, "" );
-    mConfig->addParam( "Alignment", & mAlignmentFactor, "min=-5.f max=5.f step=0.01" );
-    mConfig->addParam( "Use Cohesion", & mUseCohesion, "" );
-    mConfig->addParam( "Cohesion", & mCohesionFactor, "min=-5.f max=5.f step=0.01" );
+    
+    mParams.addText( "Flocking", "label=`Flocking`" );
+    mConfig->addParam( "Flocking Enabled", & mUseFlocking, "" );
+    mConfig->addParam( "Seperation Factor", & mSeperationFactor, "min=-5.f max=5.f step=0.01" );
+    mConfig->addParam( "Alignment Factor", & mAlignmentFactor, "min=-5.f max=5.f step=0.01" );
+    mConfig->addParam( "Cohesion Factor", & mCohesionFactor, "min=-5.f max=5.f step=0.01" );
+    
+    mParams.addSeparator();
+    mParams.addText( "Settings", "label=`Settings`" );
+    mParams.addButton( "Save", bind( & ParticleSystemApp::saveConfig, this) );
+    mParams.addButton( "Reload", bind( & ParticleSystemApp::loadConfig, this) );
     
     // Try to restore last saved parameters configuration
     try {
@@ -146,11 +146,11 @@ void ParticleSystemApp::update()
     {
         Particle * particle =  * it;
         
-        particle->seperationEnabled = mUseSeperation;
+        particle->seperationEnabled = mUseFlocking;
         particle->seperationFactor = mSeperationFactor;
-        particle->alignmentEnabled = mUseAlignment;
+        particle->alignmentEnabled = mUseFlocking;
         particle->alignmentFactor = mAlignmentFactor;
-        particle->cohesionEnabled = mUseCohesion;
+        particle->cohesionEnabled = mUseFlocking;
         particle->cohesionFactor = mCohesionFactor;
         
         Vec2f force = ( center - particle->position ) * .01f;
@@ -179,7 +179,7 @@ void ParticleSystemApp::addNewParticleAtPosition( const Vec2f &position )
     float mass = radius;
     float drag = .95f;
     
-    Particle * particle = new Particle( position, radius, mass, drag );
+    Particle * particle = new Particle( position, radius, mass, drag, mParticleColor );
     mParticleSystem.addParticle( particle );
 }
 

@@ -50,7 +50,8 @@ void ParticleSystem::draw()
             float distance = (*particle_first_it)->position.distance( (*particle_second_it)->position );
             float per = 1.f - ( distance / 100.f );
             if ( per > 0.f ) {
-                ci::gl::color( ci::ColorA( 1.f, 1.f, 1.f, per * .8f ) );
+                ci::Color colorFirst = ci::lerp((*particle_first_it)->color, (*particle_second_it)->color, per );
+                ci::gl::color( ci::ColorA(  colorFirst, per * .8f ) );
                 ci::Vec2f conVec = (*particle_second_it)->position - (*particle_first_it)->position;
                 conVec.normalize();
                 ci::gl::drawLine((*particle_first_it)->position+conVec * ((*particle_first_it)->radius+2.f),

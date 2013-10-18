@@ -1,20 +1,19 @@
 #include "Particle.h"
 
 
-Particle::Particle( const ci::Vec2f & position, float radius, float mass, float drag )
+Particle::Particle( const ci::Vec2f & position, float radius, float mass, float drag, const ci::Color & color )
 {
     this->position = position;
     this->radius = radius;
     this->mass = mass;
     this->drag = drag;
+    this->color = color;
     this->maxSpeed = 1.f;
     this->maxForce = .05f;
     
     anchor = position;
     prevPosition = position;
     forces = ci::Vec2f::zero();
-    
-    tailLength = radius * 24.f;
     
     seperationEnabled = false;
     seperationFactor = 1.f;
@@ -30,12 +29,6 @@ void Particle::update()
     
     position += velocity + forces / mass;
     prevPosition = temp;
-    
-    tailLength = (int)velocity.length() * 10;
-    
-    positionHistory.push_back( temp );
-    if ( positionHistory.size() > tailLength )
-        positionHistory.erase( positionHistory.begin() );
     
     forces = ci::Vec2f::zero();
 }
@@ -153,10 +146,10 @@ ci::Vec2f Particle::cohesion( std::vector<Particle *> & particles )
 void Particle::draw()
 {
     float outerRadius = radius + radius * .8f;
-    ci::gl::color( ci::ColorA( ci::Color::white(), .8f ) );
+    ci::gl::color( ci::ColorA( color, .8f ) );
     ci::gl::drawSolidCircle( position, outerRadius );
 //    ci::gl::color( ci::ColorA( ci::Color::white(), 1.f ) );
 //    ci::gl::drawSolidCircle( position, radius );
-    ci::gl::color( ci::ColorA( ci::Color::white(), 1.f ) );
+    ci::gl::color( ci::ColorA( color, 1.f ) );
     ci::gl::drawStrokedCircle( position, outerRadius );
 }

@@ -8,16 +8,12 @@
 
 class Particle {
     
-    std::vector<ci::Vec2f> positionHistory;
-    
     ci::Vec2f   prevPosition;
-    
-    int     tailLength;
     
 public:
     
     Particle();
-    Particle( const ci::Vec2f & position, float radius, float mass, float drag );
+    Particle( const ci::Vec2f & position, float radius, float mass, float drag, const ci::Color & color );
     
     void update();
     void draw();
@@ -34,6 +30,8 @@ public:
     ci::Vec2f position;
     ci::Vec2f forces;
     ci::Vec2f velocity;
+    
+    ci::Color color;
     
     float seperationFactor, alignmentFactor, cohesionFactor;
     
