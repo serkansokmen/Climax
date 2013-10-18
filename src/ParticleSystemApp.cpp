@@ -2,6 +2,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
+#include "cinder/Rect.h"
 #include "cinder/ImageIo.h"
 #include "cinder/params/Params.h"
 
@@ -9,6 +10,9 @@
 
 #include "Resources.h"
 #include "ParticleSystem.h"
+
+#define GUI_WIDTH               280
+#define PARTICLE_AREA_PADDING   20.f
 
 using namespace ci;
 using namespace ci::app;
@@ -39,7 +43,8 @@ public:
     ParticleSystem  mParticleSystem;
     gl::Texture     mParticleTexture;
     
-    Vec2f   mForceCenter;
+    Vec2f       mForceCenter;
+    ci::Area    mParticlesArea;
     
     float   mParticleRadiusMin, mParticleRadiusMax;
     
@@ -57,7 +62,7 @@ public:
     bool    mUseSeperation;
     bool    mUseAlignment;
     bool    mUseCohesion;
-    bool    mShowParams;
+    bool    mAddParticleWithTouch;
 };
 
 void ParticleSystemApp::prepareSettings( Settings * settings )
@@ -82,7 +87,6 @@ void ParticleSystemApp::setup()
     mParticleRadiusMax = 6.f;
     
     mUseAttraction = false;
-    mForceCenter = getWindowCenter();
     mAttrFactor = .05f;
     
     mUseRepulsion = false;
@@ -95,12 +99,11 @@ void ParticleSystemApp::setup()
     mAlignmentFactor = .9f;
     mUseCohesion = true;
     mCohesionFactor = .4f;
+    mAddParticleWithTouch = true;
     
     mNumParticles = 40;
     
-    mShowParams = true;
-    
-    mParams = params::InterfaceGl( getWindow(), "Parameters", toPixels( Vec2i( 280, 260 ) ) );
+    mParams = params::InterfaceGl( getWindow(), "Parameters", toPixels( Vec2i( GUI_WIDTH, 260 ) ) );
     mConfig = new config::Config( & mParams );
     
     mParams.addParam( "Configuration file name", & configFilename );
@@ -109,14 +112,15 @@ void ParticleSystemApp::setup()
     mParams.addSeparator();
     
     mParams.addText( "text", "label=`Particle Radius Randomness`" );
-    mConfig->addParam( "Minimum", & mParticleRadiusMin, "min=0.01f max=1.f step=.01f keyIncr=z keyDecr=Z" );
-    mConfig->addParam( "Maximum", & mParticleRadiusMax, "min=1.f max=20.f step=.1f keyIncr=x keyDecr=X" );
+    mConfig->addParam( "Add Particle on Touch", & mAddParticleWithTouch , "key=q" );
+    mConfig->addParam( "Minimum", & mParticleRadiusMin, "min=0.01f max=1.f step=.01f keyIncr=a keyDecr=A" );
+    mConfig->addParam( "Maximum", & mParticleRadiusMax, "min=1.f max=20.f step=.1f" );
     mParams.addSeparator();
     
-    mConfig->addParam( "Use Attraction", & mUseAttraction, "" );
+    mConfig->addParam( "Use Attraction", & mUseAttraction, "key=w" );
     mConfig->addParam( "Attraction Factor", & mAttrFactor, "min=0.f max=10.f step=.01f" );
     mParams.addSeparator();
-    mConfig->addParam( "Use Repulsion", & mUseRepulsion, "" );
+    mConfig->addParam( "Use Repulsion", & mUseRepulsion, "key=e" );
     mConfig->addParam( "Repulsion Factor", & mRepulsionFactor, "min=-10.f max=10.f step=.01f" );
     mConfig->addParam( "Repulsion Radius", & mRepulsionRadius, "min=0.f max=800.f" );
     mParams.addSeparator();
@@ -182,6 +186,9 @@ void ParticleSystemApp::addNewParticleAtPosition( const Vec2f &position )
 void ParticleSystemApp::mouseDown( MouseEvent event )
 {
     mForceCenter = event.getPos();
+    
+    if ( mAddParticleWithTouch )
+        addNewParticleAtPosition( event.getPos() );
 }
 
 void ParticleSystemApp::mouseMove( MouseEvent event )
@@ -203,7 +210,13 @@ void ParticleSystemApp::mouseDrag( MouseEvent event )
 
 void ParticleSystemApp::resize()
 {
-    mParticleSystem.setBorders( getWindowBounds() );
+    ci::Rectf rect(GUI_WIDTH + PARTICLE_AREA_PADDING * 2.f,
+                   PARTICLE_AREA_PADDING,
+                   getWindowWidth() - PARTICLE_AREA_PADDING,
+                   getWindowHeight() - PARTICLE_AREA_PADDING);
+    mParticlesArea = ci::Area( rect );
+    mForceCenter = rect.getCenter();
+    mParticleSystem.setBorders( mParticlesArea );
 }
 
 void ParticleSystemApp::keyDown( KeyEvent event )
@@ -212,22 +225,26 @@ void ParticleSystemApp::keyDown( KeyEvent event )
     {
         mParticleSystem.clear();
     }
-    if ( event.getChar() == 's' )
-        mShowParams = !mShowParams;
+    if ( event.getChar() == 's' ) {
+        if ( mParams.isVisible() ) {
+            mParams.hide();
+        } else
+            mParams.show();
+    }
 }
 
 void ParticleSystemApp::draw()
 {
-//    gl::enableDepthRead();
-//	gl::enableDepthWrite();
 	gl::clear();
     gl::enableAlphaBlending();
     gl::setViewport( getWindowBounds() );
     gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
     
+    gl::color( Color::white() );
+    gl::drawStrokedRect( mParticlesArea );
     mParticleSystem.draw();
     
-    if ( mShowParams ) mParams.draw();
+    if ( mParams.isVisible() ) mParams.draw();
 }
 
 void ParticleSystemApp::saveConfig()

@@ -54,13 +54,8 @@ void Particle::flock( std::vector<Particle *> & particles )
 
 void Particle::borders( const ci::Area & borders )
 {
-    float width = borders.getWidth();
-    float height = borders.getHeight();
-        
-    if ( position.x < radius )          velocity.x *= -1.f;
-    if ( position.y < radius)           velocity.y *= -1.f;
-    if ( position.x > width - radius )  velocity.x *= -1.f;
-    if ( position.y > height - radius ) velocity.y *= -1.f;
+    if ( position.x < borders.getX1() || position.x > borders.getX2() ) velocity.x *= -1.f;
+    if ( position.y < borders.getY1() || position.y > borders.getY2() ) velocity.y *= -1.f;
 }
 
 ci::Vec2f Particle::steer( ci::Vec2f target, bool slowdown )
