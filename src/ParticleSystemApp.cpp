@@ -33,6 +33,7 @@ public:
 	void update();
 	void draw();
     void addNewParticleAtPosition( const Vec2f & position );
+    void randomizeParticleColor();
     void saveConfig();
     void loadConfig();
     
@@ -44,7 +45,7 @@ public:
     gl::Texture     mParticleTexture;
     
     Vec2f       mForceCenter;
-    ci::Area    mParticlesArea;
+    ci::Rectf   mParticlesBorder;
     
     Color   mParticleColor;
     float   mParticleRadiusMin, mParticleRadiusMax;
@@ -58,6 +59,7 @@ public:
     
     int     mNumParticles;
     
+    bool    mParticlesPullToCenter;
     bool    mUseAttraction;
     bool    mUseRepulsion;
     bool    mUseFlocking;
@@ -72,6 +74,7 @@ void ParticleSystemApp::prepareSettings( Settings * settings )
     settings->enableHighDensityDisplay();
     settings->setResizable( true );
     settings->setBorderless( false );
+    settings->setTitle( "Climax" );
 }
 
 void ParticleSystemApp::setup()
@@ -85,6 +88,7 @@ void ParticleSystemApp::setup()
     mParticleRadiusMin = .6f;
     mParticleRadiusMax = 6.f;
     
+    mParticlesPullToCenter = true;
     mUseAttraction = false;
     mAttrFactor = .05f;
     
@@ -101,35 +105,37 @@ void ParticleSystemApp::setup()
     mNumParticles = 40;
     
     configFilename = "config.xml";
-    mParams = params::InterfaceGl( getWindow(), "Parameters", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - PARTICLE_AREA_PADDING * 2.f ) ) );
+    mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - PARTICLE_AREA_PADDING * 2.f ) ) );
     mConfig = new config::Config( & mParams );
     
-    mParams.addText( "Particles", "label=`Particles Settings`" );
+    mParams.addText( "Particles", "label=`Particles`" );
     mConfig->addParam( "Add on Touch", & mAddParticleWithTouch , "key=q" );
-    mConfig->addParam( "Minimum Particle Radius", & mParticleRadiusMin, "min=0.01f max=1.f step=.01f keyIncr=a keyDecr=A" );
-    mConfig->addParam( "Maximum Particle Radius", & mParticleRadiusMax, "min=1.f max=20.f step=.1f" );
+    mConfig->addParam( "Minimum Particle Radius", & mParticleRadiusMin, "min=0.01f max=1.f step=.01f keyIncr=Z keyDecr=z" );
+    mConfig->addParam( "Maximum Particle Radius", & mParticleRadiusMax, "min=1.f max=20.f step=.1f keyIncr=X keyDecr=x" );
     mConfig->addParam( "Particle Color" , & mParticleColor );
+    mParams.addButton( "Randomize Particle Color" , std::bind( & ParticleSystemApp::randomizeParticleColor, this ), "key=R" );
     mParams.addSeparator();
     
     mParams.addText( "Forces", "label=`Forces`" );
-    mConfig->addParam( "Attraction Enabled", & mUseAttraction, "key=w" );
-    mConfig->addParam( "Attraction Factor", & mAttrFactor, "min=0.f max=10.f step=.01f" );
+    mConfig->addParam( "Pull Particles to Center", & mParticlesPullToCenter , "key=c" );
+    mConfig->addParam( "Attraction Enabled", & mUseAttraction, "key=a" );
+    mConfig->addParam( "Attraction Factor", & mAttrFactor, "min=0.f max=10.f step=.001f" );
     mParams.addSeparator();
-    mConfig->addParam( "Repulsion Enabled", & mUseRepulsion, "key=e" );
-    mConfig->addParam( "Repulsion Factor", & mRepulsionFactor, "min=-10.f max=10.f step=.01f" );
+    mConfig->addParam( "Repulsion Enabled", & mUseRepulsion, "key=r" );
+    mConfig->addParam( "Repulsion Factor", & mRepulsionFactor, "min=-10.f max=10.f step=.001f" );
     mConfig->addParam( "Repulsion Radius", & mRepulsionRadius, "min=0.f max=800.f" );
     mParams.addSeparator();
     
     mParams.addText( "Flocking", "label=`Flocking`" );
-    mConfig->addParam( "Flocking Enabled", & mUseFlocking, "" );
+    mConfig->addParam( "Flocking Enabled", & mUseFlocking, "key=f" );
     mConfig->addParam( "Seperation Factor", & mSeperationFactor, "min=-5.f max=5.f step=0.01" );
     mConfig->addParam( "Alignment Factor", & mAlignmentFactor, "min=-5.f max=5.f step=0.01" );
-    mConfig->addParam( "Cohesion Factor", & mCohesionFactor, "min=-5.f max=5.f step=0.01" );
+    mConfig->addParam( "Cohesion Factor", & mCohesionFactor, "min=-50.f max=50.f step=0.1" );
     
     mParams.addSeparator();
     mParams.addText( "Settings", "label=`Settings`" );
-    mParams.addButton( "Save", bind( & ParticleSystemApp::saveConfig, this) );
-    mParams.addButton( "Reload", bind( & ParticleSystemApp::loadConfig, this) );
+    mParams.addButton( "Save Settings", bind( & ParticleSystemApp::saveConfig, this ), "key=S" );
+    mParams.addButton( "Reload Settings", bind( & ParticleSystemApp::loadConfig, this ), "key=L" );
     
     // Try to restore last saved parameters configuration
     try {
@@ -153,8 +159,10 @@ void ParticleSystemApp::update()
         particle->cohesionEnabled = mUseFlocking;
         particle->cohesionFactor = mCohesionFactor;
         
-        Vec2f force = ( center - particle->position ) * .01f;
-        particle->forces += force;
+        if ( mParticlesPullToCenter ) {
+            Vec2f force = ( center - particle->position ) * .01f;
+            particle->forces += force;
+        }
         
         if ( mUseAttraction )
         {
@@ -183,9 +191,15 @@ void ParticleSystemApp::addNewParticleAtPosition( const Vec2f &position )
     mParticleSystem.addParticle( particle );
 }
 
+void ParticleSystemApp::randomizeParticleColor()
+{
+    mParticleColor = Color( randFloat(), randFloat(), randFloat() );
+}
+
 void ParticleSystemApp::mouseDown( MouseEvent event )
 {
-    mForceCenter = event.getPos();
+//    mForceCenter = event.getPos();
+    randomizeParticleColor();
     
     if ( mAddParticleWithTouch )
         addNewParticleAtPosition( event.getPos() );
@@ -205,18 +219,17 @@ void ParticleSystemApp::mouseUp( MouseEvent event )
 
 void ParticleSystemApp::mouseDrag( MouseEvent event )
 {
-    mForceCenter = event.getPos();
+//    mForceCenter = event.getPos();
 }
 
 void ParticleSystemApp::resize()
 {
-    ci::Rectf rect(GUI_WIDTH + PARTICLE_AREA_PADDING * 2.f,
-                   PARTICLE_AREA_PADDING,
-                   getWindowWidth() - PARTICLE_AREA_PADDING,
-                   getWindowHeight() - PARTICLE_AREA_PADDING);
-    mParticlesArea = ci::Area( rect );
-    mForceCenter = rect.getCenter();
-    mParticleSystem.setBorders( mParticlesArea );
+    mParticlesBorder = ci::Rectf(GUI_WIDTH + PARTICLE_AREA_PADDING * 2.f,
+                                 PARTICLE_AREA_PADDING,
+                                 getWindowWidth() - PARTICLE_AREA_PADDING,
+                                 getWindowHeight() - PARTICLE_AREA_PADDING);
+    mForceCenter = mParticlesBorder.getCenter();
+    mParticleSystem.setBorders( ci::Area( mParticlesBorder ) );
 }
 
 void ParticleSystemApp::keyDown( KeyEvent event )
@@ -241,7 +254,7 @@ void ParticleSystemApp::draw()
     gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
     
     gl::color( Color::white() );
-    gl::drawStrokedRect( mParticlesArea );
+    gl::drawStrokedRect( mParticlesBorder );
     mParticleSystem.draw();
     
     if ( mParams.isVisible() ) mParams.draw();

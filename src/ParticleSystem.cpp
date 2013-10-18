@@ -24,6 +24,9 @@ void ParticleSystem::clear()
 
 void ParticleSystem::update()
 {
+    if ( particles.size() > MAX_PARTICLES )
+        destroyParticle( * particles.begin() );
+    
     for (std::vector< Particle *>::const_iterator it = particles.begin(); it != particles.end(); ++it)
     {
         Particle * particle = * it;

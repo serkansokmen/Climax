@@ -2,7 +2,7 @@
 
 #include "cinder/gl/gl.h"
 #include "cinder/Vector.h"
-#include "cinder/Area.h"
+#include "cinder/Rect.h"
 #include "cinder/Color.h"
 
 
@@ -19,7 +19,7 @@ public:
     void draw();
     
     void flock( std::vector<Particle * > & particles );
-    void borders( const ci::Area & borders );
+    void borders( const ci::Rectf & borders );
     
     ci::Vec2f steer( ci::Vec2f target, bool slowdown );
     ci::Vec2f seperate( std::vector<Particle * > & particles );

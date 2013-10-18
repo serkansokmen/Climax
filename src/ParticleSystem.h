@@ -6,6 +6,8 @@
 
 #include <vector>
 
+#define MAX_PARTICLES   400
+
 class ParticleSystem {
     
     ci::Area        borders;
