@@ -134,7 +134,7 @@ void ParticleSystemApp::setup()
     
     mParams.addSeparator();
     mParams.addText( "Settings", "label=`Settings`" );
-    mParams.addButton( "Save Settings", bind( & ParticleSystemApp::saveConfig, this ), "key=S" );
+    mParams.addButton( "Save Settings", bind( & ParticleSystemApp::saveConfig, this ) );
     mParams.addButton( "Reload Settings", bind( & ParticleSystemApp::loadConfig, this ), "key=L" );
     
     // Try to restore last saved parameters configuration
@@ -234,6 +234,15 @@ void ParticleSystemApp::resize()
 
 void ParticleSystemApp::keyDown( KeyEvent event )
 {
+    if ( event.getChar() == 's' && event.isMetaDown() ) {
+        saveConfig();
+        return;
+    }
+    if ( event.getChar() == 'l' && event.isMetaDown() ) {
+        loadConfig();
+        return;
+    }
+    
     if ( event.getChar() == ' ' )
     {
         mParticleSystem.clear();
