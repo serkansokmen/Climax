@@ -157,11 +157,11 @@ ci::Vec2f Particle::cohesion( std::vector<Particle *> & particles )
 
 void Particle::draw()
 {
-    float outerRadius = radius + radius * .8f;
-    ci::gl::color( ci::ColorA( color, .8f ) );
-    ci::gl::drawSolidCircle( position, outerRadius );
+//    float outerRadius = radius + radius * .8f;
+//    ci::gl::color( ci::ColorA( color, .8f ) );
+//    ci::gl::drawSolidCircle( position, outerRadius );
 //    ci::gl::color( ci::ColorA( ci::Color::white(), 1.f ) );
 //    ci::gl::drawSolidCircle( position, radius );
-    ci::gl::color( ci::ColorA( color, 1.f ) );
-    ci::gl::drawStrokedCircle( position, outerRadius );
+//    ci::gl::color( ci::ColorA( color, 1.f ) );
+//    ci::gl::drawStrokedCircle( position, outerRadius );
 }

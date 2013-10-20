@@ -4,6 +4,7 @@
 #include "cinder/Rand.h"
 #include "cinder/Rect.h"
 #include "cinder/ImageIo.h"
+#include "cinder/gl/Fbo.h"
 #include "cinder/params/Params.h"
 
 #include "CinderConfig.h"
@@ -43,6 +44,7 @@ public:
     
     ParticleSystem  mParticleSystem;
     gl::Texture     mParticleTexture;
+    gl::Fbo         mParticlesFbo;
     
     Vec2f       mForceCenter;
     ci::Rectf   mParticlesBorder;
@@ -51,6 +53,7 @@ public:
     float   mParticleRadiusMin, mParticleRadiusMax;
     
     float   mAttrFactor;
+    
     float   mRepulsionFactor;
     float   mRepulsionRadius;
     float   mSeperationFactor;
@@ -83,6 +86,17 @@ void ParticleSystemApp::setup()
     gl::clear( Color::black() );
     
     mParticleTexture = gl::Texture( loadImage( loadResource( RES_PARTICLE_IMAGE ) ) );
+    gl::Fbo::Format format;
+    format.enableMipmapping( true );
+    format.setColorInternalFormat( GL_RGBA );
+    format.setSamples( 4 );
+    format.setCoverageSamples( 8 );
+    mParticlesFbo = gl::Fbo( getWindowWidth(), getWindowHeight(), format );
+    
+    mParticlesFbo.bindFramebuffer();
+    gl::clear( Color::black() );
+    mParticlesFbo.unbindFramebuffer();
+    
     
     mParticleColor = Color::white();
     mParticleRadiusMin = .6f;
@@ -264,6 +278,17 @@ void ParticleSystemApp::draw()
     
     gl::color( Color::white() );
     gl::drawStrokedRect( mParticlesBorder );
+    
+    mParticlesFbo.bindFramebuffer();
+    gl::clear();
+    gl::color( Color::black() );
+    gl::drawSolidRect( getWindowBounds() );
+    mParticlesFbo.unbindFramebuffer();
+    
+    gl::Texture text( mParticlesFbo.getTexture() );
+    text.setFlipped(true);
+    gl::draw( text );
+    
     mParticleSystem.draw();
     
     if ( mParams.isVisible() ) mParams.draw();
