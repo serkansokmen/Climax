@@ -9,11 +9,17 @@
 class Particle {
     
     ci::Vec2f   prevPosition;
+    float       targetSeparation;
+    float       neighboringDistance;
     
 public:
     
     Particle();
-    Particle( const ci::Vec2f & position, float radius, float mass, float drag, const ci::Color & color );
+    Particle( const ci::Vec2f & position,
+              float radius, float mass, float drag,
+              float targetSeparation,
+              float neighboringDistance,
+              const ci::Color & color );
     
     void update();
     void draw();
@@ -22,7 +28,7 @@ public:
     void borders( const ci::Rectf & borders );
     
     ci::Vec2f steer( ci::Vec2f target, bool slowdown );
-    ci::Vec2f seperate( std::vector<Particle * > & particles );
+    ci::Vec2f separate( std::vector<Particle * > & particles );
     ci::Vec2f align( std::vector<Particle * > & particles );
     ci::Vec2f cohesion( std::vector<Particle * > & particles );
     
@@ -33,7 +39,7 @@ public:
     
     ci::Color color;
     
-    float seperationFactor, alignmentFactor, cohesionFactor;
+    float separationFactor, alignmentFactor, cohesionFactor;
     
     float radius;
     float drag;
@@ -41,7 +47,7 @@ public:
     float maxForce;
     float mass;
     
-    bool seperationEnabled;
+    bool separationEnabled;
     bool alignmentEnabled;
     bool cohesionEnabled;
 };

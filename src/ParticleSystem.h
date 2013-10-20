@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#define MAX_PARTICLES   400
+#define MAX_PARTICLES   200
 
 class ParticleSystem {
     
@@ -29,6 +29,8 @@ public:
     
     void setBorders( const ci::Area & area );
     void computeBspline();
+    
+    int  maxParticles;
     
     std::vector< Particle * >   particles;
     std::vector< Spring * >     springs;
