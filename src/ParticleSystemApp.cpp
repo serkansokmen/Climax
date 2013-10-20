@@ -35,6 +35,7 @@ public:
 	void draw();
     void addNewParticleAtPosition( const Vec2f & position );
     void randomizeParticleProperties();
+    void randomizeFlockingProperties();
     void saveConfig();
     void loadConfig();
     
@@ -68,14 +69,13 @@ public:
     bool    mUseAttraction;
     bool    mUseRepulsion;
     bool    mUseFlocking;
-    bool    mAddParticleWithTouch;
 };
 
 void ParticleSystemApp::prepareSettings( Settings * settings )
 {
     settings->setWindowSize( 1280, 720 );
     settings->enableMultiTouch( false );
-    settings->setFullScreen( false );
+    settings->setFullScreen( true );
     settings->enableHighDensityDisplay();
     settings->setResizable( true );
     settings->setBorderless( false );
@@ -101,8 +101,8 @@ void ParticleSystemApp::setup()
     
     mMaxParticles = 1200;
     mParticleColor = Color::white();
-    mParticleRadiusMin = .6f;
-    mParticleRadiusMax = 6.f;
+    mParticleRadiusMin = .2f;
+    mParticleRadiusMax = 1.6f;
     
     mParticlesPullToCenter = true;
     mUseAttraction = false;
@@ -118,7 +118,6 @@ void ParticleSystemApp::setup()
     mSeparationFactor = 1.2f;
     mAlignmentFactor = .9f;
     mCohesionFactor = .4f;
-    mAddParticleWithTouch = true;
     
     configFilename = "config.xml";
     mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - PARTICLE_AREA_PADDING * 2.f ) ) );
@@ -126,11 +125,17 @@ void ParticleSystemApp::setup()
     
     mParams.addText( "Particles", "label=`Particles`" );
     mConfig->addParam( "Max Particles", & mMaxParticles , "" );
-    mConfig->addParam( "Add on Touch", & mAddParticleWithTouch , "key=q" );
-    mConfig->addParam( "Minimum Particle Radius", & mParticleRadiusMin, "min=0.01f max=1.f step=.01f keyIncr=Z keyDecr=z" );
-    mConfig->addParam( "Maximum Particle Radius", & mParticleRadiusMax, "min=1.f max=20.f step=.1f keyIncr=X keyDecr=x" );
+    
     mConfig->addParam( "Particle Color" , & mParticleColor );
-    mParams.addButton( "Randomize Particle Color" , std::bind( & ParticleSystemApp::randomizeParticleProperties, this ), "key=R" );
+    mConfig->addParam( "Target Separation", & mTargetSeparation, "min=-500.f max=500.f" );
+    mConfig->addParam( "Neighboring Distance", & mNeighboringDistance, "min=0.f max=1000.f" );
+    mParams.addButton( "Randomize Particle Properties" , std::bind( & ParticleSystemApp::randomizeParticleProperties, this ), "key=R" );
+    
+    mConfig->addParam( "Flocking Enabled", & mUseFlocking, "key=f" );
+    mConfig->addParam( "Separation Factor", & mSeparationFactor, "min=-5.f max=5.f step=0.01" );
+    mConfig->addParam( "Alignment Factor", & mAlignmentFactor, "min=-5.f max=5.f" );
+    mConfig->addParam( "Cohesion Factor", & mCohesionFactor, "min=-50.f max=50.f" );
+    mParams.addButton( "Randomize Flocking Parameters" , std::bind( & ParticleSystemApp::randomizeFlockingProperties, this ), "key=F" );
     mParams.addSeparator();
     
     mParams.addText( "Forces", "label=`Forces`" );
@@ -142,14 +147,6 @@ void ParticleSystemApp::setup()
     mConfig->addParam( "Repulsion Factor", & mRepulsionFactor, "min=-10.f max=10.f step=.001f" );
     mConfig->addParam( "Repulsion Radius", & mRepulsionRadius, "min=0.f max=800.f" );
     mParams.addSeparator();
-    
-    mParams.addText( "Flocking", "label=`Flocking`" );
-    mConfig->addParam( "Flocking Enabled", & mUseFlocking, "key=f" );
-    mConfig->addParam( "Target Separation", & mTargetSeparation, "min=-500.f max=500.f" );
-    mConfig->addParam( "Neighboring Distance", & mNeighboringDistance, "min=0.f max=1000.f" );
-    mConfig->addParam( "Separation Factor", & mSeparationFactor, "min=-5.f max=5.f step=0.01" );
-    mConfig->addParam( "Alignment Factor", & mAlignmentFactor, "min=-5.f max=5.f" );
-    mConfig->addParam( "Cohesion Factor", & mCohesionFactor, "min=-50.f max=50.f" );
     
     mParams.addSeparator();
     mParams.addText( "Settings", "label=`Settings`" );
@@ -214,17 +211,23 @@ void ParticleSystemApp::addNewParticleAtPosition( const Vec2f &position )
 void ParticleSystemApp::randomizeParticleProperties()
 {
     mParticleColor = Color( randFloat(), randFloat(), randFloat() );
-    mTargetSeparation = randFloat( 0.f, 100.f );
-    mNeighboringDistance = randFloat( 0.f, 400.f );
+    mParticleRadiusMin = randFloat( .4f, .8f );
+    mParticleRadiusMax = randFloat( 1.2f, 2.4f );
+    mTargetSeparation = randFloat( 5.f, 100.f );
+    mNeighboringDistance = randFloat( 5.f, 120.f );
+}
+
+void ParticleSystemApp::randomizeFlockingProperties()
+{
+    mSeparationFactor = randFloat();
+    mAlignmentFactor = randFloat();
+    mCohesionFactor = randFloat();
 }
 
 void ParticleSystemApp::mouseDown( MouseEvent event )
 {
 //    mForceCenter = event.getPos();
     randomizeParticleProperties();
-    
-    if ( mAddParticleWithTouch )
-        addNewParticleAtPosition( event.getPos() );
 }
 
 void ParticleSystemApp::mouseMove( MouseEvent event )
@@ -246,10 +249,11 @@ void ParticleSystemApp::mouseDrag( MouseEvent event )
 
 void ParticleSystemApp::resize()
 {
-    mParticlesBorder = ci::Rectf(GUI_WIDTH + PARTICLE_AREA_PADDING * 2.f,
-                                 PARTICLE_AREA_PADDING,
-                                 getWindowWidth() - PARTICLE_AREA_PADDING,
-                                 getWindowHeight() - PARTICLE_AREA_PADDING);
+//    mParticlesBorder = ci::Rectf(GUI_WIDTH + PARTICLE_AREA_PADDING * 2.f,
+//                                 PARTICLE_AREA_PADDING,
+//                                 getWindowWidth() - PARTICLE_AREA_PADDING,
+//                                 getWindowHeight() - PARTICLE_AREA_PADDING);
+    mParticlesBorder = getWindowBounds();
     mForceCenter = mParticlesBorder.getCenter();
     mParticleSystem.setBorders( ci::Area( mParticlesBorder ) );
 }
@@ -285,7 +289,6 @@ void ParticleSystemApp::draw()
     gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
     
     gl::color( Color::white() );
-    gl::drawStrokedRect( mParticlesBorder );
     
     mParticlesFbo.bindFramebuffer();
     gl::clear();

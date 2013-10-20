@@ -1,7 +1,10 @@
 #include "Particle.h"
 
 
-Particle::Particle( const ci::Vec2f & position, float radius, float mass, float drag, float targetSeparation, float neighboringDistance, const ci::Color & color )
+Particle::Particle( const ci::Vec2f & position,
+                    float radius, float mass, float drag,
+                    float targetSeparation, float neighboringDistance,
+                    const ci::Color & color )
 {
     this->position = position;
     this->radius = radius;
@@ -13,7 +16,9 @@ Particle::Particle( const ci::Vec2f & position, float radius, float mass, float 
     this->maxSpeed = 1.f;
     this->maxForce = .05f;
     
-    this->radius = neighboringDistance * 0.007f;
+    this->radius = targetSeparation / neighboringDistance * 1.6f;
+    if ( this->radius > 10.f )
+        this->radius = 10.f;
     
     anchor = position;
     prevPosition = position;
@@ -49,22 +54,27 @@ void Particle::flock( std::vector<Particle *> & particles )
     velocity.limit( maxSpeed );
 }
 
-void Particle::borders( const ci::Rectf & borders )
+void Particle::borders( const ci::Rectf & borders, bool bounce )
 {
-//    if ( position.x < borders.getX1() || position.x > borders.getX2() ) velocity.x *= -1.f;
-//    if ( position.y < borders.getY1() || position.y > borders.getY2() ) velocity.y *= -1.f;
-    
-    if ( position.x <= borders.getX1() + radius )
-        position.x = borders.getX2() - radius;
-    
-    else if ( position.y <= borders.getY1() + radius )
-        position.y = borders.getY2() - radius;
-    
-    else if ( position.x >= borders.getX2() - radius )
-        position.x = borders.getX1() + radius;
-    
-    else if ( position.y >= borders.getY2() - radius )
-        position.y = borders.getY1() + radius;
+    if ( bounce )
+    {
+        if ( position.x <= borders.getX1() || position.x >= borders.getX2() ) velocity.x *= -1.f;
+        if ( position.y <= borders.getY1() || position.y >= borders.getY2() ) velocity.y *= -1.f;
+    }
+    else
+    {
+        if ( position.x <= borders.getX1() + radius )
+             position.x = borders.getX2() - radius;
+        
+        else if ( position.y <= borders.getY1() + radius )
+            position.y = borders.getY2() - radius;
+        
+        else if ( position.x >= borders.getX2() - radius )
+            position.x = borders.getX1() + radius;
+        
+        else if ( position.y >= borders.getY2() - radius )
+            position.y = borders.getY1() + radius;
+    }
 }
 
 ci::Vec2f Particle::steer( ci::Vec2f target, bool slowdown )
@@ -176,8 +186,15 @@ void Particle::draw()
 //    float outerRadius = radius + radius * .8f;
 //    ci::gl::color( ci::ColorA( color, .8f ) );
 //    ci::gl::drawSolidCircle( position, outerRadius );
-    ci::gl::color( color );
-    ci::gl::drawSolidCircle( position, radius );
+    if ( this->radius < 5.f )
+    {
+        ci::gl::color( color );
+        ci::gl::drawSolidCircle( position, radius );
+    }
+    else
+    {
+        ci::gl::color( ci::ColorA( color, .7 ) );
+        ci::gl::drawStrokedCircle( position, radius );
+    }
 //    ci::gl::color( ci::ColorA( color, 1.f ) );
-//    ci::gl::drawStrokedCircle( position, outerRadius );
 }
