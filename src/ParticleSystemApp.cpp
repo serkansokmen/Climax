@@ -53,6 +53,7 @@ public:
     Color   mParticleColor;
     float   mParticleRadiusMin, mParticleRadiusMax;
     
+    float   mParticlesPullFactor;
     float   mAttrFactor;
     float   mRepulsionFactor;
     float   mRepulsionRadius;
@@ -105,6 +106,7 @@ void ParticleSystemApp::setup()
     mParticleRadiusMax = 1.6f;
     
     mParticlesPullToCenter = true;
+    mParticlesPullFactor = 0.01f;
     mUseAttraction = false;
     mAttrFactor = .05f;
     
@@ -140,6 +142,7 @@ void ParticleSystemApp::setup()
     
     mParams.addText( "Forces", "label=`Forces`" );
     mConfig->addParam( "Pull Particles to Center", & mParticlesPullToCenter , "key=c" );
+    mConfig->addParam( "Pull Factor", & mParticlesPullFactor, "min=0.f max=1.f step=.0001f" );
     mConfig->addParam( "Attraction Enabled", & mUseAttraction, "key=a" );
     mConfig->addParam( "Attraction Factor", & mAttrFactor, "min=0.f max=10.f step=.001f" );
     mParams.addSeparator();
@@ -232,10 +235,17 @@ void ParticleSystemApp::mouseDown( MouseEvent event )
 
 void ParticleSystemApp::mouseMove( MouseEvent event )
 {
+    mForceCenter = event.getPos();
+    
+    bool repulsionUsed = mUseRepulsion;
+    
     if ( event.isMetaDown() )
     {
+        mUseRepulsion = false;
         addNewParticleAtPosition( event.getPos() );
     }
+    
+    mUseRepulsion = repulsionUsed;
 }
 
 void ParticleSystemApp::mouseUp( MouseEvent event )
