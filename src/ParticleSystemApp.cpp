@@ -6,6 +6,9 @@
 #include "cinder/ImageIo.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/params/Params.h"
+#include "cinder/audio/Output.h"
+#include "cinder/audio/Callback.h"
+#include "cinder/CinderMath.h"
 
 #include "CinderConfig.h"
 
@@ -20,7 +23,7 @@ using namespace ci::app;
 using namespace std;
 
 
-class ParticleSystemApp : public AppNative {
+class ClimaxApp : public AppNative {
 
 public:
     void prepareSettings( Settings * settings );
@@ -38,6 +41,8 @@ public:
     void randomizeFlockingProperties();
     void saveConfig();
     void loadConfig();
+    
+    void audioCallback( uint64_t inSampleOffset, uint32_t ioSampleCount, audio::Buffer32f *buffer );
     
     string              configFilename;
     params::InterfaceGl mParams;
@@ -72,7 +77,7 @@ public:
     bool    mUseFlocking;
 };
 
-void ParticleSystemApp::prepareSettings( Settings * settings )
+void ClimaxApp::prepareSettings( Settings * settings )
 {
     settings->setWindowSize( 1280, 720 );
     settings->enableMultiTouch( false );
@@ -83,7 +88,7 @@ void ParticleSystemApp::prepareSettings( Settings * settings )
     settings->setTitle( "Climax" );
 }
 
-void ParticleSystemApp::setup()
+void ClimaxApp::setup()
 {
     gl::enableAlphaBlending();
     gl::clear( Color::black() );
@@ -131,13 +136,13 @@ void ParticleSystemApp::setup()
     mConfig->addParam( "Particle Color" , & mParticleColor );
     mConfig->addParam( "Target Separation", & mTargetSeparation, "min=-500.f max=500.f" );
     mConfig->addParam( "Neighboring Distance", & mNeighboringDistance, "min=0.f max=1000.f" );
-    mParams.addButton( "Randomize Particle Properties" , std::bind( & ParticleSystemApp::randomizeParticleProperties, this ), "key=R" );
+    mParams.addButton( "Randomize Particle Properties" , std::bind( & ClimaxApp::randomizeParticleProperties, this ), "key=R" );
     
     mConfig->addParam( "Flocking Enabled", & mUseFlocking, "key=f" );
     mConfig->addParam( "Separation Factor", & mSeparationFactor, "min=-5.f max=5.f step=0.01" );
     mConfig->addParam( "Alignment Factor", & mAlignmentFactor, "min=-5.f max=5.f" );
     mConfig->addParam( "Cohesion Factor", & mCohesionFactor, "min=-50.f max=50.f" );
-    mParams.addButton( "Randomize Flocking Parameters" , std::bind( & ParticleSystemApp::randomizeFlockingProperties, this ), "key=F" );
+    mParams.addButton( "Randomize Flocking Parameters" , std::bind( & ClimaxApp::randomizeFlockingProperties, this ), "key=F" );
     mParams.addSeparator();
     
     mParams.addText( "Forces", "label=`Forces`" );
@@ -153,8 +158,8 @@ void ParticleSystemApp::setup()
     
     mParams.addSeparator();
     mParams.addText( "Settings", "label=`Settings`" );
-    mParams.addButton( "Save Settings", bind( & ParticleSystemApp::saveConfig, this ) );
-    mParams.addButton( "Reload Settings", bind( & ParticleSystemApp::loadConfig, this ), "key=L" );
+    mParams.addButton( "Save Settings", bind( & ClimaxApp::saveConfig, this ) );
+    mParams.addButton( "Reload Settings", bind( & ClimaxApp::loadConfig, this ), "key=L" );
     
     // Try to restore last saved parameters configuration
     try {
@@ -164,7 +169,7 @@ void ParticleSystemApp::setup()
     }
 }
 
-void ParticleSystemApp::update()
+void ClimaxApp::update()
 {
     Vec2f center = getWindowCenter();
     for ( auto it : mParticleSystem.particles )
@@ -176,7 +181,8 @@ void ParticleSystemApp::update()
         it->cohesionEnabled = mUseFlocking;
         it->cohesionFactor = mCohesionFactor;
         
-        if ( mParticlesPullToCenter ) {
+        if ( mParticlesPullToCenter )
+        {
             Vec2f force = ( center - it->position ) * .01f;
             it->forces += force;
         }
@@ -191,7 +197,7 @@ void ParticleSystemApp::update()
         if ( mUseRepulsion )
         {
             Vec2f repForce = it->position - mForceCenter;
-            repForce = repForce.normalized() * math<float>::max(0.f, mRepulsionRadius - repForce.length() );
+            repForce = repForce.normalized() * math<float>::max( 0.f, mRepulsionRadius - repForce.length() );
             it->forces += repForce;
         }
     }
@@ -199,7 +205,7 @@ void ParticleSystemApp::update()
     mParticleSystem.update();
 }
 
-void ParticleSystemApp::addNewParticleAtPosition( const Vec2f &position )
+void ClimaxApp::addNewParticleAtPosition( const Vec2f &position )
 {
     float radius = ci::randFloat( mParticleRadiusMin, mParticleRadiusMax );
     float mass = radius;
@@ -209,7 +215,7 @@ void ParticleSystemApp::addNewParticleAtPosition( const Vec2f &position )
     mParticleSystem.addParticle( particle );
 }
 
-void ParticleSystemApp::randomizeParticleProperties()
+void ClimaxApp::randomizeParticleProperties()
 {
     mParticleColor = Color( randFloat(), randFloat(), randFloat() );
     mParticleRadiusMin = randFloat( .4f, .8f );
@@ -218,19 +224,19 @@ void ParticleSystemApp::randomizeParticleProperties()
     mNeighboringDistance = randFloat( 5.f, 120.f );
 }
 
-void ParticleSystemApp::randomizeFlockingProperties()
+void ClimaxApp::randomizeFlockingProperties()
 {
     mSeparationFactor = randFloat();
     mAlignmentFactor = randFloat();
     mCohesionFactor = randFloat();
 }
 
-void ParticleSystemApp::mouseDown( MouseEvent event )
+void ClimaxApp::mouseDown( MouseEvent event )
 {
     randomizeParticleProperties();
 }
 
-void ParticleSystemApp::mouseMove( MouseEvent event )
+void ClimaxApp::mouseMove( MouseEvent event )
 {
     mForceCenter = event.getPos();
     
@@ -245,22 +251,22 @@ void ParticleSystemApp::mouseMove( MouseEvent event )
     mUseRepulsion = repulsionUsed;
 }
 
-void ParticleSystemApp::mouseUp( MouseEvent event )
+void ClimaxApp::mouseUp( MouseEvent event )
 {
 }
 
-void ParticleSystemApp::mouseDrag( MouseEvent event )
+void ClimaxApp::mouseDrag( MouseEvent event )
 {
 }
 
-void ParticleSystemApp::resize()
+void ClimaxApp::resize()
 {
     mParticlesBorder = getWindowBounds();
     mForceCenter = mParticlesBorder.getCenter();
     mParticleSystem.setBorders( ci::Area( mParticlesBorder ) );
 }
 
-void ParticleSystemApp::keyDown( KeyEvent event )
+void ClimaxApp::keyDown( KeyEvent event )
 {
     if ( event.getChar() == 's' && event.isMetaDown() ) {
         saveConfig();
@@ -283,7 +289,13 @@ void ParticleSystemApp::keyDown( KeyEvent event )
     }
 }
 
-void ParticleSystemApp::draw()
+void ClimaxApp::audioCallback( uint64_t inSampleOffset, uint32_t ioSampleCount, audio::Buffer32f *buffer )
+{
+
+}
+
+
+void ClimaxApp::draw()
 {
 	gl::clear();
     gl::enableAlphaBlending();
@@ -307,16 +319,16 @@ void ParticleSystemApp::draw()
     if ( mParams.isVisible() ) mParams.draw();
 }
 
-void ParticleSystemApp::saveConfig()
+void ClimaxApp::saveConfig()
 {
     mConfig->save( getAppPath() / fs::path( configFilename ) );
     console() << "Saved configuration to: " << getAppPath() / fs::path( configFilename ) << std::endl;
 }
 
-void ParticleSystemApp::loadConfig()
+void ClimaxApp::loadConfig()
 {
     mConfig->load( getAppPath() / fs::path( configFilename ) );
     console() << "Loaded configuration from: " << getAppPath() / fs::path( configFilename ) << std::endl;
 }
 
-CINDER_APP_NATIVE( ParticleSystemApp, RendererGl )
+CINDER_APP_NATIVE( ClimaxApp, RendererGl )
