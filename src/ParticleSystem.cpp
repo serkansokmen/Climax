@@ -9,14 +9,13 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::clear()
 {
-    for ( auto it : particles ) {
+    for ( auto it : particles ){
         delete it;
     }
     particles.clear();
     
-    for( std::vector<Spring*>::iterator it = springs.begin(); it != springs.end(); ++it )
-    {
-        delete * it;
+    for( auto it : springs ){
+        delete it;
     }
     springs.clear();
 }
@@ -26,7 +25,7 @@ void ParticleSystem::update()
     if ( particles.size() > maxParticles )
         destroyParticle( * particles.begin() );
     
-    for ( auto it : particles ) {
+    for ( auto it : particles ){
         it->borders( this->borders );
         it->update();
         it->flock( particles );
@@ -43,11 +42,12 @@ void ParticleSystem::draw()
     {
         for ( auto particle_second_it : particles )
         {
-            float distance = particle_first_it->position.distance( particle_second_it->position );
-            float per = 1.f - ( distance / 100.f );
-            if ( per > 0.f ) {
-                ci::Color colorFirst = ci::lerp( particle_first_it->color, particle_second_it->color, per );
-                ci::gl::color( ci::ColorA(  colorFirst, per * .8f ) );
+            float distBetweenParticles = particle_first_it->position.distance( particle_second_it->position );
+            float distancePercent = 1.f - ( distBetweenParticles / 100.f );
+            
+            if ( distancePercent > 0.f ){
+                ci::Color colorFirst = ci::lerp( particle_first_it->color, particle_second_it->color, distancePercent );
+                ci::gl::color( ci::ColorA(  colorFirst, distancePercent * .8f ) );
                 ci::Vec2f conVec = particle_second_it->position - particle_first_it->position;
                 conVec.normalize();
                 ci::gl::drawLine( particle_first_it->position+conVec * ( particle_first_it->radius+2.f ),

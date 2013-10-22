@@ -69,12 +69,19 @@ public:
     float   mAlignmentFactor;
     float   mCohesionFactor;
     
+    float   mSoundFrequency;
+    float   mPhase, mPhaseAdd;
+    float   mModFrequency;
+    float   mModPhase, mModPhaseAdd;
+    
     int     mMaxParticles;
     
     bool    mParticlesPullToCenter;
     bool    mUseAttraction;
     bool    mUseRepulsion;
     bool    mUseFlocking;
+    
+    vector<float>       mOutput;
 };
 
 void ClimaxApp::prepareSettings( Settings * settings )
@@ -104,6 +111,15 @@ void ClimaxApp::setup()
     mParticlesFbo.bindFramebuffer();
     gl::clear( Color::black() );
     mParticlesFbo.unbindFramebuffer();
+    
+    // Audio Setup
+    mSoundFrequency = 0.f;
+    mPhase = 0.f;
+    mPhaseAdd = 0.f;
+    mModFrequency = 0.0f;
+    mModPhase = 0.0f;
+    mModPhaseAdd = 0.0f;
+    audio::Output::play( audio::createCallback( this, &ClimaxApp::audioCallback ) );
     
     mMaxParticles = 1200;
     mParticleColor = Color::white();
@@ -172,8 +188,20 @@ void ClimaxApp::setup()
 void ClimaxApp::update()
 {
     Vec2f center = getWindowCenter();
-    for ( auto it : mParticleSystem.particles )
-    {
+    
+    float maxFrequency = 15000.f;
+    float targetFrequency = ( getMousePos().y / (float)getWindowHeight() ) * maxFrequency;
+    targetFrequency = mSoundFrequency - 10000.f;
+    mSoundFrequency = math<float>::clamp( targetFrequency, 0.f, maxFrequency );
+    
+    float maxModFrequency = 30.0f;
+    float targetModFrequency = ( getMousePos().x / (float)getWindowWidth() ) * maxModFrequency;
+    mModFrequency = math<float>::clamp( targetModFrequency, 0.0f, maxModFrequency );
+    
+    mParticleSystem.maxParticles = mMaxParticles;
+    
+    for ( auto it : mParticleSystem.particles ){
+        
         it->separationEnabled = mUseFlocking;
         it->separationFactor = mSeparationFactor;
         it->alignmentEnabled = mUseFlocking;
@@ -181,27 +209,37 @@ void ClimaxApp::update()
         it->cohesionEnabled = mUseFlocking;
         it->cohesionFactor = mCohesionFactor;
         
-        if ( mParticlesPullToCenter )
-        {
+        for( auto second : mParticleSystem.particles ){
+            float d = it->position.distance( second->position );
+            float d2 = ( it->radius + second->radius ) * 100.f;
+            if( d > 0.f && d <= d2 && d < 500.f ) {
+                mSoundFrequency = 1000.f;
+                mSoundFrequency += 500.f * ( 1.f - ( it->radius * it->color.get( CM_RGB ).length() / 4000.f ) );
+                mSoundFrequency += 500.f * ( 1.f - ( second->radius * second->color.get( CM_RGB ).length() / 4000.f ) );
+            }
+        }
+
+        
+        if ( mParticlesPullToCenter ){
             Vec2f force = ( center - it->position ) * .01f;
             it->forces += force;
         }
         
-        if ( mUseAttraction )
-        {
+        if ( mUseAttraction ){
             Vec2f attrForce = mForceCenter - it->position;
             attrForce *= mAttrFactor;
             it->forces += attrForce;
         }
         
-        if ( mUseRepulsion )
-        {
+        if ( mUseRepulsion ){
             Vec2f repForce = it->position - mForceCenter;
             repForce = repForce.normalized() * math<float>::max( 0.f, mRepulsionRadius - repForce.length() );
             it->forces += repForce;
         }
     }
-    mParticleSystem.maxParticles = mMaxParticles;
+    
+    mSoundFrequency = math<float>::clamp( mSoundFrequency, 0.0f, maxFrequency );
+    
     mParticleSystem.update();
 }
 
@@ -291,7 +329,21 @@ void ClimaxApp::keyDown( KeyEvent event )
 
 void ClimaxApp::audioCallback( uint64_t inSampleOffset, uint32_t ioSampleCount, audio::Buffer32f *buffer )
 {
-
+    if ( mOutput.size() != ioSampleCount ) {
+        mOutput.resize( ioSampleCount );
+    }
+    mPhaseAdd += ( ( mSoundFrequency / 44100.0f ) - mPhaseAdd ) * 0.1f;
+    mModPhaseAdd += ( ( mModFrequency / 44100.0f ) - mModPhaseAdd ) * 0.1f;
+    int numChannels = buffer->mNumberChannels;
+    for( int i=0; i<ioSampleCount; i++ ){
+        mPhase += mPhaseAdd;
+        mModPhase += mModPhaseAdd;
+        float output = math<float>::sin( mPhase * 2.0f * M_PI ) * math<float>::sin( mModPhase * 2.0f * M_PI );
+        for( int j=0; j<numChannels; j++ ){
+            buffer->mData[ i*numChannels + j ] = output;
+        }
+        mOutput[i] = output;
+    }
 }
 
 
