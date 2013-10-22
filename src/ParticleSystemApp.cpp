@@ -169,32 +169,30 @@ void ParticleSystemApp::update()
     Vec2f center = getWindowCenter();
     for ( auto it : mParticleSystem.particles )
     {
-        Particle * particle =  * it;
-        
-        particle->separationEnabled = mUseFlocking;
-        particle->separationFactor = mSeparationFactor;
-        particle->alignmentEnabled = mUseFlocking;
-        particle->alignmentFactor = mAlignmentFactor;
-        particle->cohesionEnabled = mUseFlocking;
-        particle->cohesionFactor = mCohesionFactor;
+        it->separationEnabled = mUseFlocking;
+        it->separationFactor = mSeparationFactor;
+        it->alignmentEnabled = mUseFlocking;
+        it->alignmentFactor = mAlignmentFactor;
+        it->cohesionEnabled = mUseFlocking;
+        it->cohesionFactor = mCohesionFactor;
         
         if ( mParticlesPullToCenter ) {
-            Vec2f force = ( center - particle->position ) * .01f;
-            particle->forces += force;
+            Vec2f force = ( center - it->position ) * .01f;
+            it->forces += force;
         }
         
         if ( mUseAttraction )
         {
-            Vec2f attrForce = mForceCenter - particle->position;
+            Vec2f attrForce = mForceCenter - it->position;
             attrForce *= mAttrFactor;
-            particle->forces += attrForce;
+            it->forces += attrForce;
         }
         
         if ( mUseRepulsion )
         {
-            Vec2f repForce = particle->position - mForceCenter;
+            Vec2f repForce = it->position - mForceCenter;
             repForce = repForce.normalized() * math<float>::max(0.f, mRepulsionRadius - repForce.length() );
-            particle->forces += repForce;
+            it->forces += repForce;
         }
     }
     mParticleSystem.maxParticles = mMaxParticles;
@@ -229,7 +227,6 @@ void ParticleSystemApp::randomizeFlockingProperties()
 
 void ParticleSystemApp::mouseDown( MouseEvent event )
 {
-//    mForceCenter = event.getPos();
     randomizeParticleProperties();
 }
 
@@ -254,15 +251,10 @@ void ParticleSystemApp::mouseUp( MouseEvent event )
 
 void ParticleSystemApp::mouseDrag( MouseEvent event )
 {
-//    mForceCenter = event.getPos();
 }
 
 void ParticleSystemApp::resize()
 {
-//    mParticlesBorder = ci::Rectf(GUI_WIDTH + PARTICLE_AREA_PADDING * 2.f,
-//                                 PARTICLE_AREA_PADDING,
-//                                 getWindowWidth() - PARTICLE_AREA_PADDING,
-//                                 getWindowHeight() - PARTICLE_AREA_PADDING);
     mParticlesBorder = getWindowBounds();
     mForceCenter = mParticlesBorder.getCenter();
     mParticleSystem.setBorders( ci::Area( mParticlesBorder ) );
@@ -318,12 +310,13 @@ void ParticleSystemApp::draw()
 void ParticleSystemApp::saveConfig()
 {
     mConfig->save( getAppPath() / fs::path( configFilename ) );
-    console() << "Saved to: " << getAppPath() / fs::path( configFilename ) << std::endl;
+    console() << "Saved configuration to: " << getAppPath() / fs::path( configFilename ) << std::endl;
 }
 
 void ParticleSystemApp::loadConfig()
 {
     mConfig->load( getAppPath() / fs::path( configFilename ) );
+    console() << "Loaded configuration from: " << getAppPath() / fs::path( configFilename ) << std::endl;
 }
 
 CINDER_APP_NATIVE( ParticleSystemApp, RendererGl )
