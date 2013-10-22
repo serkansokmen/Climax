@@ -167,7 +167,7 @@ void ParticleSystemApp::setup()
 void ParticleSystemApp::update()
 {
     Vec2f center = getWindowCenter();
-    for (vector<Particle*>::iterator it = mParticleSystem.particles.begin(); it != mParticleSystem.particles.end(); ++it)
+    for ( auto it : mParticleSystem.particles )
     {
         Particle * particle =  * it;
         

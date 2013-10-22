@@ -96,13 +96,12 @@ ci::Vec2f Particle::steer( ci::Vec2f target, bool slowdown )
 ci::Vec2f Particle::separate( std::vector<Particle *> & particles )
 {
     ci::Vec2f resultVec = ci::Vec2f::zero();
-    std::vector<Particle*>::const_iterator it;
     
     int count = 0;
     
-    for( it = particles.begin(); it != particles.end(); ++it )
+    for( auto it : particles )
     {
-        ci::Vec2f diffVec = position - (*it)->position;
+        ci::Vec2f diffVec = position - it->position;
         if ( diffVec.length() > 0 && diffVec.length() < targetSeparation )
         {
             resultVec += diffVec.normalized() / diffVec.length();
@@ -129,11 +128,10 @@ ci::Vec2f Particle::align( std::vector<Particle *> & particles )
 {
     ci::Vec2f resultVec = ci::Vec2f::zero();
     int count = 0;
-    for ( std::vector<Particle*>::const_iterator it = particles.begin(); it
-        != particles.end(); ++it ) {
-        ci::Vec2f diffVec = position - (*it)->position;
+    for ( auto it : particles ) {
+        ci::Vec2f diffVec = position - it->position;
         if( diffVec.length() >0 && diffVec.length() < neighboringDistance ) {
-            resultVec += (*it)->velocity;
+            resultVec += it->velocity;
             count++;
         }
     }
@@ -157,19 +155,18 @@ ci::Vec2f Particle::cohesion( std::vector<Particle *> & particles )
 {
     ci::Vec2f resultVec = ci::Vec2f::zero();
     int count = 0;
-    for ( std::vector<Particle*>::const_iterator it = particles.begin(); it
-         != particles.end(); ++it )
+    for ( auto it : particles )
     {
         if (resultVec.length() >0)
         {
             resultVec.normalize();
             resultVec *= maxSpeed;
             resultVec -= velocity;
-            resultVec.limit(maxForce);
-            float d = position.distance( (*it)->position );
+            resultVec.limit( maxForce );
+            float d = position.distance( it->position );
             if ( d > 0 && d < neighboringDistance )
             {
-                resultVec += (*it)->position;
+                resultVec += it->position;
                 count++;
             }
         }
@@ -183,9 +180,6 @@ ci::Vec2f Particle::cohesion( std::vector<Particle *> & particles )
 
 void Particle::draw()
 {
-//    float outerRadius = radius + radius * .8f;
-//    ci::gl::color( ci::ColorA( color, .8f ) );
-//    ci::gl::drawSolidCircle( position, outerRadius );
     if ( this->radius < 5.f )
     {
         ci::gl::color( color );
@@ -196,5 +190,4 @@ void Particle::draw()
         ci::gl::color( ci::ColorA( color, .7 ) );
         ci::gl::drawStrokedCircle( position, radius );
     }
-//    ci::gl::color( ci::ColorA( color, 1.f ) );
 }
