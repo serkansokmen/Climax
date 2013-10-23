@@ -17,8 +17,6 @@
 #include "Resources.h"
 #include "ParticleSystem.h"
 
-#define GUI_WIDTH               280
-#define PARTICLE_AREA_PADDING   20.f
 
 using namespace ci;
 using namespace ci::app;
@@ -43,6 +41,7 @@ public:
     void randomizeFlockingProperties();
     void saveConfig();
     void loadConfig();
+    void toggleSoundPlaying();
     
     string              configFilename;
     params::InterfaceGl mParams;
@@ -153,7 +152,7 @@ void ClimaxApp::setup()
     mCohesionFactor = .4f;
     
     configFilename = "config.xml";
-    mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - PARTICLE_AREA_PADDING * 2.f ) ) );
+    mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( 280, getWindowHeight() - 20.f ) ) );
     mConfig = new config::Config( & mParams );
     
     mParams.addText( "Particles", "label=`Particles`" );
@@ -184,6 +183,7 @@ void ClimaxApp::setup()
     mParams.addSeparator();
     
     mParams.addText( "Audio", "label=`Audio`" );
+    mParams.addButton( "Play / Pause" , std::bind( & ClimaxApp::toggleSoundPlaying, this ) );
     mConfig->addParam( "Minimum Beat Force", & mMinimumBeatForce, "min=0.1f max=20.f" );
     mConfig->addParam( "Beat Force", & mBeatForce, "min=0.f max=1000.f" );
     mConfig->addParam( "Beat Sensitivity", & mBeatSensitivity, "min=0.f max=1.f" );
@@ -312,6 +312,14 @@ void ClimaxApp::randomizeFlockingProperties()
     mSeparationFactor = randFloat();
     mAlignmentFactor = randFloat();
     mCohesionFactor = randFloat();
+}
+
+void ClimaxApp::toggleSoundPlaying()
+{
+    if ( mTrack->isPlaying() )
+        mTrack->stop();
+    else
+        mTrack->play();
 }
 
 void ClimaxApp::mouseDown( MouseEvent event )
