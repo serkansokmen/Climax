@@ -2,12 +2,14 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
+#include "cinder/Perlin.h"
 #include "cinder/Rect.h"
 #include "cinder/ImageIo.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/params/Params.h"
 #include "cinder/audio/Output.h"
-#include "cinder/audio/Callback.h"
+#include "cinder/audio/FftProcessor.h"
+#include "cinder/audio/PcmBuffer.h"
 #include "cinder/CinderMath.h"
 
 #include "CinderConfig.h"
@@ -42,11 +44,16 @@ public:
     void saveConfig();
     void loadConfig();
     
-    void audioCallback( uint64_t inSampleOffset, uint32_t ioSampleCount, audio::Buffer32f *buffer );
-    
     string              configFilename;
     params::InterfaceGl mParams;
     config::Config*     mConfig;
+    
+    audio::TrackRef         mTrack;
+    audio::PcmBuffer32fRef  mPcmBuffer;
+    float                   mBeatForce;
+    float                   mBeatSensitivity;
+    float                   mAverageLevelOld;
+    float                   mRandAngle;
     
     ParticleSystem  mParticleSystem;
     gl::Texture     mParticleTexture;
@@ -56,8 +63,11 @@ public:
     ci::Rectf   mParticlesBorder;
     
     Color   mParticleColor;
-    float   mParticleRadiusMin, mParticleRadiusMax;
     
+    float   mPerlinFrequency;
+    Perlin  mPerlin;
+    float   mMinimumBeatForce;
+    float   mParticleRadiusMin, mParticleRadiusMax;
     float   mParticlesPullFactor;
     float   mAttrFactor;
     float   mRepulsionFactor;
@@ -68,11 +78,6 @@ public:
     float   mSeparationFactor;
     float   mAlignmentFactor;
     float   mCohesionFactor;
-    
-    float   mSoundFrequency;
-    float   mPhase, mPhaseAdd;
-    float   mModFrequency;
-    float   mModPhase, mModPhaseAdd;
     
     int     mMaxParticles;
     
@@ -113,19 +118,22 @@ void ClimaxApp::setup()
     mParticlesFbo.unbindFramebuffer();
     
     // Audio Setup
-    mSoundFrequency = 0.f;
-    mPhase = 0.f;
-    mPhaseAdd = 0.f;
-    mModFrequency = 0.0f;
-    mModPhase = 0.0f;
-    mModPhaseAdd = 0.0f;
-    audio::Output::play( audio::createCallback( this, &ClimaxApp::audioCallback ) );
+    mMinimumBeatForce = 2.f;
+    mBeatForce = 150.f;
+    mBeatSensitivity = .03f;
+    mAverageLevelOld = 0.f;
+    mRandAngle = 15.f;
+    
+    mTrack = audio::Output::addTrack( audio::load( getAssetPath( "sound.mp3" ).c_str() ) );
+    mTrack->enablePcmBuffering( true );
+    
+    mPerlinFrequency = .01f;
+    mPerlin = Perlin();
     
     mMaxParticles = 1200;
     mParticleColor = Color::white();
     mParticleRadiusMin = .2f;
     mParticleRadiusMax = 1.6f;
-    
     mParticlesPullToCenter = true;
     mParticlesPullFactor = 0.01f;
     mUseAttraction = false;
@@ -172,7 +180,12 @@ void ClimaxApp::setup()
     mConfig->addParam( "Repulsion Radius", & mRepulsionRadius, "min=0.f max=800.f" );
     mParams.addSeparator();
     
+    mParams.addText( "Audio", "label=`Audio`" );
+    mConfig->addParam( "Minimum Beat Force", & mMinimumBeatForce, "min=0.1f max=20.f" );
+    mConfig->addParam( "Beat Force", & mBeatForce, "min=0.f max=300.f" );
+    mConfig->addParam( "Beat Sensitivity", & mBeatSensitivity, "min=0.f max=1.f" );
     mParams.addSeparator();
+    
     mParams.addText( "Settings", "label=`Settings`" );
     mParams.addButton( "Save Settings", bind( & ClimaxApp::saveConfig, this ) );
     mParams.addButton( "Reload Settings", bind( & ClimaxApp::loadConfig, this ), "key=L" );
@@ -189,14 +202,50 @@ void ClimaxApp::update()
 {
     Vec2f center = getWindowCenter();
     
-    float maxFrequency = 15000.f;
-    float targetFrequency = ( getMousePos().y / (float)getWindowHeight() ) * maxFrequency;
-    targetFrequency = mSoundFrequency - 10000.f;
-    mSoundFrequency = math<float>::clamp( targetFrequency, 0.f, maxFrequency );
+    float beatValue = 0.f;
+    mPcmBuffer = mTrack->getPcmBuffer();
     
-    float maxModFrequency = 30.0f;
-    float targetModFrequency = ( getMousePos().x / (float)getWindowWidth() ) * maxModFrequency;
-    mModFrequency = math<float>::clamp( targetModFrequency, 0.0f, maxModFrequency );
+    if ( mPcmBuffer ){
+        
+        int bandCount = 32;
+        std::shared_ptr<float> fftRef = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT ), bandCount );
+        
+        if( fftRef ) {
+            float * fftBuffer = fftRef.get();
+            float avgLvl= 0.f;
+            for( int i= 0; i<bandCount; i++ ) {
+                avgLvl += fftBuffer[i] / (float)bandCount;
+            }
+            avgLvl /= (float)bandCount;
+            if( avgLvl > mAverageLevelOld + mBeatSensitivity) {
+                beatValue = avgLvl - mBeatSensitivity;
+            }
+            mAverageLevelOld = avgLvl;
+        }
+    }
+    
+    float beatForce = beatValue * randFloat( mBeatForce * .5f, mBeatForce );
+    console() << beatForce << std::endl;
+    
+    // Add New Particle on Beat
+    
+//    mMaxParticles = (int)( beatForce * 100 );
+    mForceCenter =  getWindowCenter();
+    if ( beatForce > .1f ) {
+        mPerlinFrequency = beatForce;
+        mForceCenter += mPerlin.dfBm( mForceCenter * mPerlinFrequency ) * 100.f;
+    }
+    
+    if ( beatForce > mMinimumBeatForce ){
+        randomizeParticleProperties();
+    }
+    
+    float radius = ci::randFloat( mParticleRadiusMin, mParticleRadiusMax ) * beatForce * 10.f;
+    float mass = radius;
+    float drag = .95f;
+    
+    Particle * particle = new Particle( mForceCenter, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor );
+    mParticleSystem.addParticle( particle );
     
     mParticleSystem.maxParticles = mMaxParticles;
     
@@ -209,15 +258,13 @@ void ClimaxApp::update()
         it->cohesionEnabled = mUseFlocking;
         it->cohesionFactor = mCohesionFactor;
         
-        for( auto second : mParticleSystem.particles ){
-            float d = it->position.distance( second->position );
-            float d2 = ( it->radius + second->radius ) * 100.f;
-            if( d > 0.f && d <= d2 && d < 500.f ) {
-                mSoundFrequency = 1000.f;
-                mSoundFrequency += 500.f * ( 1.f - ( it->radius * it->color.get( CM_RGB ).length() / 4000.f ) );
-                mSoundFrequency += 500.f * ( 1.f - ( second->radius * second->color.get( CM_RGB ).length() / 4000.f ) );
-            }
-        }
+//        for( auto second : mParticleSystem.particles ){
+//            float d = it->position.distance( second->position );
+//            float d2 = ( it->radius + second->radius ) * 100.f;
+//            if ( d > 0.f && d <= d2 && d < 500.f ) {
+//                
+//            }
+//        }
 
         
         if ( mParticlesPullToCenter ){
@@ -237,8 +284,6 @@ void ClimaxApp::update()
             it->forces += repForce;
         }
     }
-    
-    mSoundFrequency = math<float>::clamp( mSoundFrequency, 0.0f, maxFrequency );
     
     mParticleSystem.update();
 }
@@ -276,7 +321,7 @@ void ClimaxApp::mouseDown( MouseEvent event )
 
 void ClimaxApp::mouseMove( MouseEvent event )
 {
-    mForceCenter = event.getPos();
+//    mForceCenter = event.getPos();
     
     bool repulsionUsed = mUseRepulsion;
     
@@ -326,26 +371,6 @@ void ClimaxApp::keyDown( KeyEvent event )
             mParams.show();
     }
 }
-
-void ClimaxApp::audioCallback( uint64_t inSampleOffset, uint32_t ioSampleCount, audio::Buffer32f *buffer )
-{
-    if ( mOutput.size() != ioSampleCount ) {
-        mOutput.resize( ioSampleCount );
-    }
-    mPhaseAdd += ( ( mSoundFrequency / 44100.0f ) - mPhaseAdd ) * 0.1f;
-    mModPhaseAdd += ( ( mModFrequency / 44100.0f ) - mModPhaseAdd ) * 0.1f;
-    int numChannels = buffer->mNumberChannels;
-    for( int i=0; i<ioSampleCount; i++ ){
-        mPhase += mPhaseAdd;
-        mModPhase += mModPhaseAdd;
-        float output = math<float>::sin( mPhase * 2.0f * M_PI ) * math<float>::sin( mModPhase * 2.0f * M_PI );
-        for( int j=0; j<numChannels; j++ ){
-            buffer->mData[ i*numChannels + j ] = output;
-        }
-        mOutput[i] = output;
-    }
-}
-
 
 void ClimaxApp::draw()
 {
