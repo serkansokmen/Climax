@@ -60,7 +60,6 @@ public:
     gl::Fbo         mParticlesFbo;
     
     Vec2f       mForceCenter;
-    ci::Rectf   mParticlesBorder;
     
     Color   mParticleColor;
     
@@ -80,6 +79,7 @@ public:
     float   mCohesionFactor;
     
     int     mMaxParticles;
+    int     mNumParticlesOnBeat;
     
     bool    mParticlesPullToCenter;
     bool    mUseAttraction;
@@ -124,13 +124,15 @@ void ClimaxApp::setup()
     mAverageLevelOld = 0.f;
     mRandAngle = 15.f;
     
-    mTrack = audio::Output::addTrack( audio::load( getAssetPath( "sound.mp3" ).c_str() ) );
+    mTrack = audio::Output::addTrack( audio::load( getAssetPath( "sound_.mp3" ).c_str() ) );
     mTrack->enablePcmBuffering( true );
+    mTrack->setLooping( true );
     
     mPerlinFrequency = .01f;
     mPerlin = Perlin();
     
     mMaxParticles = 1200;
+    mNumParticlesOnBeat = 1;
     mParticleColor = Color::white();
     mParticleRadiusMin = .2f;
     mParticleRadiusMax = 1.6f;
@@ -156,6 +158,7 @@ void ClimaxApp::setup()
     
     mParams.addText( "Particles", "label=`Particles`" );
     mConfig->addParam( "Max Particles", & mMaxParticles , "" );
+    mConfig->addParam( "Particles on Beat", & mNumParticlesOnBeat , "" );
     
     mConfig->addParam( "Particle Color" , & mParticleColor );
     mConfig->addParam( "Target Separation", & mTargetSeparation, "min=-500.f max=500.f" );
@@ -182,7 +185,7 @@ void ClimaxApp::setup()
     
     mParams.addText( "Audio", "label=`Audio`" );
     mConfig->addParam( "Minimum Beat Force", & mMinimumBeatForce, "min=0.1f max=20.f" );
-    mConfig->addParam( "Beat Force", & mBeatForce, "min=0.f max=300.f" );
+    mConfig->addParam( "Beat Force", & mBeatForce, "min=0.f max=1000.f" );
     mConfig->addParam( "Beat Sensitivity", & mBeatSensitivity, "min=0.f max=1.f" );
     mParams.addSeparator();
     
@@ -224,31 +227,6 @@ void ClimaxApp::update()
         }
     }
     
-    float beatForce = beatValue * randFloat( mBeatForce * .5f, mBeatForce );
-    console() << beatForce << std::endl;
-    
-    // Add New Particle on Beat
-    
-//    mMaxParticles = (int)( beatForce * 100 );
-    mForceCenter =  getWindowCenter();
-    if ( beatForce > .1f ) {
-        mPerlinFrequency = beatForce;
-        mForceCenter += mPerlin.dfBm( mForceCenter * mPerlinFrequency ) * 100.f;
-    }
-    
-    if ( beatForce > mMinimumBeatForce ){
-        randomizeParticleProperties();
-    }
-    
-    float radius = ci::randFloat( mParticleRadiusMin, mParticleRadiusMax ) * beatForce * 10.f;
-    float mass = radius;
-    float drag = .95f;
-    
-    Particle * particle = new Particle( mForceCenter, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor );
-    mParticleSystem.addParticle( particle );
-    
-    mParticleSystem.maxParticles = mMaxParticles;
-    
     for ( auto it : mParticleSystem.particles ){
         
         it->separationEnabled = mUseFlocking;
@@ -258,14 +236,14 @@ void ClimaxApp::update()
         it->cohesionEnabled = mUseFlocking;
         it->cohesionFactor = mCohesionFactor;
         
-//        for( auto second : mParticleSystem.particles ){
-//            float d = it->position.distance( second->position );
-//            float d2 = ( it->radius + second->radius ) * 100.f;
-//            if ( d > 0.f && d <= d2 && d < 500.f ) {
-//                
-//            }
-//        }
-
+        //        for( auto second : mParticleSystem.particles ){
+        //            float d = it->position.distance( second->position );
+        //            float d2 = ( it->radius + second->radius ) * 100.f;
+        //            if ( d > 0.f && d <= d2 && d < 500.f ) {
+        //
+        //            }
+        //        }
+        
         
         if ( mParticlesPullToCenter ){
             Vec2f force = ( center - it->position ) * .01f;
@@ -284,8 +262,30 @@ void ClimaxApp::update()
             it->forces += repForce;
         }
     }
-    
+    mParticleSystem.maxParticles = mMaxParticles;
     mParticleSystem.update();
+    
+    // Add New Particle on Beat
+    float beatForce = beatValue * randFloat( mBeatForce * .5f, mBeatForce );
+    mForceCenter = getWindowCenter();
+    mPerlinFrequency = beatValue;
+    mForceCenter += mPerlin.dfBm( mForceCenter * mPerlinFrequency ) * getWindowHeight() / 5;
+    mNumParticlesOnBeat = (int)( beatValue * 40.f );
+    
+    if ( beatForce > mMinimumBeatForce ){
+        
+        randomizeParticleProperties();
+        
+        float radius = ci::randFloat( mParticleRadiusMin, mParticleRadiusMax ) * beatForce * 40.f;
+        float mass = radius;
+        float drag = .95f;
+        
+        for ( int i=0; i<mNumParticlesOnBeat; i++) {
+            Vec2f pos = mForceCenter + randVec2f() * 10.f;
+            Particle * particle = new Particle( pos, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor );
+            mParticleSystem.addParticle( particle );
+        }
+    }
 }
 
 void ClimaxApp::addNewParticleAtPosition( const Vec2f &position )
@@ -344,9 +344,8 @@ void ClimaxApp::mouseDrag( MouseEvent event )
 
 void ClimaxApp::resize()
 {
-    mParticlesBorder = getWindowBounds();
-    mForceCenter = mParticlesBorder.getCenter();
-    mParticleSystem.setBorders( ci::Area( mParticlesBorder ) );
+    mForceCenter = getWindowCenter();
+    mParticleSystem.setBorders( getWindowBounds() );
 }
 
 void ClimaxApp::keyDown( KeyEvent event )

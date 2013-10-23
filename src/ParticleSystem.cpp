@@ -26,9 +26,15 @@ void ParticleSystem::update()
         destroyParticle( * particles.begin() );
     
     for ( auto it : particles ){
-        it->borders( this->borders );
-        it->update();
-        it->flock( particles );
+        
+        ci::Rectf rect = ci::app::getWindowBounds();
+        if ( rect.contains( it->position ) ){
+            it->borders( this->borders );
+            it->update();
+            it->flock( particles );
+        } else {
+            destroyParticle( it );
+        }
     }
     
     for( auto it : springs ) {
