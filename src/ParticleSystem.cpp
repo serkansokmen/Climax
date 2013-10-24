@@ -22,8 +22,12 @@ void ParticleSystem::clear()
 
 void ParticleSystem::update()
 {
-    if ( particles.size() > maxParticles )
-        destroyParticle( * particles.begin() );
+    int numExcess = particles.size() - maxParticles;
+    
+    if ( numExcess > 0 )
+        for ( int i=0; i<numExcess; i++ )
+            destroyParticle( particles[ numExcess - i ] );
+    
     
     for ( auto it : particles ){
         
