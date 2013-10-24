@@ -76,6 +76,7 @@ public:
     float   mSeparationFactor;
     float   mAlignmentFactor;
     float   mCohesionFactor;
+    float   mForceCenterAnimRadius;
     
     int     mMaxParticles;
     int     mNumParticlesOnBeat;
@@ -84,6 +85,7 @@ public:
     bool    mUseAttraction;
     bool    mUseRepulsion;
     bool    mUseFlocking;
+    bool    mDrawForceCenter;
     
     vector<float>       mOutput;
 };
@@ -123,7 +125,7 @@ void ClimaxApp::setup()
     mAverageLevelOld = 0.f;
     mRandAngle = 15.f;
     
-    mTrack = audio::Output::addTrack( audio::load( getAssetPath( "sound_.mp3" ).c_str() ) );
+    mTrack = audio::Output::addTrack( audio::load( getAssetPath( "vordhosbn.mp3" ).c_str() ) );
     mTrack->enablePcmBuffering( true );
     mTrack->setLooping( true );
     
@@ -150,6 +152,9 @@ void ClimaxApp::setup()
     mSeparationFactor = 1.2f;
     mAlignmentFactor = .9f;
     mCohesionFactor = .4f;
+    
+    mForceCenterAnimRadius = 2.f;
+    mDrawForceCenter = true;
     
     configFilename = "config.xml";
     mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( 280, getWindowHeight() - 20.f ) ) );
@@ -180,6 +185,8 @@ void ClimaxApp::setup()
     mConfig->addParam( "Repulsion Enabled", & mUseRepulsion, "key=r" );
     mConfig->addParam( "Repulsion Factor", & mRepulsionFactor, "min=-10.f max=10.f step=.001f" );
     mConfig->addParam( "Repulsion Radius", & mRepulsionRadius, "min=0.f max=800.f" );
+    mConfig->addParam( "Force Area Radius", & mForceCenterAnimRadius, "min=0.1f max=800.f" );
+    mConfig->addParam( "Show Force Center", & mDrawForceCenter, "" );
     mParams.addSeparator();
     
     mParams.addText( "Audio", "label=`Audio`" );
@@ -265,25 +272,35 @@ void ClimaxApp::update()
     mParticleSystem.maxParticles = mMaxParticles;
     mParticleSystem.update();
     
+    mForceCenter = getWindowCenter();
+    
     // Add New Particle on Beat
     float beatForce = beatValue * randFloat( mBeatForce * .5f, mBeatForce );
-    mForceCenter = getWindowCenter();
+    Vec2f particlePos = getWindowCenter();
+    
+    particlePos.x = math<float>::sin( getElapsedSeconds() * 3 ) * getWindowWidth() / mForceCenterAnimRadius + getWindowWidth() / 2;
+    particlePos.y = math<float>::cos( getElapsedSeconds() * 7 ) * getWindowHeight() / mForceCenterAnimRadius + getWindowHeight() / 2;
     mPerlinFrequency = beatValue;
-    mForceCenter += mPerlin.dfBm( mForceCenter * mPerlinFrequency ) * getWindowHeight() / 5;
+    particlePos += mPerlin.fBm( mPerlinFrequency );
     mNumParticlesOnBeat = (int)( beatValue * 40.f );
     
     if ( beatForce > mMinimumBeatForce ){
         
-        randomizeParticleProperties();
+        if ( beatForce > mMinimumBeatForce * 2.f ) {
+            randomizeParticleProperties();
+            randomizeFlockingProperties();
+        }
         
-        float radius = ci::randFloat( mParticleRadiusMin, mParticleRadiusMax ) * beatForce * 40.f;
-        float mass = radius;
-        float drag = .95f;
-        
-        for ( int i=0; i<mNumParticlesOnBeat; i++) {
-            Vec2f pos = mForceCenter + randVec2f() * 10.f;
-            Particle * particle = new Particle( pos, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor );
-            mParticleSystem.addParticle( particle );
+        if ( mForceCenter.x > 0 && mForceCenter.x < getWindowWidth() && mForceCenter.y > 0 && mForceCenter.y < getWindowHeight() ) {
+            float radius = ci::randFloat( mParticleRadiusMin, mParticleRadiusMax ) * beatForce * 40.f;
+            float mass = radius;
+            float drag = .95f;
+            
+            for ( int i=0; i<mNumParticlesOnBeat; i++) {
+                Vec2f pos = particlePos + randVec2f() * 10.f;
+                Particle * particle = new Particle( pos, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor );
+                mParticleSystem.addParticle( particle );
+            }
         }
     }
 }
@@ -399,6 +416,11 @@ void ClimaxApp::draw()
 //    gl::draw( text );
     
     mParticleSystem.draw();
+    
+    if ( mDrawForceCenter ){
+        gl::color( Color::white() );
+        gl::drawSolidCircle( mForceCenter, 40 );
+    }
     
     if ( mParams.isVisible() ) mParams.draw();
 }
