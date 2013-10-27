@@ -182,14 +182,14 @@ ci::Vec2f Particle::cohesion( std::vector<Particle *> & particles )
 
 void Particle::draw()
 {
-    if ( this->radius < 5.f )
+    if ( this->radius < 25.f )
     {
-        ci::gl::color( color );
+        ci::gl::color( ci::ColorA( color, 1.f ) );
         ci::gl::drawSolidCircle( position, radius );
     }
     else
     {
-        ci::gl::color( ci::ColorA( color, .7 ) );
+        ci::gl::color( ci::ColorA( color, .7f ) );
         ci::gl::drawStrokedCircle( position, radius );
     }
 }

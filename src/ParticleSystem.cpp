@@ -22,57 +22,57 @@ void ParticleSystem::clear()
 
 void ParticleSystem::update()
 {
-    int numExcess = particles.size() - maxParticles;
+    if ( particles.size() > maxParticles )
+        destroyParticle( * particles.begin() );
     
-    if ( numExcess > 0 )
-        for ( int i=0; i<numExcess; i++ )
-            destroyParticle( particles[ numExcess - i ] );
-    
-    
-    for ( auto it : particles ){
-        
-        ci::Rectf rect = ci::app::getWindowBounds();
-        if ( rect.contains( it->position ) ){
-            it->borders( this->borders );
-            it->update();
-            it->flock( particles );
-        } else {
-            destroyParticle( it );
-        }
+    for ( auto particle : particles ){
+        particle->borders( true );
+        particle->update();
+        particle->flock( particles );
     }
     
-    for( auto it : springs ) {
-        it->update();
-    }
+    for ( auto spring : springs )
+        spring->update();
 }
 
 void ParticleSystem::draw()
 {
-    for ( auto particle_first_it : particles )
-    {
-        for ( auto particle_second_it : particles )
-        {
-            float distBetweenParticles = particle_first_it->position.distance( particle_second_it->position );
-            float distancePercent = 1.f - ( distBetweenParticles / 100.f );
-            
-            if ( distancePercent > 0.f ){
-                ci::Color colorFirst = ci::lerp( particle_first_it->color, particle_second_it->color, distancePercent );
-                ci::gl::color( ci::ColorA(  colorFirst, distancePercent * .8f ) );
-                ci::Vec2f conVec = particle_second_it->position - particle_first_it->position;
-                conVec.normalize();
-                ci::gl::drawLine( particle_first_it->position+conVec * ( particle_first_it->radius+2.f ),
-                                  particle_second_it->position-conVec * ( particle_second_it->radius+2.f ));
-            }
-        }
+    for( auto particle : particles ){
+//        for ( auto second : particles ){
+//            if ( particle != second ){
+//                float distBetweenParticles = particle->position.distance( second->position );
+//                float distancePercent = 1.f - ( distBetweenParticles / 100.f );
+//                
+//                if ( distancePercent > 0.f ){
+//                    ci::Color colorFirst = ci::lerp( particle->color, second->color, distancePercent );
+//                    ci::gl::color( ci::ColorA(  colorFirst, distancePercent * .8f ) );
+//                    ci::Vec2f conVec = particle->position - second->position;
+//                    conVec.normalize();
+//                    ci::gl::drawLine( particle->position+conVec * ( particle->radius+ .5f ),
+//                                      second->position-conVec * ( second->radius+ .5f ));
+//                }
+//            }
+//        }
+        particle->draw();
     }
-    
-    for( auto particle_it : particles ) particle_it->draw();
-    for( auto spring_it : springs )     spring_it->draw();
+    for( auto spring : springs )     spring->draw();
 }
 
 void ParticleSystem::addParticle( Particle *particle )
 {
     particles.push_back( particle );
+    
+    for ( auto second : particles ){
+        if ( particle != second ){
+            float d = particle->position.distance( second->position );
+            float d2 = ( particle->radius + second->radius ) * 100.f;
+
+            if ( d > 0.f && d <= d2 && d < 500.f ){
+                Spring * spring = new Spring( particle, second, d * 1.2f, .001f );
+                addSpring( spring );
+            }
+        }
+    }
 }
 
 void ParticleSystem::destroyParticle( Particle *particle )
@@ -80,6 +80,10 @@ void ParticleSystem::destroyParticle( Particle *particle )
     std::vector< Particle *>::const_iterator it = std::find( particles.begin(), particles.end(), particle );
     delete * it;
     particles.erase( it );
+    
+    for ( auto spring : springs )
+        if ( spring->particleA == * it || spring->particleB == * it )
+            destroySpring( spring );
 }
 
 void ParticleSystem::addSpring( Spring *spring )
@@ -92,9 +96,4 @@ void ParticleSystem::destroySpring( Spring *spring )
     std::vector<Spring*>::iterator it = std::find( springs.begin(), springs.end(), spring );
     delete *it;
     springs.erase( it );
-}
-
-void ParticleSystem::setBorders( const ci::Area &area )
-{
-    this->borders = area;
 }
