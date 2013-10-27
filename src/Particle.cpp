@@ -54,8 +54,10 @@ void Particle::flock( std::vector<Particle *> & particles )
     velocity.limit( maxSpeed );
 }
 
-void Particle::borders( const ci::Rectf & borders, bool bounce )
+void Particle::borders( bool bounce )
 {
+    ci::Rectf borders( ci::app::getWindowBounds() );
+    
     if ( bounce )
     {
         if ( position.x <= borders.getX1() || position.x >= borders.getX2() ) velocity.x *= -1.f;

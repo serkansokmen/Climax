@@ -25,7 +25,7 @@ public:
     void draw();
     
     void flock( std::vector<Particle * > & particles );
-    void borders( const ci::Rectf & borders, bool bounce = true );
+    void borders( bool bounce = true );
     
     ci::Vec2f steer( ci::Vec2f target, bool slowdown );
     ci::Vec2f separate( std::vector<Particle * > & particles );

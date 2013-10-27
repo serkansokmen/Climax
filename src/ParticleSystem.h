@@ -27,7 +27,6 @@ public:
     void addSpring( Spring * spring );
     void destroySpring( Spring * spring );
     
-    void setBorders( const ci::Area & area );
     void computeBspline();
     
     int  maxParticles;
