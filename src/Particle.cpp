@@ -16,9 +16,7 @@ Particle::Particle( const ci::Vec2f & position,
     this->maxSpeed = 1.f;
     this->maxForce = .05f;
     
-    this->radius = targetSeparation / neighboringDistance * 1.6f;
-    if ( this->radius > 10.f )
-        this->radius = 10.f;
+//    this->radius = targetSeparation / neighboringDistance * 1.6f;
     
     anchor = position;
     prevPosition = position;
@@ -182,14 +180,8 @@ ci::Vec2f Particle::cohesion( std::vector<Particle *> & particles )
 
 void Particle::draw()
 {
-    if ( this->radius < 25.f )
-    {
-        ci::gl::color( ci::ColorA( color, 1.f ) );
-        ci::gl::drawSolidCircle( position, radius );
-    }
-    else
-    {
-        ci::gl::color( ci::ColorA( color, .7f ) );
-        ci::gl::drawStrokedCircle( position, radius );
-    }
+    ci::gl::color( ci::ColorA( color, 1.f ) );
+    ci::gl::drawSolidCircle( position, radius * .8f );
+    ci::gl::color( ci::ColorA( color, .7f ) );
+    ci::gl::drawStrokedCircle( position, radius * 1.2f );
 }

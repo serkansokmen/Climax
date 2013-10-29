@@ -152,7 +152,7 @@ void ClimaxApp::setup()
     mDrawForceCenter = true;
     
     configFilename = "config.xml";
-    mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - 20.f ) ) );
+    mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - 40.f ) ) );
     mConfig = new config::Config( & mParams );
     
     mParams.addText( "Particles", "label=`Particles`" );
@@ -328,14 +328,14 @@ void ClimaxApp::addNewParticleAtPosition( const Vec2f & position )
 
 void ClimaxApp::setHighSeperation()
 {
-    mTargetSeparation = randFloat( 10.f, 50.f );
-    mNeighboringDistance = randFloat( 50.f, 100.f );
+    mTargetSeparation = randFloat( 50.f, 100.f );
+    mNeighboringDistance = randFloat( 10.f, 50.f );
 }
 
 void ClimaxApp::setHighNeighboring()
 {
-    mTargetSeparation = randFloat( 50.f, 100.f );
-    mNeighboringDistance = randFloat( 10.f, 50.f );
+    mTargetSeparation = randFloat( 10.f, 50.f );
+    mNeighboringDistance = randFloat( 50.f, 100.f );
 }
 
 void ClimaxApp::randomizeParticleProperties()
@@ -368,9 +368,6 @@ void ClimaxApp::mouseDown( MouseEvent event )
 void ClimaxApp::mouseMove( MouseEvent event )
 {
     mAttractionCenter = event.getPos();
-    
-    if ( event.isMetaDown() )
-        addNewParticleAtPosition( event.getPos() );
 }
 
 void ClimaxApp::mouseUp( MouseEvent event )
@@ -379,6 +376,7 @@ void ClimaxApp::mouseUp( MouseEvent event )
 
 void ClimaxApp::mouseDrag( MouseEvent event )
 {
+    addNewParticleAtPosition( event.getPos() );
 }
 
 void ClimaxApp::resize()

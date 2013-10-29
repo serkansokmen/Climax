@@ -2,7 +2,6 @@
 
 #include "Particle.h"
 #include "Spring.h"
-#include "cinder/Area.h"
 
 #include <vector>
 

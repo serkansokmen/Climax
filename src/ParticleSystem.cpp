@@ -1,4 +1,5 @@
 #include "cinder/app/AppBasic.h"
+#include "cinder/Rand.h"
 #include "ParticleSystem.h"
 
 
@@ -37,24 +38,7 @@ void ParticleSystem::update()
 
 void ParticleSystem::draw()
 {
-    for( auto particle : particles ){
-//        for ( auto second : particles ){
-//            if ( particle != second ){
-//                float distBetweenParticles = particle->position.distance( second->position );
-//                float distancePercent = 1.f - ( distBetweenParticles / 100.f );
-//                
-//                if ( distancePercent > 0.f ){
-//                    ci::Color colorFirst = ci::lerp( particle->color, second->color, distancePercent );
-//                    ci::gl::color( ci::ColorA(  colorFirst, distancePercent * .8f ) );
-//                    ci::Vec2f conVec = particle->position - second->position;
-//                    conVec.normalize();
-//                    ci::gl::drawLine( particle->position+conVec * ( particle->radius+ .5f ),
-//                                      second->position-conVec * ( second->radius+ .5f ));
-//                }
-//            }
-//        }
-        particle->draw();
-    }
+    for( auto particle : particles )    particle->draw();
     for( auto spring : springs )     spring->draw();
 }
 
@@ -65,10 +49,10 @@ void ParticleSystem::addParticle( Particle *particle )
     for ( auto second : particles ){
         if ( particle != second ){
             float d = particle->position.distance( second->position );
-            float d2 = ( particle->radius + second->radius ) * 100.f;
+            float d2 = ( particle->radius + second->radius ) * 50.f;
 
-            if ( d > 0.f && d <= d2 && d < 500.f ){
-                Spring * spring = new Spring( particle, second, d * 1.2f, .001f );
+            if ( d > 0.f && d <= d2 && d < 200.f ){
+                Spring * spring = new Spring( particle, second, d * ci::randFloat( .8f, 1.6f ), ci::randFloat( .001f, .004f ) );
                 addSpring( spring );
             }
         }
