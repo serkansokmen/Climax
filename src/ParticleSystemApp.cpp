@@ -8,14 +8,17 @@
 #include "cinder/audio/FftProcessor.h"
 #include "cinder/audio/PcmBuffer.h"
 #include "cinder/CinderMath.h"
+#include "cinder/Timer.h"
 
 #include "CinderConfig.h"
 
 #include "Resources.h"
 #include "ParticleSystem.h"
+#include "BpmTapper.h"
 
 
 #define GUI_WIDTH   320
+
 
 using namespace ci;
 using namespace ci::app;
@@ -56,6 +59,7 @@ public:
     float                   mRandAngle;
     
     ParticleSystem  mParticleSystem;
+    BpmTapper       * bpmTapper;
     
     Vec2f       mForceCenter;
     Vec2f       mAttractionCenter;
@@ -76,6 +80,7 @@ public:
     float   mAlignmentFactor;
     float   mCohesionFactor;
     float   mForceCenterAnimRadius;
+    float   mBpm;
     
     int     mMaxParticles;
     int     mNumParticlesOnBeat;
@@ -138,6 +143,9 @@ void ClimaxApp::setup()
     mRepulsionRadius = 35.f;
     
     mAutoRandomizeColor = true;
+    mBpm = 192.f;
+    bpmTapper = new BpmTapper();
+    bpmTapper->start();
     
     mUseFlocking = true;
     mTargetSeparation = 20.f;
@@ -168,6 +176,7 @@ void ClimaxApp::setup()
     mConfig->addParam( "Neighboring Distance", & mNeighboringDistance, "min=0.1f max=100.f" );
     mParams.addButton( "Randomize Particle Color" , std::bind( & ClimaxApp::randomizeParticleProperties, this ), "key=1" );
     mConfig->addParam( "Auto-Randomize Particle Color" , & mAutoRandomizeColor, "key=1" );
+    mConfig->addParam( "Auto-Randomize Tempo" , & mBpm, "min=100 max=255" );
     mParams.addButton( "High Seperation" , std::bind( & ClimaxApp::setHighSeperation, this ), "key=2" );
     mParams.addButton( "High Neighboring" , std::bind( & ClimaxApp::setHighNeighboring, this ), "key=3" );
     
@@ -240,8 +249,13 @@ void ClimaxApp::update()
         }
     }
     
-    if ( mAutoRandomizeColor && getElapsedFrames() % 100 == 0 )
+    bpmTapper->update();
+    bpmTapper->setBpm( mBpm );
+    
+    if ( mAutoRandomizeColor && bpmTapper->onBeat() ){
+        bpmTapper->start();
         randomizeParticleProperties();
+    }
     
     for ( auto it : mParticleSystem.particles ){
         
