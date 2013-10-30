@@ -24,29 +24,36 @@ public:
     
     BpmTapper(){
         this->isOnBeat = false;
+        this->isEnabled = false;
     }
     
     void start(){
-        mTimer.stop();
+        if ( ! isEnabled ) return;
         mTimer.start();
-        isOnBeat = false;
+        this->isOnBeat = false;
+    }
+    
+    void stop(){
+        if ( ! isEnabled ) return;
+        mTimer.stop();
+        this->isOnBeat = false;
     }
     
     void update(){
-        
-        isOnBeat = false;
+        if ( ! isEnabled ) return;
+        this->isOnBeat = false;
         if ( mTimer.isStopped() )
-            mTimer.start();
-        
-        float milisPerBeat = 60000 / bpm;
-        //    float beatsPerMilis = mBpm / 60000;
-        
-        if ( mTimer.getSeconds() > milisPerBeat / 1000 ){
-            mTimer.stop();
-            isOnBeat = true;
+            this->mTimer.start();
+        else {
+            float milisPerBeat = 60000 / bpm;
+//            float beatsPerMilis = mBpm / 60000;
+            
+            if ( mTimer.getSeconds() > milisPerBeat / 1000 ){
+                this->mTimer.stop();
+                this->isOnBeat = true;
+            }
         }
-        
-        console() << isOnBeat << endl;
+        ci::app::console() << this->isOnBeat << std::endl;
     }
     
     void setBpm( const float bpm ){
@@ -56,4 +63,6 @@ public:
     bool onBeat(){
         return this->isOnBeat;
     };
+    
+    bool isEnabled;
 };
