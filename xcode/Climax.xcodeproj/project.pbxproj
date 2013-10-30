@@ -20,7 +20,7 @@
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		D44E5FADF45243839ACAD164 /* ParticleSystemApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7489FCF94645410EB2DBDCE8 /* ParticleSystemApp.cpp */; };
+		D44E5FADF45243839ACAD164 /* ClimaxApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7489FCF94645410EB2DBDCE8 /* ClimaxApp.cpp */; };
 		F6AAEF8D0D9A4499B1055E67 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 074A3FCF0DEA425FA5A056EC /* CinderApp.icns */; };
 /* End PBXBuildFile section */
 
@@ -47,7 +47,7 @@
 		3A19A0DE3E2E4D25895E0DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
-		7489FCF94645410EB2DBDCE8 /* ParticleSystemApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = ParticleSystemApp.cpp; path = ../src/ParticleSystemApp.cpp; sourceTree = "<group>"; };
+		7489FCF94645410EB2DBDCE8 /* ClimaxApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClimaxApp.cpp; path = ../src/ClimaxApp.cpp; sourceTree = "<group>"; };
 		77958FA3D4224CA8B6FA4DC9 /* Climax_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Climax_Prefix.pch; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Climax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Climax.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6AB8CB550114E3F804CEB63 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				7489FCF94645410EB2DBDCE8 /* ParticleSystemApp.cpp */,
+				7489FCF94645410EB2DBDCE8 /* ClimaxApp.cpp */,
 				20B10150180C7F5E00278EA0 /* ParticleSystem.cpp */,
 				20B1014E180C7F5E00278EA0 /* Particle.cpp */,
 				20B1015E180CBF3900278EA0 /* Spring.cpp */,
@@ -260,7 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20ABCE1F1810871700FA26C7 /* CinderConfig.cpp in Sources */,
-				D44E5FADF45243839ACAD164 /* ParticleSystemApp.cpp in Sources */,
+				D44E5FADF45243839ACAD164 /* ClimaxApp.cpp in Sources */,
 				20B10152180C7F5E00278EA0 /* Particle.cpp in Sources */,
 				20B10160180CBF3900278EA0 /* Spring.cpp in Sources */,
 				20B10153180C7F5E00278EA0 /* ParticleSystem.cpp in Sources */,
@@ -288,6 +288,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-KissFft/lib/msw",
+				);
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
 				PRODUCT_NAME = Climax;
 				SYMROOT = ./build;
@@ -310,6 +314,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-KissFft/lib/msw",
+				);
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
 				PRODUCT_NAME = Climax;
 				STRIP_INSTALLED_PRODUCT = YES;
