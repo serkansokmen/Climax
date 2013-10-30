@@ -26,40 +26,11 @@ using namespace std;
 
 
 class ClimaxApp : public AppNative {
-
-public:
-    void prepareSettings( Settings * settings );
-	void setup();
-    void mouseDown( MouseEvent event );
-	void mouseMove( MouseEvent event );
-    void mouseDrag( MouseEvent event );
-    void mouseUp( MouseEvent event );
-    void keyDown( KeyEvent event );
-    void resize();
-	void update();
-	void draw();
-    void addNewParticleAtPosition( const Vec2f & position );
-    void randomizeParticleProperties();
-    void setHighSeperation();
-    void setHighNeighboring();
-    void randomizeFlockingProperties();
-    void saveConfig();
-    void loadConfig();
-    void toggleSoundPlaying();
     
-    string              configFilename;
+private:
+    
     params::InterfaceGl mParams;
-    config::Config*     mConfig;
-    
-    audio::TrackRef         mTrack;
-    audio::PcmBuffer32fRef  mPcmBuffer;
-    float                   mBeatForce;
-    float                   mBeatSensitivity;
-    float                   mAverageLevelOld;
-    float                   mRandAngle;
-    
-    ParticleSystem  mParticleSystem;
-    BpmTapper       * bpmTapper;
+    config::Config      * mConfig;
     
     Vec2f       mForceCenter;
     Vec2f       mAttractionCenter;
@@ -93,8 +64,45 @@ public:
     bool    mUseFlocking;
     bool    mDrawForceCenter;
     bool    mAutoRandomizeColor;
+
+public:
     
-    vector<float>       mOutput;
+    void prepareSettings( Settings * settings );
+	void setup();
+    void mouseDown( MouseEvent event );
+	void mouseMove( MouseEvent event );
+    void mouseDrag( MouseEvent event );
+    void mouseUp( MouseEvent event );
+    void keyDown( KeyEvent event );
+    void resize();
+	void update();
+	void draw();
+    void addNewParticleAtPosition( const Vec2f & position );
+    void randomizeParticleProperties();
+    void setHighSeperation();
+    void setHighNeighboring();
+    void randomizeFlockingProperties();
+    void saveConfig();
+    void loadConfig();
+    void toggleSoundPlaying();
+    void shutdown();
+    
+    ci::audio::SourceRef		mAudioSource;
+	ci::audio::PcmBuffer32fRef	mBuffer;
+	ci::audio::TrackRef			mTrack;
+    
+    ParticleSystem  mParticleSystem;
+    BpmTapper       * bpmTapper;
+    
+    string          mConfigFileName;
+    
+    float           mBeatForce;
+    float           mBeatSensitivity;
+    float           mAverageLevelOld;
+    float           mRandAngle;
+    
+    PolyLine<Vec2f> mFreqLine;
+    vector<float>   mOutput;
 };
 
 void ClimaxApp::prepareSettings( Settings * settings )
@@ -103,7 +111,7 @@ void ClimaxApp::prepareSettings( Settings * settings )
     settings->enableMultiTouch( false );
     settings->setFullScreen( true );
     settings->enableHighDensityDisplay();
-    settings->setResizable( true );
+    settings->setResizable( false );
     settings->setBorderless( false );
     settings->setTitle( "Climax" );
 }
@@ -120,10 +128,18 @@ void ClimaxApp::setup()
     mAverageLevelOld = 0.f;
     mRandAngle = 15.f;
     
-    mTrack = audio::Output::addTrack( audio::load( getAssetPath( "vordhosbn.mp3" ).c_str() ) );
-    mTrack->enablePcmBuffering( true );
+    // Set up line rendering
+    gl::enable( GL_LINE_SMOOTH );
+    glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
+    gl::color( ColorAf::white() );
+    
+    // Load and play audio
+	mAudioSource = audio::load( getAssetPath( "vordhosbn.mp3" ).c_str() );
+	mTrack = audio::Output::addTrack( mAudioSource, false );
+	mTrack->enablePcmBuffering( true );
     mTrack->setLooping( true );
-    toggleSoundPlaying();
+	mTrack->play();
+//    toggleSoundPlaying();
     
     mPerlinFrequency = .01f;
     mPerlin = Perlin();
@@ -131,7 +147,7 @@ void ClimaxApp::setup()
     mMaxParticles = 1200;
     mNumParticlesOnBeat = 1;
     mParticleColor = Color::white();
-    mParticleRadiusMin = .2f;
+    mParticleRadiusMin = .8f;
     mParticleRadiusMax = 1.6f;
     mParticlesPullToCenter = true;
     mParticlesPullFactor = 0.01f;
@@ -145,6 +161,7 @@ void ClimaxApp::setup()
     mAutoRandomizeColor = true;
     mBpm = 192.f;
     bpmTapper = new BpmTapper();
+    bpmTapper->isEnabled = false;
     bpmTapper->start();
     
     mUseFlocking = true;
@@ -159,7 +176,7 @@ void ClimaxApp::setup()
     mForceCenterAnimRadius = 2.f;
     mDrawForceCenter = true;
     
-    configFilename = "config.xml";
+    mConfigFileName = "config.xml";
     mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - 40.f ) ) );
     mConfig = new config::Config( & mParams );
     
@@ -227,30 +244,8 @@ void ClimaxApp::update()
     
     Vec2f center = getWindowCenter();
     
-    float beatValue = 0.f;
-    mPcmBuffer = mTrack->getPcmBuffer();
-    
-    if ( mPcmBuffer ){
-        
-        int bandCount = 32;
-        std::shared_ptr<float> fftRef = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT ), bandCount );
-        
-        if( fftRef ) {
-            float * fftBuffer = fftRef.get();
-            float avgLvl= 0.f;
-            for( int i= 0; i<bandCount; i++ ) {
-                avgLvl += fftBuffer[i] / (float)bandCount;
-            }
-            avgLvl /= (float)bandCount;
-            if( avgLvl > mAverageLevelOld + mBeatSensitivity) {
-                beatValue = avgLvl - mBeatSensitivity;
-            }
-            mAverageLevelOld = avgLvl;
-        }
-    }
-    
-    bpmTapper->update();
     bpmTapper->setBpm( mBpm );
+    bpmTapper->update();
     
     if ( mAutoRandomizeColor && bpmTapper->onBeat() ){
         bpmTapper->start();
@@ -288,46 +283,10 @@ void ClimaxApp::update()
     mParticleSystem.update();
     
     mForceCenter = getWindowCenter();
-    
-    // Add New Particle on Beat
-    float beatForce = beatValue * randFloat( mBeatForce * .5f, mBeatForce );
-    Vec2f particlePos = getWindowCenter();
-    
-    particlePos.x = math<float>::sin( getElapsedSeconds() * 8 ) * getWindowWidth() + getWindowWidth() / 2;
-    particlePos.y = math<float>::cos( getElapsedSeconds() * 4 ) * getWindowHeight() + getWindowHeight() / 2;
-    mPerlinFrequency = beatValue;
-    particlePos += mPerlin.fBm( mPerlinFrequency );
-    mNumParticlesOnBeat = (int)( beatValue * 40.f );
-    
-    if ( beatForce > mMinimumBeatForce ){
         
-        if ( beatForce > mMinimumBeatForce * 2.f ) {
-            randomizeParticleProperties();
-            randomizeFlockingProperties();
-        }
-        
-        if ( mForceCenter.x > 0 && mForceCenter.x < getWindowWidth() && mForceCenter.y > 0 && mForceCenter.y < getWindowHeight() ) {
-            float radius = ci::randFloat( mParticleRadiusMin, mParticleRadiusMax ) * beatForce * 40.f;
-            float mass = radius * radius;
-            float drag = .95f;
-            
-            for ( int i=0; i<mNumParticlesOnBeat; i++) {
-                Vec2f pos = particlePos + randVec2f() * 10.f;
-                Particle * particle = new Particle( pos, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor );
-                
-                for ( auto second : mParticleSystem.particles ){
-                    float d = particle->position.distance( second->position );
-                    float d2 = ( particle->radius + second->radius ) * 100.f;
-                    
-                    if ( d > 0.f && d <= d2 && d2 < 500.f ) {
-                        Spring * spring = new Spring( particle, second, d * 1.2f, .001f );
-                        mParticleSystem.addSpring( spring );
-                    }
-                }
-                mParticleSystem.addParticle( particle );
-            }
-        }
-    }
+//    if ( mForceCenter.x > 0 && mForceCenter.x < getWindowWidth() && mForceCenter.y > 0 && mForceCenter.y < getWindowHeight() ) {
+//        addNewParticleAtPosition( mForceCenter );
+//    }
 }
 
 void ClimaxApp::addNewParticleAtPosition( const Vec2f & position )
@@ -355,8 +314,8 @@ void ClimaxApp::setHighNeighboring()
 void ClimaxApp::randomizeParticleProperties()
 {
     mParticleColor = Color( randFloat(), randFloat(), randFloat() );
-    mParticleRadiusMin = randFloat( .4f, .8f );
-    mParticleRadiusMax = randFloat( .8f, 1.6f );
+    mParticleRadiusMin = .8f;
+    mParticleRadiusMax = 1.6f;
 }
 
 void ClimaxApp::randomizeFlockingProperties()
@@ -445,14 +404,21 @@ void ClimaxApp::draw()
 
 void ClimaxApp::saveConfig()
 {
-    mConfig->save( getAppPath() / fs::path( configFilename ) );
-    console() << "Saved configuration to: " << getAppPath() / fs::path( configFilename ) << std::endl;
+    mConfig->save( getAppPath() / fs::path( mConfigFileName ) );
+    console() << "Saved configuration to: " << getAppPath() / fs::path( mConfigFileName ) << std::endl;
 }
 
 void ClimaxApp::loadConfig()
 {
-    mConfig->load( getAppPath() / fs::path( configFilename ) );
-    console() << "Loaded configuration from: " << getAppPath() / fs::path( configFilename ) << std::endl;
+    mConfig->load( getAppPath() / fs::path( mConfigFileName ) );
+    console() << "Loaded configuration from: " << getAppPath() / fs::path( mConfigFileName ) << std::endl;
+}
+
+void ClimaxApp::shutdown()
+{
+    // Stop track
+	mTrack->enablePcmBuffering( false );
+	mTrack->stop();
 }
 
 CINDER_APP_NATIVE( ClimaxApp, RendererGl )
