@@ -39,7 +39,7 @@ void ParticleSystem::update()
 void ParticleSystem::draw()
 {
     for( auto particle : particles )    particle->draw();
-    for( auto spring : springs )     spring->draw();
+    for( auto spring : springs )        spring->draw();
 }
 
 void ParticleSystem::addParticle( Particle *particle )
@@ -52,7 +52,7 @@ void ParticleSystem::addParticle( Particle *particle )
             float d2 = ( particle->radius + second->radius ) * 50.f;
 
             if ( d > 0.f && d <= d2 && d < 200.f ){
-                Spring * spring = new Spring( particle, second, d * ci::randFloat( .8f, 1.6f ), ci::randFloat( .001f, .004f ) );
+                Spring * spring = new Spring( particle, second, d * ci::randFloat( .4f, 1.6f ), ci::randFloat( .001f, .01f ) );
                 addSpring( spring );
             }
         }

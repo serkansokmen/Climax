@@ -17,10 +17,10 @@
 		20B10153180C7F5E00278EA0 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20B10150180C7F5E00278EA0 /* ParticleSystem.cpp */; };
 		20B10155180C7F9000278EA0 /* particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B10154180C7F9000278EA0 /* particle.png */; };
 		20B10160180CBF3900278EA0 /* Spring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20B1015E180CBF3900278EA0 /* Spring.cpp */; };
-		20D1ED3918215EFD0044D2BC /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 20D1ED0118215EFC0044D2BC /* CMakeLists.txt */; };
-		20D1ED3A18215EFD0044D2BC /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 20D1ED0218215EFC0044D2BC /* kiss_fft.c */; };
-		20D1ED3B18215EFD0044D2BC /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = 20D1ED0418215EFC0044D2BC /* kiss_fftr.c */; };
-		20D1ED3C18215EFD0044D2BC /* KissFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20D1ED0618215EFC0044D2BC /* KissFFT.cpp */; };
+		20B595CA1821C404001A6E61 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 20B5958D1821C403001A6E61 /* CMakeLists.txt */; };
+		20B595CB1821C404001A6E61 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 20B5958E1821C403001A6E61 /* kiss_fft.c */; };
+		20B595CC1821C404001A6E61 /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = 20B595901821C403001A6E61 /* kiss_fftr.c */; };
+		20B595CD1821C404001A6E61 /* KissFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20B595921821C403001A6E61 /* KissFFT.cpp */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -46,14 +46,14 @@
 		20B10154180C7F9000278EA0 /* particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle.png; sourceTree = "<group>"; };
 		20B1015E180CBF3900278EA0 /* Spring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spring.cpp; path = ../src/Spring.cpp; sourceTree = "<group>"; };
 		20B1015F180CBF3900278EA0 /* Spring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spring.h; path = ../src/Spring.h; sourceTree = "<group>"; };
-		20D1ED0018215EFC0044D2BC /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
-		20D1ED0118215EFC0044D2BC /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		20D1ED0218215EFC0044D2BC /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
-		20D1ED0318215EFC0044D2BC /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
-		20D1ED0418215EFC0044D2BC /* kiss_fftr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fftr.c; sourceTree = "<group>"; };
-		20D1ED0518215EFC0044D2BC /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
-		20D1ED0618215EFC0044D2BC /* KissFFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KissFFT.cpp; sourceTree = "<group>"; };
-		20D1ED0718215EFC0044D2BC /* KissFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KissFFT.h; sourceTree = "<group>"; };
+		20B5958C1821C403001A6E61 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
+		20B5958D1821C403001A6E61 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		20B5958E1821C403001A6E61 /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
+		20B5958F1821C403001A6E61 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
+		20B595901821C403001A6E61 /* kiss_fftr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fftr.c; sourceTree = "<group>"; };
+		20B595911821C403001A6E61 /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
+		20B595921821C403001A6E61 /* KissFFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KissFFT.cpp; sourceTree = "<group>"; };
+		20B595931821C403001A6E61 /* KissFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KissFFT.h; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		3A19A0DE3E2E4D25895E0DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 		01B97315FEAEA392516A2CEA /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				20D1ECAE18215EFB0044D2BC /* Cinder-KissFft */,
+				20B595311821C402001A6E61 /* Cinder-KissFft */,
 				20ABCDEA1810871700FA26C7 /* Cinder-Config */,
 			);
 			name = Blocks;
@@ -162,34 +162,34 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		20D1ECAE18215EFB0044D2BC /* Cinder-KissFft */ = {
+		20B595311821C402001A6E61 /* Cinder-KissFft */ = {
 			isa = PBXGroup;
 			children = (
-				20D1ECFE18215EFC0044D2BC /* src */,
+				20B5958A1821C403001A6E61 /* src */,
 			);
 			name = "Cinder-KissFft";
 			path = "../../../Cinder_0.8.5/blocks/Cinder-KissFft";
 			sourceTree = "<group>";
 		};
-		20D1ECFE18215EFC0044D2BC /* src */ = {
+		20B5958A1821C403001A6E61 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				20D1ECFF18215EFC0044D2BC /* kiss */,
-				20D1ED0618215EFC0044D2BC /* KissFFT.cpp */,
-				20D1ED0718215EFC0044D2BC /* KissFFT.h */,
+				20B5958B1821C403001A6E61 /* kiss */,
+				20B595921821C403001A6E61 /* KissFFT.cpp */,
+				20B595931821C403001A6E61 /* KissFFT.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		20D1ECFF18215EFC0044D2BC /* kiss */ = {
+		20B5958B1821C403001A6E61 /* kiss */ = {
 			isa = PBXGroup;
 			children = (
-				20D1ED0018215EFC0044D2BC /* _kiss_fft_guts.h */,
-				20D1ED0118215EFC0044D2BC /* CMakeLists.txt */,
-				20D1ED0218215EFC0044D2BC /* kiss_fft.c */,
-				20D1ED0318215EFC0044D2BC /* kiss_fft.h */,
-				20D1ED0418215EFC0044D2BC /* kiss_fftr.c */,
-				20D1ED0518215EFC0044D2BC /* kiss_fftr.h */,
+				20B5958C1821C403001A6E61 /* _kiss_fft_guts.h */,
+				20B5958D1821C403001A6E61 /* CMakeLists.txt */,
+				20B5958E1821C403001A6E61 /* kiss_fft.c */,
+				20B5958F1821C403001A6E61 /* kiss_fft.h */,
+				20B595901821C403001A6E61 /* kiss_fftr.c */,
+				20B595911821C403001A6E61 /* kiss_fftr.h */,
 			);
 			path = kiss;
 			sourceTree = "<group>";
@@ -293,7 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6AAEF8D0D9A4499B1055E67 /* CinderApp.icns in Resources */,
-				20D1ED3918215EFD0044D2BC /* CMakeLists.txt in Resources */,
+				20B595CA1821C404001A6E61 /* CMakeLists.txt in Resources */,
 				20B10155180C7F9000278EA0 /* particle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,14 +305,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20D1ED3B18215EFD0044D2BC /* kiss_fftr.c in Sources */,
+				20B595CC1821C404001A6E61 /* kiss_fftr.c in Sources */,
 				20ABCE1F1810871700FA26C7 /* CinderConfig.cpp in Sources */,
 				D44E5FADF45243839ACAD164 /* ClimaxApp.cpp in Sources */,
-				20D1ED3C18215EFD0044D2BC /* KissFFT.cpp in Sources */,
+				20B595CD1821C404001A6E61 /* KissFFT.cpp in Sources */,
 				20B10152180C7F5E00278EA0 /* Particle.cpp in Sources */,
 				20B10160180CBF3900278EA0 /* Spring.cpp in Sources */,
 				20B10153180C7F5E00278EA0 /* ParticleSystem.cpp in Sources */,
-				20D1ED3A18215EFD0044D2BC /* kiss_fft.c in Sources */,
+				20B595CB1821C404001A6E61 /* kiss_fft.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

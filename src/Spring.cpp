@@ -31,8 +31,8 @@ void Spring::draw()
         ci::gl::color( ci::ColorA(  colorFirst, distancePercent * .8f ) );
         ci::Vec2f conVec = particleB->position - particleA->position;
         conVec.normalize();
-        ci::gl::drawLine( particleA->position+conVec * ( particleA->radius+ .5f ),
-                         particleB->position-conVec * ( particleB->radius+ .5f ));
+        ci::gl::drawLine( particleA->position + conVec * ( particleA->radius + .5f ),
+                          particleB->position - conVec * ( particleB->radius + .5f ));
     }
 //    
 //

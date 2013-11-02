@@ -91,6 +91,7 @@ public:
 	void update();
 	void draw();
     void addNewParticleAtPosition( const Vec2f & position );
+    void addNewParticlesOnPolyLine( const PolyLine<Vec2f> & line );
     void randomizeParticleProperties();
     void setHighSeperation();
     void setHighNeighboring();
@@ -157,16 +158,14 @@ void ClimaxApp::setup()
 	mPhase = 0.0f;
 	mPhaseAdjust = 0.0f;
     
-//	mAudioSource = audio::load( getAssetPath( "vordhosbn.mp3" ).c_str() );
-    mAudioSource = audio::createCallback( this, & ClimaxApp::sineWave );
-    // Play sine
-//	audio::Output::play( mAudioSource );
-    
+//    mAudioSource = audio::createCallback( this, & ClimaxApp::sineWave );
+    mAudioSource = audio::load( loadAsset( "Amon_Tobin_Lost_&_Found.m4a" ) );
 	mTrack = audio::Output::addTrack( mAudioSource, false );
 	mTrack->enablePcmBuffering( true );
     mTrack->setLooping( true );
 	mTrack->play();
-//    toggleSoundPlaying();
+    mTrack->stop();
+    
     
     mPerlinFrequency = .01f;
     mPerlin = Perlin();
@@ -188,7 +187,7 @@ void ClimaxApp::setup()
     mAutoRandomizeColor = true;
     mBpm = 192.f;
     bpmTapper = new BpmTapper();
-    bpmTapper->isEnabled = false;
+    bpmTapper->isEnabled = true;
     bpmTapper->start();
     
     mUseFlocking = true;
@@ -220,7 +219,6 @@ void ClimaxApp::setup()
     mConfig->addParam( "Neighboring Distance", & mNeighboringDistance, "min=0.1f max=100.f" );
     mParams.addButton( "Randomize Particle Color" , std::bind( & ClimaxApp::randomizeParticleProperties, this ), "key=1" );
     mConfig->addParam( "Auto-Randomize Particle Color" , & mAutoRandomizeColor, "key=1" );
-    mConfig->addParam( "Auto-Randomize Tempo" , & mBpm, "min=100 max=255" );
     mParams.addButton( "High Seperation" , std::bind( & ClimaxApp::setHighSeperation, this ), "key=2" );
     mParams.addButton( "High Neighboring" , std::bind( & ClimaxApp::setHighNeighboring, this ), "key=3" );
     
@@ -246,6 +244,7 @@ void ClimaxApp::setup()
     mParams.addSeparator();
     
     mParams.addText( "Audio", "label=`Audio`" );
+    mConfig->addParam( "BPM Tempo" , & mBpm, "min=100 max=255" );
     mParams.addButton( "Play / Pause" , std::bind( & ClimaxApp::toggleSoundPlaying, this ) );
     mConfig->addParam( "Minimum Beat Force", & mMinimumBeatForce, "min=0.1f max=20.f" );
     mConfig->addParam( "Beat Force", & mBeatForce, "min=0.f max=1000.f" );
@@ -305,15 +304,19 @@ void ClimaxApp::update()
             repForce = repForce.normalized() * math<float>::max( 0.f, mRepulsionRadius - repForce.length() );
             it->forces += repForce;
         }
+        // Change frequency and amplitude based on mouse position
+        // Scale everything logarithmically to get a better feel and sound
+        mAmplitude = 1.0f - it->position.normalized().length();
+        double width = (double)getWindowWidth();
+        double x = width - (double)it->position.y;
+        float mPosition = (float)( ( log( width ) - log( x ) ) / log( width ) );
+        mFreqTarget = math<float>::clamp( mMaxFreq * mPosition, mMinFreq, mMaxFreq );
+        mAmplitude = math<float>::clamp( mAmplitude * ( 1.0f - mPosition ), 0.05f, 1.0f );
     }
     mParticleSystem.maxParticles = mMaxParticles;
     mParticleSystem.update();
     
     mForceCenter = getWindowCenter();
-        
-//    if ( mForceCenter.x > 0 && mForceCenter.x < getWindowWidth() && mForceCenter.y > 0 && mForceCenter.y < getWindowHeight() ) {
-//        addNewParticleAtPosition( mForceCenter );
-//    }
 }
 
 void ClimaxApp::addNewParticleAtPosition( const Vec2f & position )
@@ -324,6 +327,14 @@ void ClimaxApp::addNewParticleAtPosition( const Vec2f & position )
     
     Particle * particle = new Particle( position, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor );
     mParticleSystem.addParticle( particle );
+}
+
+void ClimaxApp::addNewParticlesOnPolyLine( const PolyLine<Vec2f> & line )
+{
+    if ( line.size() == 0 ) return;
+    if ( bpmTapper->onBeat() )
+        for ( auto it : line )
+            addNewParticleAtPosition( it );
 }
 
 void ClimaxApp::setHighSeperation()
@@ -354,10 +365,15 @@ void ClimaxApp::randomizeFlockingProperties()
 
 void ClimaxApp::toggleSoundPlaying()
 {
-    if ( mTrack->isPlaying() )
+    if ( mTrack->isPlaying() ){
         mTrack->stop();
-    else
+        bpmTapper->isEnabled = false;
+        bpmTapper->stop();
+    } else {
         mTrack->play();
+        bpmTapper->isEnabled = true;
+        bpmTapper->start();
+    }
 }
 
 void ClimaxApp::mouseDown( MouseEvent event )
@@ -368,15 +384,6 @@ void ClimaxApp::mouseDown( MouseEvent event )
 void ClimaxApp::mouseMove( MouseEvent event )
 {
     mAttractionCenter = event.getPos();
-    
-    // Change frequency and amplitude based on mouse position
-	// Scale everything logarithmically to get a better feel and sound
-	mAmplitude = 1.0f - event.getY() / (float)getWindowHeight();
-	double width = (double)getWindowWidth();
-	double x = width - (double)event.getX();
-	float mPosition = (float)( ( log( width ) - log( x ) ) / log( width ) );
-	mFreqTarget = math<float>::clamp( mMaxFreq * mPosition, mMinFreq, mMaxFreq );
-	mAmplitude = math<float>::clamp( mAmplitude * ( 1.0f - mPosition ), 0.05f, 1.0f );
 }
 
 void ClimaxApp::mouseUp( MouseEvent event )
@@ -415,6 +422,9 @@ void ClimaxApp::keyDown( KeyEvent event )
         } else
             mParams.show();
     }
+    
+    if ( event.getChar() == 'p' )
+        addNewParticlesOnPolyLine( mFreqLine );
 }
 
 void ClimaxApp::draw()
@@ -435,45 +445,6 @@ void ClimaxApp::draw()
         gl::drawSolidCircle( mAttractionCenter , mAttrFactor * 10 );
     }
     
-    // Check init flag
-	if ( mFft ) {
-        
-		// Get data in the frequency (transformed) and time domains
-		float * freqData = mFft->getAmplitude();
-		float * timeData = mFft->getData();
-		int32_t dataSize = mFft->getBinSize();
-        
-		// Cast data size to float
-		float dataSizef = (float)dataSize;
-        
-		// Get dimensions
-		float scale = ( (float)getWindowWidth() - 20.0f ) / dataSizef;
-		float windowHeight = (float)getWindowHeight();
-        
-		// Use polylines to depict time and frequency domains
-		PolyLine<Vec2f> freqLine;
-		PolyLine<Vec2f> timeLine;
-        
-		// Iterate through data
-		for ( int32_t i = 0; i < dataSize; i++ ) {
-            
-			// Do logarithmic plotting for frequency domain
-			float logSize = math<float>::log( dataSizef );
-			float x = (float)( (math<float>::log( (float)i) / logSize ) * dataSizef );
-			float y = math<float>::clamp( freqData[i] * ( x / dataSizef ) * ( math<float>::log( ( dataSizef - (float)i ) ) ), 0.0f, 2.0f );
-            
-			// Plot points on lines for tme domain
-			freqLine.push_back( Vec2f(        x * scale + 10.0f,          -y   * ( windowHeight - 20.0f ) * 0.25f + ( windowHeight - 10.0f ) ) );
-			timeLine.push_back( Vec2f( (float)i * scale + 10.0f, timeData[ i ] * ( windowHeight - 20.0f ) * 0.25f + ( windowHeight * 0.25f + 10.0f ) ) );
-            
-		}
-        
-		// Draw signals
-		gl::draw( freqLine );
-		gl::draw( timeLine );
-        
-	}
-    
     if ( mParams.isVisible() ) mParams.draw();
 }
 
@@ -493,11 +464,20 @@ void ClimaxApp::sineWave( uint64_t inSampleOffset, uint32_t ioSampleCount, ci::a
 {
     // Fill buffer with sine wave
 	mPhaseAdjust = mPhaseAdjust * 0.95f + ( mFreqTarget / 44100.0f ) * 0.05f;
-	for ( uint32_t i = 0; i < ioSampleCount; i++ ) {
+    
+    mAmplitude = 1.f;
+    for ( auto particle_it : mParticleSystem.particles ) {
+        mAmplitude -= particle_it->color.get( CM_RGB ).normalized().x;
+    }
+    
+	for ( uint32_t i = 0; i < ioSampleCount; i++ ){
+        
 		mPhase += mPhaseAdjust;
 		mPhase = mPhase - math<float>::floor( mPhase );
-		float val = math<float>::sin( mPhase * 2.0f * (float)M_PI ) * mAmplitude;
-		ioBuffer->mData[ i * ioBuffer->mNumberChannels ] = val;
+        
+        float val = math<float>::sin( mPhase * 2.0f * (float)M_PI ) * mAmplitude;
+        
+        ioBuffer->mData[ i * ioBuffer->mNumberChannels ] = val;
 		ioBuffer->mData[ i * ioBuffer->mNumberChannels + 1 ] = val;
 	}
     
@@ -512,9 +492,12 @@ void ClimaxApp::sineWave( uint64_t inSampleOffset, uint32_t ioSampleCount, ci::a
 
 void ClimaxApp::shutdown()
 {
+    mTrack->stop();
+    mTrack.reset();
     if ( mFft ) {
 		mFft->stop();
 	}
+    mAudioSource.reset();
 }
 
 CINDER_APP_NATIVE( ClimaxApp, RendererGl )
