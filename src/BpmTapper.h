@@ -53,7 +53,6 @@ public:
                 this->isOnBeat = true;
             }
         }
-        ci::app::console() << this->isOnBeat << std::endl;
     }
     
     void setBpm( const float bpm ){
