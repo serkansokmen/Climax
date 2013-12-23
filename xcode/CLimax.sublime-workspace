@@ -1,0 +1,402 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"col",
+				"columns"
+			],
+			[
+				"fra",
+				"framerate	frameRate (set)"
+			],
+			[
+				"size",
+				"size	size"
+			],
+			[
+				"for",
+				"for	for"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/Processing/Processing.sublime-build",
+	"command_palette":
+	{
+		"height": 52.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"fla",
+				"User: Python Flake8 Lint"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"con",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"conver",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"set syn proce",
+				"Set Syntax: Processing"
+			],
+			[
+				"set syn c++",
+				"Set Syntax: C++"
+			],
+			[
+				"set syn c",
+				"Set Syntax: C"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"set syn xml",
+				"Set Syntax: XML"
+			],
+			[
+				"set syn css",
+				"Set Syntax: CSS"
+			],
+			[
+				"set syn html dj",
+				"Set Syntax: HTML (Django)"
+			],
+			[
+				"set sy dja",
+				"Set Syntax: Python Django"
+			]
+		],
+		"width": 462.0
+	},
+	"console":
+	{
+		"height": 195.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/serkansokmen/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/serkansokmen/Documents/Django/Fitoera/base/urls.py",
+		"/Users/serkansokmen/Documents/Django/Fitoera/bower_components/modernizr/feature-detects/battery-api.js",
+		"/Users/serkansokmen/Documents/Django/Fitoera/bower.json",
+		"/Users/serkansokmen/Documents/Django/Fitoera/bower_components/font-awesome/src/community.html",
+		"/Users/serkansokmen/Documents/Django/Fitoera/requirements/compiled.txt",
+		"/Users/serkansokmen/Documents/Django/Fitoera/bower_components/modernizr/feature-detects/css-objectfit.js",
+		"/Users/serkansokmen/Documents/Django/Fitoera/.codeintel/config",
+		"/Users/serkansokmen/Documents/Django/Fitoera/bower_components/font-awesome/src/assets/less/bootstrap-3.0.0/component-animations.less",
+		"/Users/serkansokmen/Documents/Django/Fitoera/fitoera/settings/local.py",
+		"/Users/serkansokmen/Documents/Django/Fitoera/bower_components/font-awesome/src/assets/css/prettify.css",
+		"/Users/serkansokmen/Documents/Django/Fitoera/bower_components/font-awesome/src/_includes/tell-me-thanks.html",
+		"/Users/serkansokmen/Documents/Django/Fitoera/bower_components/modernizr/test/js/setup.js",
+		"/Users/serkansokmen/Documents/Django/Fitoera/conf/supervisord.conf",
+		"/Users/serkansokmen/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/serkansokmen/Library/Application Support/Sublime Text 3/Packages/SublimeLinter/README.md",
+		"/Users/serkansokmen/Library/Application Support/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/serkansokmen/Documents/Django/Fitoera/.git/COMMIT_EDITMSG",
+		"/Applications/KSP_osx/readme.txt",
+		"/Users/serkansokmen/Documents/OpenFrameworks/08_OSX/apps/Nerdworking/BodyRace/bin/data/settings.xml",
+		"/Users/serkansokmen/Documents/OpenFrameworks/08_OSX/apps/Nerdworking/BodySequencer/bin/data/shape.dat",
+		"/Users/serkansokmen/Documents/OpenFrameworks/08_OSX/apps/Nerdworking/BodySequencer/bin/data/lines.txt",
+		"/Users/serkansokmen/Documents/Processing/Apps/BodySequencer/Timer.pde",
+		"/Users/serkansokmen/Documents/Processing/Apps/BodySequencer/BodySequencer.pde",
+		"/Users/serkansokmen/Documents/Processing/Apps/BodySequencer/Cell.pde",
+		"/Users/serkansokmen/Documents/Django/brainwave_hof/brainwave_hof/templates/halloffame/scorerecord_list.html",
+		"/Users/serkansokmen/Downloads/sundialModel/sundialModel.pde",
+		"/Users/serkansokmen/Downloads/application.macosx/source/sundialModel.pde",
+		"/Users/serkansokmen/Documents/OpenFrameworks/Maximilian/maximilian_examples/3.AM1.cpp",
+		"/Users/serkansokmen/Documents/OpenFrameworks/Maximilian/maximilian_examples/5.FM1.cpp",
+		"/Users/serkansokmen/Desktop/Info.plist",
+		"/Volumes/C/DVD_DATA/sources/EI.CFG",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/apps/myApps/GeodizeOSC/bin/data/shaders/shape_shader.frag",
+		"/Volumes/C/Win8Pro/sources/EI.CFG",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/apps/myApps/GeodizeOSC/bin/data/shaders/test_shader.vert",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/apps/myApps/GeodizeOSC/bin/data/shaders/test_shader.frag",
+		"/Users/serkansokmen/Documents/Python/kivy_apps/.codeintel/config",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/examples/gl/geometryShaderExample/bin/data/shaders/vert.glsl",
+		"/Users/serkansokmen/Documents/Python/kivy_apps/pong.py",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/apps/myApps/Lesh/src/testApp.h",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/apps/myApps/Lesh/src/testApp.cpp",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/addons/ofxFlocking/Boid.cpp",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/addons/ofxFlocking/Boid.h",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/addons/ofxFlocking/Flock.h",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/addons/ofxFlocking/Flock.cpp",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/apps/myApps/Lesh/.gitignore",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/addons/ofxARtoolkitPlus/README.md",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/addons/ofxFX/example-conway/example-conway.xcodeproj/project.pbxproj",
+		"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/apps/myApps/LucidMapper/LucidMapper.xcodeproj/project.pbxproj",
+		"/Users/serkansokmen/Documents/Django/tvpremiere/README.md",
+		"/Applications/Sublime Text.app/Contents/MacOS/changelog.txt",
+		"/private/var/folders/rl/dcnhc1lx18j_4n93wg9g3gpc0000gn/T/ch.sudo.cyberduck/182f86db-a0ce-49dc-a0d2-5a8365b7af4d/project642531/static/cache/manifest.json",
+		"/private/var/folders/rl/dcnhc1lx18j_4n93wg9g3gpc0000gn/T/ch.sudo.cyberduck/182f86db-a0ce-49dc-a0d2-5a8365b7af4d/project642531/manifest.json",
+		"/private/var/folders/rl/dcnhc1lx18j_4n93wg9g3gpc0000gn/T/ch.sudo.cyberduck/182f86db-a0ce-49dc-a0d2-5a8365b7af4d/project642531/media/manifest.json",
+		"/Users/serkansokmen/Documents/Django/susmakonus/susmakonus/settings/prod.py",
+		"/Users/serkansokmen/Documents/Django/susmakonus/susmakonus/settings/dev.py",
+		"/Users/serkansokmen/Documents/Django/susmakonus/reqs/prod.txt",
+		"/Users/serkansokmen/Documents/Django/susmakonus/susmakonus/compile/bootstrap/less/sprites.less",
+		"/Users/serkansokmen/Documents/Django/susmakonus/susmakonus/compile/site.less",
+		"/Users/serkansokmen/Documents/Django/kumelenme/kumelenme/assets/lib/jquery-ui-bootstrap/index.html",
+		"/Users/serkansokmen/Documents/Django/kumelenme/scripts/companies_all.py",
+		"/Users/serkansokmen/Documents/Django/qnotes/qnotes/apps/authors/models.py",
+		"/Users/serkansokmen/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/serkansokmen/Documents/Django/quotes-notes-django-skel/quotes_notes/quotes_notes/apps/authors/models.py",
+		"/Users/serkansokmen/Documents/Django/quotes-notes-django-skel/quotes_notes/quotes_notes/templates/authors/author_detail.html",
+		"/Users/serkansokmen/Teknolab/gezgin/src/templates/posts/photo_form.html",
+		"/Users/serkansokmen/Documents/Django/quotes-notes-django-skel/quotes_notes/quotes_notes/apps/authors/views.py",
+		"/Users/serkansokmen/Teknolab/KobiKumelenme/kumelenme/clusters/models.py",
+		"/Users/serkansokmen/Teknolab/KobiKumelenme/kumelenme/activities/models.py",
+		"/Users/serkansokmen/Teknolab/KobiKumelenme/kumelenme/clusters/admin.py"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 111.0,
+		"where_history":
+		[
+			"/Users/serkansokmen/Documents/Django/Fitoera",
+			"/Users/serkansokmen/Documents/OpenFrameworks/074_OSX/apps/OtherApps/abunchofexperiments/steppy-seq_src"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"STATICFILES_FINDERS",
+			"STATIC_FILE",
+			"brainwave_hof",
+			"( MouseEvent event );",
+			"void ",
+			"NumpadButton",
+			"ofColor::greenYellow",
+			"ofColor::greenYellow);",
+			".setup(",
+			".set(numpadX",
+			"10 + btnHeight",
+			"10 + btnWidth",
+			"millis() % 1000",
+			"columns",
+			"20",
+			"bpm",
+			"colums",
+			"ball",
+			"Requ",
+			">\n",
+			".at(i)",
+			"0",
+			"addColor",
+			"1",
+			"addVertex",
+			"setFont",
+			"guiKinect",
+			"bPlayOnce",
+			"kumelenme",
+			"step",
+			"trackerHeight",
+			"trackerWidth",
+			"kinectHeight",
+			"kinectWidth",
+			"step",
+			"mainMesh",
+			"HEROKU",
+			"clydiaCanvas",
+			"https://github.com"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 41.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 160.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "CLimax.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"url",
+				"base/urls.py"
+			],
+			[
+				"base",
+				"fitoera/settings/base.py"
+			],
+			[
+				"sco",
+				"brainwave_hof/templates/halloffame/scorerecord_list.html"
+			],
+			[
+				"dev",
+				"susmakonus/settings/dev.py"
+			],
+			[
+				"model",
+				"susmakonus/apps/tweetbot/models.py"
+			],
+			[
+				"pro",
+				"reqs/prod.txt"
+			],
+			[
+				"prod",
+				"susmakonus/settings/prod.py"
+			],
+			[
+				"site",
+				"susmakonus/compile/site.less"
+			],
+			[
+				"auth",
+				"quotes_notes/templates/authors/author_detail.html"
+			],
+			[
+				"quotemode",
+				"quotes_notes/apps/authors/models.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"Auth",
+				"Author"
+			],
+			[
+				"Author",
+				"AuthorUpdate"
+			],
+			[
+				"",
+				"Animation"
+			],
+			[
+				"cluster",
+				"ClusterAdmin"
+			]
+		],
+		"width": 458.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 229.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

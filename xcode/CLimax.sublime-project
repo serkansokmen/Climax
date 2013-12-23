@@ -1,0 +1,25 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "/Users/serkansokmen/Documents/Cinder/PersonalApps/Climax"
+		}
+	],
+    "settings":
+    {
+        "sublimeclang_enable_fast_completions": false,
+        "sublimeclang_options":
+        [
+            "-isystem",
+            "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/",
+            "-isystem",
+            "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/c++/4.2.1",
+            "-Wno-deprecated-declarations",
+            "-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks",
+            "-I/Frameworks/Cinder/cinder_fork/boost/",
+            "-I/Frameworks/Cinder/cinder_fork/include/",
+            "-I/Frameworks/Cinder/cinder_fork/src/"
+        ]
+    }
+}
