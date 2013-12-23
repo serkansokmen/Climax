@@ -3,21 +3,20 @@
 #include "cinder/Rand.h"
 #include "cinder/Perlin.h"
 #include "cinder/Rect.h"
-#include "cinder/audio/Output.h"
-#include "cinder/audio/FftProcessor.h"
-#include "cinder/audio/PcmBuffer.h"
-#include "cinder/audio/Callback.h"
 #include "cinder/CinderMath.h"
 #include "cinder/Timer.h"
 #include "cinder/params/Params.h"
 
-#include "KissFFT.h"
 #include "CinderConfig.h"
-#include "OscListener.h"
 
 #include "Resources.h"
 #include "ParticleSystem.h"
 #include "BpmTapper.h"
+
+#include <vector>
+#include <map>
+#include <list>
+
 
 #define GUI_WIDTH   320
 
@@ -27,9 +26,68 @@ using namespace ci::app;
 using namespace std;
 
 
+struct TouchPoint {
+	TouchPoint() {}
+	TouchPoint( const Vec2f &initialPt, const Color &color ) : mColor( color ), mTimeOfDeath( -1.0 )
+	{
+		mLine.push_back( initialPt );
+	}
+	
+	void addPoint( const Vec2f &pt ) { mLine.push_back( pt ); }
+	
+	void draw() const
+	{
+		if( mTimeOfDeath > 0 ) // are we dying? then fade out
+			gl::color( ColorA( mColor, ( mTimeOfDeath - getElapsedSeconds() ) / 2.0f ) );
+		else
+			gl::color( mColor );
+        
+		gl::draw( mLine );
+	}
+	
+	void startDying() { mTimeOfDeath = getElapsedSeconds() + 2.0f; } // two seconds til dead
+	
+	bool isDead() const { return getElapsedSeconds() > mTimeOfDeath; }
+	
+	PolyLine<Vec2f>	mLine;
+	Color			mColor;
+	float			mTimeOfDeath;
+};
+
+
 class ClimaxApp : public AppNative {
+
+public:
     
-private:
+    void prepareSettings( Settings * settings );
+	void setup();
+    void update();
+	void draw();
+    
+    void touchesBegan( TouchEvent event );
+	void touchesMoved( TouchEvent event );
+	void touchesEnded( TouchEvent event );
+
+    void keyDown( KeyEvent event );
+    void resize();
+	
+    void addNewParticleAtPosition( const Vec2f & position );
+    void addNewParticlesOnPolyLine( const PolyLine<Vec2f> & line );
+    void randomizeParticleProperties();
+    void setHighSeperation();
+    void setHighNeighboring();
+    void randomizeFlockingProperties();
+
+    void saveConfig();
+    void loadConfig();
+
+    void shutdown();
+    
+    ParticleSystem  mParticleSystem;
+    BpmTapper       * bpmTapper;
+    
+    map<uint32_t,TouchPoint>	mActivePoints;
+	list<TouchPoint>			mDyingPoints;
     
 #ifndef CINDER_COCOA_TOUCH
     params::InterfaceGl mParams;
@@ -40,21 +98,9 @@ private:
     Vec2f       mAttractionCenter;
     Color       mParticleColor;
     Perlin      mPerlin;
-    osc::Listener 	listener;
-    
-	// Analyzer
-	KissRef mFft;
-    
-    // Audio generation settings
-	float	mAmplitude;
-	float	mFreqTarget;
-	float	mPhase;
-	float	mPhaseAdjust;
-	float	mMaxFreq;
-	float	mMinFreq;
+    string      mConfigFileName;
     
     float   mPerlinFrequency;
-    float   mMinimumBeatForce;
     float   mParticleRadiusMin, mParticleRadiusMax;
     float   mParticlesPullFactor;
     float   mAttrFactor;
@@ -79,64 +125,11 @@ private:
     bool    mUseRepulsion;
     bool    mUseFlocking;
     bool    mAutoRandomizeColor;
-
-public:
-    
-    void prepareSettings( Settings * settings );
-	void setup();
-    void update();
-	void draw();
-    
-#ifdef CINDER_COCOA_TOUCH
-    void touchesBegan( TouchEvent event );
-	void touchesMoved( TouchEvent event );
-	void touchesEnded( TouchEvent event );
-#else
-    void mouseDown( MouseEvent event );
-	void mouseMove( MouseEvent event );
-    void mouseDrag( MouseEvent event );
-    void mouseUp( MouseEvent event );
-    void keyDown( KeyEvent event );
-    void resize();
-#endif
-	
-    void addNewParticleAtPosition( const Vec2f & position );
-    void addNewParticlesOnPolyLine( const PolyLine<Vec2f> & line );
-    void randomizeParticleProperties();
-    void setHighSeperation();
-    void setHighNeighboring();
-    void randomizeFlockingProperties();
-#ifndef CINDER_COCOA_TOUCH
-    void saveConfig();
-    void loadConfig();
-#endif
-    void toggleSoundPlaying();
-    void shutdown();
-    
-    void sineWave( uint64_t inSampleOffset, uint32_t ioSampleCount, ci::audio::Buffer32f * ioBuffer );
-    
-    ci::audio::SourceRef		mAudioSource;
-	ci::audio::PcmBuffer32fRef	mBuffer;
-	ci::audio::TrackRef			mTrack;
-    
-    ParticleSystem  mParticleSystem;
-    BpmTapper       * bpmTapper;
-    
-    string          mConfigFileName;
-    
-    float           mBeatForce;
-    float           mBeatSensitivity;
-    float           mAverageLevelOld;
-    float           mRandAngle;
-    
-    PolyLine<Vec2f> mFreqLine;
-    vector<float>   mOutput;
 };
 
 void ClimaxApp::prepareSettings( Settings * settings )
 {
 #ifdef CINDER_COCOA_TOUCH
-    settings->enableMultiTouch( true );
     settings->enableHighDensityDisplay();
 #else
     settings->setWindowSize( 1280, 720 );
@@ -145,6 +138,7 @@ void ClimaxApp::prepareSettings( Settings * settings )
     settings->setBorderless( false );
     settings->setTitle( "Climax" );
 #endif
+    settings->enableMultiTouch( true );
 }
 
 void ClimaxApp::setup()
@@ -152,36 +146,10 @@ void ClimaxApp::setup()
     gl::enableAlphaBlending();
     gl::clear( Color::black() );
     
-    listener.setup( 9001 );
-    
-    // Audio Setup
-    mMinimumBeatForce = 2.f;
-    mBeatForce = 150.f;
-    mBeatSensitivity = .03f;
-    mAverageLevelOld = 0.f;
-    mRandAngle = 15.f;
-    
     // Set up line rendering
     gl::enable( GL_LINE_SMOOTH );
     glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
     gl::color( ColorAf::white() );
-    
-    // Set synth properties
-	mAmplitude = 0.5f;
-	mMaxFreq = 20000.0f;
-	mMinFreq = 1.0f;
-	mFreqTarget = 0.0f;
-	mPhase = 0.0f;
-	mPhaseAdjust = 0.0f;
-    
-//    mAudioSource = audio::createCallback( this, & ClimaxApp::sineWave );
-    mAudioSource = audio::load( loadResource( RES_SAMPLE ) );
-	mTrack = audio::Output::addTrack( mAudioSource, false );
-	mTrack->enablePcmBuffering( true );
-    mTrack->setLooping( true );
-	mTrack->play();
-    mTrack->stop();
-    
     
     mPerlinFrequency = .01f;
     mPerlin = Perlin();
@@ -200,7 +168,7 @@ void ClimaxApp::setup()
     mRepulsionFactor = -10.f;
     mRepulsionRadius = 35.f;
     
-    mAutoRandomizeColor = true;
+    mAutoRandomizeColor = false;
     mBpm = 192.f;
     bpmTapper = new BpmTapper();
     bpmTapper->isEnabled = true;
@@ -230,6 +198,7 @@ void ClimaxApp::setup()
     mConfig->addParam( "Max Particles", & mMaxParticles , "" );
     mConfig->addParam( "Particles on Beat", & mNumParticlesOnBeat , "" );
     
+    mConfig->addParam( "BPM Tempo" , & mBpm, "min=100 max=255" );
     mConfig->addParam( "Particle Color" , & mParticleColor );
     mConfig->addParam( "Target Separation", & mTargetSeparation, "min=0.1f max=100.f" );
     mConfig->addParam( "Neighboring Distance", & mNeighboringDistance, "min=0.1f max=100.f" );
@@ -258,14 +227,6 @@ void ClimaxApp::setup()
     mConfig->addParam( "Force Area Radius", & mForceCenterAnimRadius, "min=0.1f max=800.f" );
     mParams.addSeparator();
     
-    mParams.addText( "Audio", "label=`Audio`" );
-    mConfig->addParam( "BPM Tempo" , & mBpm, "min=100 max=255" );
-    mParams.addButton( "Play / Pause" , std::bind( & ClimaxApp::toggleSoundPlaying, this ) );
-    mConfig->addParam( "Minimum Beat Force", & mMinimumBeatForce, "min=0.1f max=20.f" );
-    mConfig->addParam( "Beat Force", & mBeatForce, "min=0.f max=1000.f" );
-    mConfig->addParam( "Beat Sensitivity", & mBeatSensitivity, "min=0.f max=1.f" );
-    mParams.addSeparator();
-    
     mParams.addText( "Settings", "label=`Settings`" );
     mParams.addButton( "Save Settings", bind( & ClimaxApp::saveConfig, this ) );
     mParams.addButton( "Reload Settings", bind( & ClimaxApp::loadConfig, this ), "key=L" );
@@ -283,48 +244,6 @@ void ClimaxApp::update()
 {
     mNumParticles = mParticleSystem.particles.size();
     mNumSprings = mParticleSystem.springs.size();
-    
-    while( listener.hasWaitingMessages() ) {
-		osc::Message message;
-		listener.getNextMessage( &message );
-		
-		console() << "New message received" << std::endl;
-		console() << "Address: " << message.getAddress() << std::endl;
-		console() << "Num Arg: " << message.getNumArgs() << std::endl;
-		
-//        for (int i = 0; i < message.getNumArgs(); i++) {
-//			console() << "-- Argument " << i << std::endl;
-//			console() << "---- type: " << message.getArgTypeName(i) << std::endl;
-//			if( message.getArgType(i) == osc::TYPE_INT32 ) {
-//				try {
-//					console() << "------ value: "<< message.getArgAsInt32(i) << std::endl;
-//				}
-//				catch (...) {
-//					console() << "Exception reading argument as int32" << std::endl;
-//				}
-//			}
-//			else if( message.getArgType(i) == osc::TYPE_FLOAT ) {
-//				try {
-//					console() << "------ value: " << message.getArgAsFloat(i) << std::endl;
-//				}
-//				catch (...) {
-//					console() << "Exception reading argument as float" << std::endl;
-//				}
-//			}
-//			else if( message.getArgType(i) == osc::TYPE_STRING) {
-//				try {
-//					console() << "------ value: " << message.getArgAsString(i).c_str() << std::endl;
-//				}
-//				catch (...) {
-//					console() << "Exception reading argument as string" << std::endl;
-//				}
-//			}
-//		}
-        
-        Vec2f pos = Vec2f::zero() + getWindowCenter();
-        if( message.getNumArgs() != 0 && message.getArgType( 0 ) == osc::TYPE_FLOAT )
-            pos.x = message.getArgAsFloat(0);
-	}
     
     Vec2f center = getWindowCenter();
     
@@ -362,14 +281,6 @@ void ClimaxApp::update()
             repForce = repForce.normalized() * math<float>::max( 0.f, mRepulsionRadius - repForce.length() );
             it->forces += repForce;
         }
-        // Change frequency and amplitude based on mouse position
-        // Scale everything logarithmically to get a better feel and sound
-        mAmplitude = 1.0f - it->position.normalized().length();
-        double width = (double)getWindowWidth();
-        double x = width - (double)it->position.y;
-        float mPosition = (float)( ( log( width ) - log( x ) ) / log( width ) );
-        mFreqTarget = math<float>::clamp( mMaxFreq * mPosition, mMinFreq, mMaxFreq );
-        mAmplitude = math<float>::clamp( mAmplitude * ( 1.0f - mPosition ), 0.05f, 1.0f );
     }
     mParticleSystem.maxParticles = mMaxParticles;
     mParticleSystem.update();
@@ -421,62 +332,29 @@ void ClimaxApp::randomizeFlockingProperties()
     mCohesionFactor = randFloat();
 }
 
-void ClimaxApp::toggleSoundPlaying()
-{
-    if ( mTrack->isPlaying() ){
-        mTrack->stop();
-        bpmTapper->isEnabled = false;
-        bpmTapper->stop();
-    } else {
-        mTrack->play();
-        bpmTapper->isEnabled = true;
-        bpmTapper->start();
-    }
-}
-
-#ifdef CINDER_COCOA_TOUCH
 void ClimaxApp::touchesBegan( TouchEvent event )
 {
-    randomizeParticleProperties();
-	for ( auto touch : event.getTouches() ) {
-        addNewParticleAtPosition( touch.getPos() );
+    for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt ) {
+		Color newColor( CM_HSV, Rand::randFloat(), 1, 1 );
+		mActivePoints.insert( make_pair( touchIt->getId(), TouchPoint( touchIt->getPos(), newColor ) ) );
 	}
 }
 
 void ClimaxApp::touchesMoved( TouchEvent event )
 {
-//	for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt )
-//		mActivePoints[touchIt->getId()].addPoint( touchIt->getPos() );
+    for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt ){
+        mActivePoints[touchIt->getId()].addPoint( touchIt->getPos() );
+        addNewParticleAtPosition( touchIt->getPos() );
+    }
 }
 
 void ClimaxApp::touchesEnded( TouchEvent event )
 {
-//	for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt ) {
-//		mActivePoints[touchIt->getId()].startDying();
-//		mDyingPoints.push_back( mActivePoints[touchIt->getId()] );
-//		mActivePoints.erase( touchIt->getId() );
-//	}
-}
-
-#else
-
-void ClimaxApp::mouseDown( MouseEvent event )
-{
-    randomizeParticleProperties();
-}
-
-void ClimaxApp::mouseMove( MouseEvent event )
-{
-    mAttractionCenter = event.getPos();
-}
-
-void ClimaxApp::mouseUp( MouseEvent event )
-{
-}
-
-void ClimaxApp::mouseDrag( MouseEvent event )
-{
-    addNewParticleAtPosition( event.getPos() );
+    for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt ) {
+		mActivePoints[touchIt->getId()].startDying();
+		mDyingPoints.push_back( mActivePoints[touchIt->getId()] );
+		mActivePoints.erase( touchIt->getId() );
+	}
 }
 
 void ClimaxApp::resize()
@@ -506,12 +384,7 @@ void ClimaxApp::keyDown( KeyEvent event )
         } else
             mParams.show();
     }
-    
-    if ( event.getChar() == 'p' )
-        addNewParticlesOnPolyLine( mFreqLine );
 }
-
-#endif
 
 void ClimaxApp::draw()
 {
@@ -523,6 +396,23 @@ void ClimaxApp::draw()
     gl::color( Color::white() );
     
     mParticleSystem.draw();
+    
+//    for( map<uint32_t,TouchPoint>::const_iterator activeIt = mActivePoints.begin(); activeIt != mActivePoints.end(); ++activeIt ) {
+//		activeIt->second.draw();
+//	}
+//    
+//	for( list<TouchPoint>::iterator dyingIt = mDyingPoints.begin(); dyingIt != mDyingPoints.end(); ) {
+//		dyingIt->draw();
+//		if( dyingIt->isDead() )
+//			dyingIt = mDyingPoints.erase( dyingIt );
+//		else
+//			++dyingIt;
+//	}
+//	
+//	// draw yellow circles at the active touch points
+//	gl::color( Color( 1, 1, 0 ) );
+//	for( vector<TouchEvent::Touch>::const_iterator touchIt = getActiveTouches().begin(); touchIt != getActiveTouches().end(); ++touchIt )
+//		gl::drawStrokedCircle( touchIt->getPos(), 20.0f );
     
 #ifndef CINDER_COCOA_TOUCH
     if ( mParams.isVisible() ) mParams.draw();
@@ -543,44 +433,8 @@ void ClimaxApp::loadConfig()
 }
 #endif
 
-void ClimaxApp::sineWave( uint64_t inSampleOffset, uint32_t ioSampleCount, ci::audio::Buffer32f * ioBuffer )
-{
-    // Fill buffer with sine wave
-	mPhaseAdjust = mPhaseAdjust * 0.95f + ( mFreqTarget / 44100.0f ) * 0.05f;
-    
-    mAmplitude = 1.f;
-    for ( auto particle_it : mParticleSystem.particles ) {
-        mAmplitude -= particle_it->color.get( CM_RGB ).normalized().x;
-    }
-    
-	for ( uint32_t i = 0; i < ioSampleCount; i++ ){
-        
-		mPhase += mPhaseAdjust;
-		mPhase = mPhase - math<float>::floor( mPhase );
-        
-        float val = math<float>::sin( mPhase * 2.0f * (float)M_PI ) * mAmplitude;
-        
-        ioBuffer->mData[ i * ioBuffer->mNumberChannels ] = val;
-		ioBuffer->mData[ i * ioBuffer->mNumberChannels + 1 ] = val;
-	}
-    
-	// Initialize analyzer
-	if ( !mFft ) {
-		mFft = Kiss::create( ioSampleCount );
-	}
-    
-	// Analyze data
-	mFft->setData( ioBuffer->mData );
-}
-
 void ClimaxApp::shutdown()
 {
-    mTrack->stop();
-    mTrack.reset();
-    if ( mFft ) {
-		mFft->stop();
-	}
-    mAudioSource.reset();
 }
 
 CINDER_APP_NATIVE( ClimaxApp, RendererGl )
