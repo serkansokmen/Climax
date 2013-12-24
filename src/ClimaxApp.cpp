@@ -335,17 +335,6 @@ void ClimaxApp::randomizeFlockingProperties()
 
 void ClimaxApp::touchesBegan( TouchEvent event )
 {
-    switch ( event.getTouches().size() ) {
-        case 3:
-            randomizeParticleProperties();
-            break;
-        case 4:
-            setHighNeighboring();
-        case 5:
-            setHighSeperation();
-        default:
-            break;
-    }
     for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt ) {
         Color newColor( CM_HSV, Rand::randFloat(), 1, 1 );
         mActivePoints.insert( make_pair( touchIt->getId(), TouchPoint( touchIt->getPos(), newColor ) ) );
@@ -403,7 +392,7 @@ void ClimaxApp::keyDown( KeyEvent event )
     {
         mParticleSystem.clear();
     }
-    if ( event.getChar() == 's' ) {
+    if ( event.getChar() == 'S' ) {
         if ( mParams.isVisible() ) {
             mParams.hide();
             hideCursor();
