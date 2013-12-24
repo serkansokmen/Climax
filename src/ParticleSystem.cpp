@@ -50,8 +50,8 @@ void ParticleSystem::addParticle(Particle *particle)
         if (particle != second && particle->color == second->color){
             float d = particle->position.distance(second->position);
             float d2 = (particle->radius + second->radius) * 50.f;
-            std::cout << d2 << std::endl;
-            if (d > 0.f && d2 < 200.f ){
+            
+            if (d > 0.f && d2 < 200.f){
                 Spring * spring = new Spring(particle, second,
                                              d * ci::randFloat(.4f, 1.8f),
                                              ci::randFloat(.001f, .01f));
