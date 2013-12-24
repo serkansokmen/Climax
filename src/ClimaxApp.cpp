@@ -55,6 +55,9 @@ public:
     void loadConfig();
 
     void shutdown();
+    
+    
+    
 
     ParticleSystem  mParticleSystem;
     BpmTapper       * bpmTapper;
@@ -109,13 +112,11 @@ void ClimaxApp::setup()
 {
     gl::enableAlphaBlending();
     gl::clear(Color::black());
-
-    // Set up line rendering
-    gl::enable(GL_LINE_SMOOTH);
-    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    gl::color(ColorAf::white());
-
-    mMaxParticles = 1200;
+    
+//    gl::enableDepthRead();
+//	gl::enableDepthWrite();
+    
+	mMaxParticles = 1200;
     mEmitRes = 2;
     mParticleColor = Color::white();
     mParticleRadiusMin = .8f;
@@ -359,17 +360,13 @@ void ClimaxApp::keyDown(KeyEvent event)
     }
 }
 
+
 void ClimaxApp::draw()
 {
-	gl::clear( Color::black() );
+	gl::clear();
     gl::enableAlphaBlending();
     gl::setViewport(getWindowBounds());
     gl::setMatricesWindow(getWindowWidth(), getWindowHeight());
-    gl::lineWidth( .2f );
-
-    gl::color(Color::white());
-
-    mParticleSystem.draw();
 
 //  for(map<uint32_t,TouchPoint>::const_iterator activeIt = mActivePoints.begin(); activeIt != mActivePoints.end(); ++activeIt) {
 //		activeIt->second.draw();
@@ -382,6 +379,13 @@ void ClimaxApp::draw()
 //		else
 //			++dyingIt;
 //	}
+    
+    // Set up line rendering
+    gl::enable(GL_LINE_SMOOTH);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    gl::color(ColorA::white());
+    gl::lineWidth( .2f );
+    mParticleSystem.draw();
 
 #ifndef CINDER_COCOA_TOUCH
     if (mParams.isVisible()) {

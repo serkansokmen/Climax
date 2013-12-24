@@ -47,12 +47,14 @@ void ParticleSystem::addParticle(Particle *particle)
     particles.push_back(particle);
 
     for (auto second : particles){
-        if (particle != second){
+        if (particle != second && particle->color == second->color){
             float d = particle->position.distance(second->position);
             float d2 = (particle->radius + second->radius) * 50.f;
-
-            if (d > 0.f && d <= d2 && d < 200.f){
-                Spring * spring = new Spring(particle, second, d * ci::randFloat(.4f, 1.6f), ci::randFloat(.001f, .01f));
+            std::cout << d2 << std::endl;
+            if (d > 0.f && d2 < 200.f ){
+                Spring * spring = new Spring(particle, second,
+                                             d * ci::randFloat(.4f, 1.8f),
+                                             ci::randFloat(.001f, .01f));
                 addSpring(spring);
             }
         }
