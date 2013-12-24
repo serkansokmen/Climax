@@ -31,25 +31,25 @@ class ClimaxApp : public AppNative {
 
 public:
 
-    void prepareSettings( Settings * settings );
+    void prepareSettings(Settings * settings);
 	void setup();
     void update();
 	void draw();
 
-    void touchesBegan( TouchEvent event );
-	void touchesMoved( TouchEvent event );
-	void touchesEnded( TouchEvent event );
+    void touchesBegan(TouchEvent event);
+	void touchesMoved(TouchEvent event);
+	void touchesEnded(TouchEvent event);
 
-    void keyDown( KeyEvent event );
+    void keyDown(KeyEvent event);
     void resize();
 
-    void addNewParticleAtPosition( const Vec2f & position );
-    void addNewParticlesOnPolyLine( const PolyLine<Vec2f> & line );
+    void addNewParticleAtPosition(const Vec2f & position);
+    void addNewParticlesOnPolyLine(const PolyLine<Vec2f> & line);
     void randomizeParticleProperties();
     void setHighSeperation();
     void setHighNeighboring();
     void randomizeFlockingProperties();
-    
+
     void saveConfig();
     void loadConfig();
 
@@ -65,10 +65,10 @@ public:
     params::InterfaceGl mParams;
     config::Config      * mConfig;
 #endif
-    
+
     Vec2f       mForceCenter;
     Vec2f       mAttractionCenter;
-    
+
     Color       mParticleColor;
     string      mConfigFileName;
 
@@ -90,29 +90,29 @@ public:
     bool    mAutoRandomizeColor;
 };
 
-void ClimaxApp::prepareSettings( Settings * settings )
+void ClimaxApp::prepareSettings(Settings * settings)
 {
 #ifdef CINDER_COCOA_TOUCH
     settings->enableHighDensityDisplay();
 #else
-    settings->setWindowSize( 1280, 720 );
-    settings->setFullScreen( true );
-    settings->setResizable( false );
-    settings->setBorderless( false );
-    settings->setTitle( "Climax" );
+    settings->setWindowSize(1280, 720);
+    settings->setFullScreen(true);
+    settings->setResizable(false);
+    settings->setBorderless(false);
+    settings->setTitle("Climax");
 #endif
-    settings->enableMultiTouch( true );
+    settings->enableMultiTouch(true);
 }
 
 void ClimaxApp::setup()
 {
     gl::enableAlphaBlending();
-    gl::clear( Color::black() );
-    
+    gl::clear(Color::black());
+
     // Set up line rendering
-    gl::enable( GL_LINE_SMOOTH );
-    glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
-    gl::color( ColorAf::white() );
+    gl::enable(GL_LINE_SMOOTH);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    gl::color(ColorAf::white());
 
     mMaxParticles = 1200;
     mEmitRes = 2;
@@ -138,41 +138,60 @@ void ClimaxApp::setup()
 
 #ifndef CINDER_COCOA_TOUCH
     mConfigFileName = "config.xml";
-    mParams = params::InterfaceGl( getWindow(), "Settings", toPixels( Vec2i( GUI_WIDTH, getWindowHeight() - 40.f ) ) );
-    mConfig = new config::Config( & mParams );
+    mParams = params::InterfaceGl(getWindow(),
+                                  "Settings",
+                                  toPixels(Vec2i(GUI_WIDTH,
+                                                  getWindowHeight() - 40.f)
+                                          )
+                                 );
+    mConfig = new config::Config(& mParams);
 
-    mParams.addText( "Particles", "label=`Particles`" );
+    mParams.addText("Particles", "label=`Particles`");
 
-    mParams.addParam( "Particle Count", & mNumParticles, "", true );
-    mParams.addParam( "Spring Count", & mNumSprings, "", true );
+    mParams.addParam("Particle Count", & mNumParticles, "", true);
+    mParams.addParam("Spring Count", & mNumSprings, "", true);
 
-    mConfig->addParam( "Max Particles", & mMaxParticles , "" );
-    mConfig->addParam( "Emitter Resolution", & mEmitRes , "" );
+    mConfig->addParam("Max Particles", & mMaxParticles , "");
+    mConfig->addParam("Emitter Resolution", & mEmitRes , "");
 
-    mConfig->addParam( "BPM Tempo" , & mBpm, "min=100 max=255" );
-    mConfig->addParam( "Cluster Particle Color" , & mParticleColor );
-//    mConfig->addParam( "Target Separation", & mTargetSeparation, "min=0.1f max=100.f" );
-//    mConfig->addParam( "Neighboring Distance", & mNeighboringDistance, "min=0.1f max=100.f" );
-    mParams.addButton( "Randomize Particle Color & Radius" , std::bind( & ClimaxApp::randomizeParticleProperties, this ), "key=1" );
-    mConfig->addParam( "Auto-Randomize Particle Color" , & mAutoRandomizeColor, "key=2" );
-    mParams.addButton( "High Seperation" , std::bind( & ClimaxApp::setHighSeperation, this ), "key=3" );
-    mParams.addButton( "High Neighboring" , std::bind( & ClimaxApp::setHighNeighboring, this ), "key=4" );
+    mConfig->addParam("BPM Tempo" , & mBpm, "min=100 max=255");
+    mConfig->addParam("Cluster Particle Color" , & mParticleColor);
+//    mConfig->addParam("Target Separation", & mTargetSeparation, "min=0.1f max=100.f");
+//    mConfig->addParam("Neighboring Distance", & mNeighboringDistance, "min=0.1f max=100.f");
+    mParams.addButton("Randomize Particle Color & Radius" ,
+                      std::bind(& ClimaxApp::randomizeParticleProperties,
+                                this), "key=1");
+    mConfig->addParam("Auto-Randomize Particle Color" ,
+                      & mAutoRandomizeColor,
+                      "key=2");
+    mParams.addButton("High Seperation" ,
+                      std::bind(& ClimaxApp::setHighSeperation, this),
+                      "key=3");
+    mParams.addButton("High Neighboring" ,
+                      std::bind(& ClimaxApp::setHighNeighboring, this),
+                      "key=4");
 
-    mConfig->addParam( "Flocking Enabled", & mUseFlocking, "key=f" );
-    mConfig->addParam( "Separation Factor", & mSeparationFactor, "min=-5.f max=5.f step=0.01" );
-    mConfig->addParam( "Alignment Factor", & mAlignmentFactor, "min=-5.f max=5.f" );
-    mConfig->addParam( "Cohesion Factor", & mCohesionFactor, "min=-50.f max=50.f" );
-    mParams.addButton( "Randomize Flocking Parameters" , std::bind( & ClimaxApp::randomizeFlockingProperties, this ), "key=4" );
+    mConfig->addParam("Flocking Enabled", & mUseFlocking, "key=f");
+    mConfig->addParam("Separation Factor", & mSeparationFactor,
+                      "min=-5.f max=5.f step=0.01");
+    mConfig->addParam("Alignment Factor", & mAlignmentFactor,
+                      "min=-5.f max=5.f");
+    mConfig->addParam("Cohesion Factor", & mCohesionFactor,
+                      "min=-50.f max=50.f");
+    mParams.addButton("Randomize Flocking Parameters" ,
+                      std::bind(& ClimaxApp::randomizeFlockingProperties,
+                                this), "key=4");
     mParams.addSeparator();
 
-    mParams.addText( "Settings", "label=`Settings`" );
-    mParams.addButton( "Save Settings", bind( & ClimaxApp::saveConfig, this ) );
-    mParams.addButton( "Reload Settings", bind( & ClimaxApp::loadConfig, this ), "key=L" );
+    mParams.addText("Settings", "label=`Settings`");
+    mParams.addButton("Save Settings", bind(& ClimaxApp::saveConfig, this));
+    mParams.addButton("Reload Settings", bind(& ClimaxApp::loadConfig, this),
+                      "key=L");
 
     // Try to restore last saved parameters configuration
     try {
         loadConfig();
-    } catch ( Exception e ) {
+    } catch (Exception e) {
         console() << e.what() << std::endl;
     }
 #endif
@@ -183,15 +202,15 @@ void ClimaxApp::update()
     mNumParticles = mParticleSystem.particles.size();
     mNumSprings = mParticleSystem.springs.size();
 
-    bpmTapper->setBpm( mBpm );
+    bpmTapper->setBpm(mBpm);
     bpmTapper->update();
 
-    if ( mAutoRandomizeColor && bpmTapper->onBeat() ){
+    if (mAutoRandomizeColor && bpmTapper->onBeat()){
         bpmTapper->start();
         randomizeParticleProperties();
     }
 
-    for ( auto it : mParticleSystem.particles ){
+    for (auto it : mParticleSystem.particles){
 
         it->separationEnabled = mUseFlocking;
         it->separationFactor = mSeparationFactor;
@@ -200,21 +219,21 @@ void ClimaxApp::update()
         it->cohesionEnabled = mUseFlocking;
         it->cohesionFactor = mCohesionFactor;
 
-//        if ( mPullParticles ){
-//            Vec2f force = ( getWindowCenter() - it->position ) * .01f;
+//        if (mPullParticles){
+//            Vec2f force = (getWindowCenter() - it->position) * .01f;
 //            it->forces += force;
 //        }
 //
-//        if ( mUseAttraction ){
+//        if (mUseAttraction){
 //            Vec2f attrForce = mAttractionCenter - it->position;
 //            attrForce.normalize();
-//            attrForce *= math<float>::max( 0.f, mAttrFactor - attrForce.length() );
+//            attrForce *= math<float>::max(0.f, mAttrFactor - attrForce.length());
 //            it->forces += attrForce;
 //        }
 //
-//        if ( mUseRepulsion && it->position.distance( mAttractionCenter ) > mRepulsionRadius ){
+//        if (mUseRepulsion && it->position.distance(mAttractionCenter) > mRepulsionRadius){
 //            Vec2f repForce = it->position - mAttractionCenter;
-//            repForce = repForce.normalized() * math<float>::max( 0.f, mRepulsionRadius - repForce.length() );
+//            repForce = repForce.normalized() * math<float>::max(0.f, mRepulsionRadius - repForce.length());
 //            it->forces += repForce;
 //        }
     }
@@ -224,41 +243,41 @@ void ClimaxApp::update()
     mForceCenter = getWindowCenter();
 }
 
-void ClimaxApp::addNewParticleAtPosition( const Vec2f & position )
+void ClimaxApp::addNewParticleAtPosition(const Vec2f & position)
 {
-    if ( getElapsedFrames() % mEmitRes == 0 ) {
-        float radius = ci::randFloat( mParticleRadiusMin, mParticleRadiusMax );
+    if (getElapsedFrames() % mEmitRes == 0) {
+        float radius = ci::randFloat(mParticleRadiusMin, mParticleRadiusMax);
         float mass = radius * radius;
         float drag = .95f;
-        
-        Particle * particle = new Particle( position, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor );
-        mParticleSystem.addParticle( particle );
+
+        Particle * particle = new Particle(position, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor);
+        mParticleSystem.addParticle(particle);
     }
 }
 
-void ClimaxApp::addNewParticlesOnPolyLine( const PolyLine<Vec2f> & line )
+void ClimaxApp::addNewParticlesOnPolyLine(const PolyLine<Vec2f> & line)
 {
-    if ( line.size() == 0 ) return;
-    if ( bpmTapper->onBeat() )
-        for ( auto it : line )
-            addNewParticleAtPosition( it );
+    if (line.size() == 0) return;
+    if (bpmTapper->onBeat())
+        for (auto it : line)
+            addNewParticleAtPosition(it);
 }
 
 void ClimaxApp::setHighSeperation()
 {
-    mTargetSeparation = randFloat( 50.f, 100.f );
-    mNeighboringDistance = randFloat( 10.f, 50.f );
+    mTargetSeparation = randFloat(50.f, 100.f);
+    mNeighboringDistance = randFloat(10.f, 50.f);
 }
 
 void ClimaxApp::setHighNeighboring()
 {
-    mTargetSeparation = randFloat( 10.f, 50.f );
-    mNeighboringDistance = randFloat( 50.f, 100.f );
+    mTargetSeparation = randFloat(10.f, 50.f);
+    mNeighboringDistance = randFloat(50.f, 100.f);
 }
 
 void ClimaxApp::randomizeParticleProperties()
 {
-    mParticleColor = Color( randFloat(), randFloat(), randFloat() );
+    mParticleColor = Color(randFloat(), randFloat(), randFloat());
     mParticleRadiusMin = ci::randFloat();
     mParticleRadiusMax = ci::randFloat() * .8f;
 }
@@ -270,28 +289,28 @@ void ClimaxApp::randomizeFlockingProperties()
     mCohesionFactor = randFloat();
 }
 
-void ClimaxApp::touchesBegan( TouchEvent event )
+void ClimaxApp::touchesBegan(TouchEvent event)
 {
-    for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt ) {
-        Color newColor( CM_HSV, Rand::randFloat(), 1, 1 );
-        mActivePoints.insert( make_pair( touchIt->getId(), TouchPoint( touchIt->getPos(), newColor ) ) );
+    for(vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt) {
+        Color newColor(CM_HSV, Rand::randFloat(), 1, 1);
+        mActivePoints.insert(make_pair(touchIt->getId(), TouchPoint(touchIt->getPos(), newColor)));
     }
 }
 
-void ClimaxApp::touchesMoved( TouchEvent event )
+void ClimaxApp::touchesMoved(TouchEvent event)
 {
-    for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt ){
-        mActivePoints[touchIt->getId()].addPoint( touchIt->getPos() );
+    for(vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt){
+        mActivePoints[touchIt->getId()].addPoint(touchIt->getPos());
     }
-    
-    switch ( event.getTouches().size() ) {
+
+    switch (event.getTouches().size()) {
         case 2:
         {
             Vec2f avrg = Vec2f::zero();
-            for ( auto touch : event.getTouches() )
+            for (auto touch : event.getTouches())
                 avrg += touch.getPos();
             avrg /= 2;
-            addNewParticleAtPosition( avrg );
+            addNewParticleAtPosition(avrg);
         }
             break;
         default:
@@ -299,12 +318,12 @@ void ClimaxApp::touchesMoved( TouchEvent event )
     }
 }
 
-void ClimaxApp::touchesEnded( TouchEvent event )
+void ClimaxApp::touchesEnded(TouchEvent event)
 {
-    for( vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt ) {
+    for(vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt) {
         mActivePoints[touchIt->getId()].startDying();
-        mDyingPoints.push_back( mActivePoints[touchIt->getId()] );
-        mActivePoints.erase( touchIt->getId() );
+        mDyingPoints.push_back(mActivePoints[touchIt->getId()]);
+        mActivePoints.erase(touchIt->getId());
     }
 }
 
@@ -314,23 +333,23 @@ void ClimaxApp::resize()
     mAttractionCenter = getWindowCenter();
 }
 
-void ClimaxApp::keyDown( KeyEvent event )
+void ClimaxApp::keyDown(KeyEvent event)
 {
-//    if ( event.getChar() == 's' && event.isMetaDown() ) {
+//    if (event.getChar() == 's' && event.isMetaDown()) {
 //        saveConfig();
 //        return;
 //    }
-//    if ( event.getChar() == 'l' && event.isMetaDown() ) {
+//    if (event.getChar() == 'l' && event.isMetaDown()) {
 //        loadConfig();
 //        return;
 //    }
-    
-    if ( event.getChar() == ' ' )
+
+    if (event.getChar() == ' ')
     {
         mParticleSystem.clear();
     }
-    if ( event.getChar() == 'S' ) {
-        if ( mParams.isVisible() ) {
+    if (event.getChar() == 'S') {
+        if (mParams.isVisible()) {
             mParams.hide();
             hideCursor();
         } else
@@ -343,30 +362,30 @@ void ClimaxApp::draw()
 {
 	gl::clear();
     gl::enableAlphaBlending();
-    gl::setViewport( getWindowBounds() );
-    gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
+    gl::setViewport(getWindowBounds());
+    gl::setMatricesWindow(getWindowWidth(), getWindowHeight());
 
-    gl::color( Color::white() );
+    gl::color(Color::white());
 
     mParticleSystem.draw();
 
-//  for( map<uint32_t,TouchPoint>::const_iterator activeIt = mActivePoints.begin(); activeIt != mActivePoints.end(); ++activeIt ) {
+//  for(map<uint32_t,TouchPoint>::const_iterator activeIt = mActivePoints.begin(); activeIt != mActivePoints.end(); ++activeIt) {
 //		activeIt->second.draw();
 //	}
 //
-//	for( list<TouchPoint>::iterator dyingIt = mDyingPoints.begin(); dyingIt != mDyingPoints.end(); ) {
+//	for(list<TouchPoint>::iterator dyingIt = mDyingPoints.begin(); dyingIt != mDyingPoints.end();) {
 //		dyingIt->draw();
-//		if( dyingIt->isDead() )
-//			dyingIt = mDyingPoints.erase( dyingIt );
+//		if(dyingIt->isDead())
+//			dyingIt = mDyingPoints.erase(dyingIt);
 //		else
 //			++dyingIt;
 //	}
 
 #ifndef CINDER_COCOA_TOUCH
-    if ( mParams.isVisible() ) {
+    if (mParams.isVisible()) {
         // draw yellow circles at the active touch points
-//        gl::color( ColorA( .4f, 1.f, .8f, .7f ) );
-//        gl::drawStrokedCircle( mTouchesAvrgVec3, 20.0f );
+//        gl::color(ColorA(.4f, 1.f, .8f, .7f));
+//        gl::drawStrokedCircle(mTouchesAvrgVec3, 20.0f);
         mParams.draw();
     }
 #endif
@@ -375,14 +394,14 @@ void ClimaxApp::draw()
 #ifndef CINDER_COCOA_TOUCH
 void ClimaxApp::saveConfig()
 {
-    mConfig->save( getAppPath() / fs::path( mConfigFileName ) );
-    console() << "Saved configuration to: " << getAppPath() / fs::path( mConfigFileName ) << std::endl;
+    mConfig->save(getAppPath() / fs::path(mConfigFileName));
+    console() << "Saved configuration to: " << getAppPath() / fs::path(mConfigFileName) << std::endl;
 }
 
 void ClimaxApp::loadConfig()
 {
-    mConfig->load( getAppPath() / fs::path( mConfigFileName ) );
-    console() << "Loaded configuration from: " << getAppPath() / fs::path( mConfigFileName ) << std::endl;
+    mConfig->load(getAppPath() / fs::path(mConfigFileName));
+    console() << "Loaded configuration from: " << getAppPath() / fs::path(mConfigFileName) << std::endl;
 }
 #endif
 
@@ -390,4 +409,4 @@ void ClimaxApp::shutdown()
 {
 }
 
-CINDER_APP_NATIVE( ClimaxApp, RendererGl )
+CINDER_APP_NATIVE(ClimaxApp, RendererGl)

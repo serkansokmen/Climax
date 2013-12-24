@@ -8,14 +8,14 @@
 
 #include "ParticleCluster.h"
 
-void ParticleCluster::addParticle( Particle * particle )
+void ParticleCluster::addParticle(Particle * particle)
 {
-    particles.push_back( particle );
+    particles.push_back(particle);
 }
 
-void ParticleCluster::removeParticle( Particle * particle )
+void ParticleCluster::removeParticle(Particle * particle)
 {
-    std::vector< Particle *>::const_iterator it = std::find( particles.begin(), particles.end(), particle );
+    std::vector< Particle *>::const_iterator it = std::find(particles.begin(), particles.end(), particle);
     delete * it;
-    particles.erase( it );
+    particles.erase(it);
 }

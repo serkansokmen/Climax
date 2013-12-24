@@ -10,12 +10,12 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::clear()
 {
-    for ( auto it : particles ){
+    for (auto it : particles){
         delete it;
     }
     particles.clear();
-    
-    for( auto it : springs ){
+
+    for(auto it : springs){
         delete it;
     }
     springs.clear();
@@ -23,61 +23,61 @@ void ParticleSystem::clear()
 
 void ParticleSystem::update()
 {
-    if ( particles.size() > maxParticles )
-        destroyParticle( * particles.begin() );
-    
-    for ( auto particle : particles ){
-        particle->borders( true );
+    if (particles.size() > maxParticles)
+        destroyParticle(* particles.begin());
+
+    for (auto particle : particles){
+        particle->borders(true);
         particle->update();
-        particle->flock( particles );
+        particle->flock(particles);
     }
-    
-    for ( auto spring : springs )
+
+    for (auto spring : springs)
         spring->update();
 }
 
 void ParticleSystem::draw()
 {
-    for( auto particle : particles )    particle->draw();
-    for( auto spring : springs )        spring->draw();
+    for(auto particle : particles)    particle->draw();
+    for(auto spring : springs)        spring->draw();
 }
 
-void ParticleSystem::addParticle( Particle *particle )
+void ParticleSystem::addParticle(Particle *particle)
 {
-    particles.push_back( particle );
-    
-    for ( auto second : particles ){
-        if ( particle != second ){
-            float d = particle->position.distance( second->position );
-            float d2 = ( particle->radius + second->radius ) * 50.f;
+    particles.push_back(particle);
 
-            if ( d > 0.f && d <= d2 && d < 200.f ){
-                Spring * spring = new Spring( particle, second, d * ci::randFloat( .4f, 1.6f ), ci::randFloat( .001f, .01f ) );
-                addSpring( spring );
+    for (auto second : particles){
+        if (particle != second){
+            float d = particle->position.distance(second->position);
+            float d2 = (particle->radius + second->radius) * 50.f;
+
+            if (d > 0.f && d <= d2 && d < 200.f){
+                Spring * spring = new Spring(particle, second, d * ci::randFloat(.4f, 1.6f), ci::randFloat(.001f, .01f));
+                addSpring(spring);
             }
         }
     }
 }
 
-void ParticleSystem::destroyParticle( Particle *particle )
+void ParticleSystem::destroyParticle(Particle *particle)
 {
-    std::vector< Particle *>::const_iterator it = std::find( particles.begin(), particles.end(), particle );
+    std::vector< Particle *>::const_iterator it = std::find(particles.begin(), particles.end(), particle);
     delete * it;
-    particles.erase( it );
-    
-    for ( auto spring : springs )
-        if ( spring->particleA == * it || spring->particleB == * it )
-            destroySpring( spring );
+    particles.erase(it);
+
+    for (auto spring : springs)
+        if (spring->particleA == * it || spring->particleB == * it)
+            destroySpring(spring);
 }
 
-void ParticleSystem::addSpring( Spring *spring )
+void ParticleSystem::addSpring(Spring *spring)
 {
-    springs.push_back( spring );
+    springs.push_back(spring);
 }
 
-void ParticleSystem::destroySpring( Spring *spring )
+void ParticleSystem::destroySpring(Spring *spring)
 {
-    std::vector<Spring*>::iterator it = std::find( springs.begin(), springs.end(), spring );
+    std::vector<Spring*>::iterator it = std::find(springs.begin(), springs.end(), spring);
     delete *it;
-    springs.erase( it );
+    springs.erase(it);
 }
