@@ -10,6 +10,7 @@
 #include "CinderConfig.h"
 
 #include "Resources.h"
+#include "ParticleCluster.h"
 #include "ParticleSystem.h"
 #include "BpmTapper.h"
 #include "TouchPoint.h"
@@ -87,7 +88,7 @@ public:
     int     mNumSprings;
 
     bool    mUseFlocking;
-    bool    mAutoRandomizeColor;
+    bool    mAutoRandParticleProperties;
 };
 
 void ClimaxApp::prepareSettings(Settings * settings)
@@ -120,7 +121,7 @@ void ClimaxApp::setup()
     mParticleRadiusMin = .8f;
     mParticleRadiusMax = 1.6f;
 
-    mAutoRandomizeColor = false;
+    mAutoRandParticleProperties = false;
     mBpm = 124.f;
     bpmTapper = new BpmTapper();
     bpmTapper->isEnabled = true;
@@ -162,7 +163,7 @@ void ClimaxApp::setup()
                       std::bind(& ClimaxApp::randomizeParticleProperties,
                                 this), "key=1");
     mConfig->addParam("Auto-Randomize Particle Color" ,
-                      & mAutoRandomizeColor,
+                      & mAutoRandParticleProperties,
                       "key=2");
     mParams.addButton("High Seperation" ,
                       std::bind(& ClimaxApp::setHighSeperation, this),
@@ -205,7 +206,7 @@ void ClimaxApp::update()
     bpmTapper->setBpm(mBpm);
     bpmTapper->update();
 
-    if (mAutoRandomizeColor && bpmTapper->onBeat()){
+    if (mAutoRandParticleProperties && bpmTapper->onBeat()){
         bpmTapper->start();
         randomizeParticleProperties();
     }
@@ -349,21 +350,22 @@ void ClimaxApp::keyDown(KeyEvent event)
         mParticleSystem.clear();
     }
     if (event.getChar() == 'S') {
-        if (mParams.isVisible()) {
-            mParams.hide();
+        if (mParams.isMaximized()) {
+            mParams.minimize();
             hideCursor();
         } else
-            mParams.show();
+            mParams.maximize();
             showCursor();
     }
 }
 
 void ClimaxApp::draw()
 {
-	gl::clear();
+	gl::clear( Color::black() );
     gl::enableAlphaBlending();
     gl::setViewport(getWindowBounds());
     gl::setMatricesWindow(getWindowWidth(), getWindowHeight());
+    gl::lineWidth( .2f );
 
     gl::color(Color::white());
 
