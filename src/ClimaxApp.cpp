@@ -70,22 +70,15 @@ public:
     Vec2f       mAttractionCenter;
     
     Color       mParticleColor;
-    Perlin      mPerlin;
     string      mConfigFileName;
 
-    float   mPerlinFrequency;
     float   mParticleRadiusMin, mParticleRadiusMax;
-    float   mParticlesPullFactor;
-    float   mAttrFactor;
-    float   mRepulsionFactor;
-    float   mRepulsionRadius;
 
     float   mTargetSeparation;
     float   mNeighboringDistance;
     float   mSeparationFactor;
     float   mAlignmentFactor;
     float   mCohesionFactor;
-    float   mForceCenterAnimRadius;
     float   mBpm;
 
     int     mMaxParticles;
@@ -93,9 +86,6 @@ public:
     int     mNumParticles;
     int     mNumSprings;
 
-    bool    mPullParticles;
-    bool    mUseAttraction;
-    bool    mUseRepulsion;
     bool    mUseFlocking;
     bool    mAutoRandomizeColor;
 };
@@ -124,22 +114,11 @@ void ClimaxApp::setup()
     glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
     gl::color( ColorAf::white() );
 
-    mPerlinFrequency = .01f;
-    mPerlin = Perlin();
-
     mMaxParticles = 1200;
     mEmitRes = 2;
     mParticleColor = Color::white();
     mParticleRadiusMin = .8f;
     mParticleRadiusMax = 1.6f;
-    mPullParticles = true;
-    mParticlesPullFactor = 0.01f;
-    mUseAttraction = false;
-    mAttrFactor = .05f;
-
-    mUseRepulsion = false;
-    mRepulsionFactor = -10.f;
-    mRepulsionRadius = 35.f;
 
     mAutoRandomizeColor = false;
     mBpm = 124.f;
@@ -156,7 +135,6 @@ void ClimaxApp::setup()
 
     mForceCenter = getWindowCenter();
     mAttractionCenter = getWindowCenter();
-    mForceCenterAnimRadius = 2.f;
 
 #ifndef CINDER_COCOA_TOUCH
     mConfigFileName = "config.xml";
@@ -175,7 +153,7 @@ void ClimaxApp::setup()
     mConfig->addParam( "Cluster Particle Color" , & mParticleColor );
 //    mConfig->addParam( "Target Separation", & mTargetSeparation, "min=0.1f max=100.f" );
 //    mConfig->addParam( "Neighboring Distance", & mNeighboringDistance, "min=0.1f max=100.f" );
-    mParams.addButton( "Randomize Particle Color" , std::bind( & ClimaxApp::randomizeParticleProperties, this ), "key=1" );
+    mParams.addButton( "Randomize Particle Color & Radius" , std::bind( & ClimaxApp::randomizeParticleProperties, this ), "key=1" );
     mConfig->addParam( "Auto-Randomize Particle Color" , & mAutoRandomizeColor, "key=2" );
     mParams.addButton( "High Seperation" , std::bind( & ClimaxApp::setHighSeperation, this ), "key=3" );
     mParams.addButton( "High Neighboring" , std::bind( & ClimaxApp::setHighNeighboring, this ), "key=4" );
@@ -185,19 +163,6 @@ void ClimaxApp::setup()
     mConfig->addParam( "Alignment Factor", & mAlignmentFactor, "min=-5.f max=5.f" );
     mConfig->addParam( "Cohesion Factor", & mCohesionFactor, "min=-50.f max=50.f" );
     mParams.addButton( "Randomize Flocking Parameters" , std::bind( & ClimaxApp::randomizeFlockingProperties, this ), "key=4" );
-    mParams.addSeparator();
-
-    mParams.addText( "Forces", "label=`Forces`" );
-    mConfig->addParam( "Pull Particles", & mPullParticles , "key=5" );
-    mConfig->addParam( "Pull Factor", & mParticlesPullFactor, "min=0.f max=1.f step=.0001f" );
-    mParams.addSeparator();
-    mConfig->addParam( "Attraction Enabled", & mUseAttraction, "key=a" );
-    mConfig->addParam( "Attraction Factor", & mAttrFactor, "min=0.f max=10.f step=.001f" );
-    mParams.addSeparator();
-    mConfig->addParam( "Repulsion Enabled", & mUseRepulsion, "key=6" );
-    mConfig->addParam( "Repulsion Factor", & mRepulsionFactor, "min=-10.f max=10.f step=.001f" );
-    mConfig->addParam( "Repulsion Radius", & mRepulsionRadius, "min=0.f max=800.f" );
-    mConfig->addParam( "Force Area Radius", & mForceCenterAnimRadius, "min=0.1f max=800.f" );
     mParams.addSeparator();
 
     mParams.addText( "Settings", "label=`Settings`" );
@@ -235,23 +200,23 @@ void ClimaxApp::update()
         it->cohesionEnabled = mUseFlocking;
         it->cohesionFactor = mCohesionFactor;
 
-        if ( mPullParticles ){
-            Vec2f force = ( getWindowCenter() - it->position ) * .01f;
-            it->forces += force;
-        }
-
-        if ( mUseAttraction ){
-            Vec2f attrForce = mAttractionCenter - it->position;
-            attrForce.normalize();
-            attrForce *= math<float>::max( 0.f, mAttrFactor - attrForce.length() );
-            it->forces += attrForce;
-        }
-
-        if ( mUseRepulsion && it->position.distance( mAttractionCenter ) > mRepulsionRadius ){
-            Vec2f repForce = it->position - mAttractionCenter;
-            repForce = repForce.normalized() * math<float>::max( 0.f, mRepulsionRadius - repForce.length() );
-            it->forces += repForce;
-        }
+//        if ( mPullParticles ){
+//            Vec2f force = ( getWindowCenter() - it->position ) * .01f;
+//            it->forces += force;
+//        }
+//
+//        if ( mUseAttraction ){
+//            Vec2f attrForce = mAttractionCenter - it->position;
+//            attrForce.normalize();
+//            attrForce *= math<float>::max( 0.f, mAttrFactor - attrForce.length() );
+//            it->forces += attrForce;
+//        }
+//
+//        if ( mUseRepulsion && it->position.distance( mAttractionCenter ) > mRepulsionRadius ){
+//            Vec2f repForce = it->position - mAttractionCenter;
+//            repForce = repForce.normalized() * math<float>::max( 0.f, mRepulsionRadius - repForce.length() );
+//            it->forces += repForce;
+//        }
     }
     mParticleSystem.maxParticles = mMaxParticles;
     mParticleSystem.update();
@@ -294,8 +259,8 @@ void ClimaxApp::setHighNeighboring()
 void ClimaxApp::randomizeParticleProperties()
 {
     mParticleColor = Color( randFloat(), randFloat(), randFloat() );
-    mParticleRadiusMin = .8f;
-    mParticleRadiusMax = 1.6f;
+    mParticleRadiusMin = ci::randFloat();
+    mParticleRadiusMax = ci::randFloat() * .8f;
 }
 
 void ClimaxApp::randomizeFlockingProperties()
