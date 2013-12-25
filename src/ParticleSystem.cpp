@@ -54,7 +54,7 @@ void ParticleSystem::addParticle(Particle *particle)
             if (d > 0.f && d2 < 200.f){
                 Spring * spring = new Spring(particle, second,
                                              d * ci::randFloat(.4f, 1.8f),
-                                             ci::randFloat(.001f, .01f));
+                                             ci::randFloat(.0001f, .005f));
                 addSpring(spring);
             }
         }
