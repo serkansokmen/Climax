@@ -38,7 +38,23 @@ void ParticleSystem::update()
 
 void ParticleSystem::draw()
 {
-    for(auto particle : particles)    particle->draw();
+    for(auto particleA : particles){
+        for (auto particleB : particles){
+            
+            float distBetweenParticles = particleA->position.distance(particleB->position);
+            float distancePercent = 1.f - (distBetweenParticles / 100.f);
+            
+            if (distancePercent > 0.f){
+                ci::Color colorFirst = ci::lerp(particleA->color, particleB->color, distancePercent);
+                ci::gl::color(ci::ColorA( colorFirst, distancePercent * .8f));
+                ci::Vec2f conVec = particleB->position - particleA->position;
+                conVec.normalize();
+                ci::gl::drawLine(particleA->position + conVec * (particleA->radius + .5f),
+                                 particleB->position - conVec * (particleB->radius + .5f));
+            }
+        }
+        particleA->draw();
+    }
     for(auto spring : springs)        spring->draw();
 }
 
