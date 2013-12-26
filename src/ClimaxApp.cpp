@@ -40,6 +40,8 @@ public:
     void touchesBegan(TouchEvent event);
 	void touchesMoved(TouchEvent event);
 	void touchesEnded(TouchEvent event);
+    
+    void mouseDrag(MouseEvent event);
 
     void keyDown(KeyEvent event);
     void resize();
@@ -91,6 +93,7 @@ public:
     int     mNumSprings;
 
     bool    mUseFlocking;
+    bool    mPaintWithTouchEnabled;
     bool    mAutoRandParticleProperties;
 };
 
@@ -121,6 +124,7 @@ void ClimaxApp::setup()
     mParticleColor = Color::white();
     mParticleRadiusMin = .8f;
     mParticleRadiusMax = 1.6f;
+    mPaintWithTouchEnabled = false;
 
     mAutoRandParticleProperties = false;
     mBpm = 124.f;
@@ -163,6 +167,7 @@ void ClimaxApp::setup()
     mParams.addButton("Randomize Particle Color & Radius" ,
                       std::bind(& ClimaxApp::randomizeParticleProperties,
                                 this), "key=1");
+    mParams.addParam("Paint with Touch" , & mPaintWithTouchEnabled);
     mConfig->addParam("Auto-Randomize Particle Color" ,
                       & mAutoRandParticleProperties,
                       "key=2");
@@ -304,20 +309,21 @@ void ClimaxApp::touchesMoved(TouchEvent event)
     for(vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt){
         mActivePoints[touchIt->getId()].addPoint(touchIt->getPos());
     }
-
-    switch (event.getTouches().size()) {
-        case 2:
-        {
-            Vec2f avrg = Vec2f::zero();
-            for (auto touch : event.getTouches())
-                avrg += touch.getPos();
-            avrg /= 2;
-            addNewParticleAtPosition(avrg);
+    
+    if (mPaintWithTouchEnabled)
+        switch (event.getTouches().size()) {
+            case 2:
+            {
+                Vec2f avrg = Vec2f::zero();
+                for (auto touch : event.getTouches())
+                    avrg += touch.getPos();
+                avrg /= 2;
+                addNewParticleAtPosition(avrg);
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        default:
-            break;
-    }
 }
 
 void ClimaxApp::touchesEnded(TouchEvent event)
@@ -327,6 +333,11 @@ void ClimaxApp::touchesEnded(TouchEvent event)
         mDyingPoints.push_back(mActivePoints[touchIt->getId()]);
         mActivePoints.erase(touchIt->getId());
     }
+}
+
+void ClimaxApp::mouseDrag(MouseEvent event)
+{
+    addNewParticleAtPosition(event.getPos());
 }
 
 void ClimaxApp::resize()
