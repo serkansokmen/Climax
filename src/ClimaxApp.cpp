@@ -13,7 +13,6 @@
 #include "ParticleCluster.h"
 #include "ParticleSystem.h"
 #include "BpmTapper.h"
-#include "TouchPoint.h"
 
 #include <vector>
 #include <map>
@@ -58,14 +57,8 @@ public:
 
     void shutdown();
     
-    
-    
-
     ParticleSystem  mParticleSystem;
     BpmTapper       * bpmTapper;
-
-    map<uint32_t,TouchPoint>	mActivePoints;
-	list<TouchPoint>			mDyingPoints;
 
 #ifndef CINDER_COCOA_TOUCH
     params::InterfaceGl mParams;
@@ -99,7 +92,7 @@ public:
 
 void ClimaxApp::prepareSettings(Settings * settings)
 {
-#ifdef CINDER_COCOA_TOUCH
+#if defined( CINDER_COCOA_TOUCH )
     settings->enableHighDensityDisplay();
 #else
     settings->setWindowSize(1280, 720);
@@ -116,15 +109,16 @@ void ClimaxApp::setup()
     gl::enableAlphaBlending();
     gl::clear(Color::black());
     
-//    gl::enableDepthRead();
-//	gl::enableDepthWrite();
-    
 	mMaxParticles = 1200;
     mEmitRes = 2;
     mParticleColor = Color::white();
     mParticleRadiusMin = .8f;
     mParticleRadiusMax = 1.6f;
+#if defined( CINDER_COCOA_TOUCH )
+    mPaintWithTouchEnabled = true;
+#else
     mPaintWithTouchEnabled = false;
+#endif
 
     mAutoRandParticleProperties = false;
     mBpm = 124.f;
@@ -298,27 +292,15 @@ void ClimaxApp::randomizeFlockingProperties()
 
 void ClimaxApp::touchesBegan(TouchEvent event)
 {
-    for(vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt) {
-        Color newColor(CM_HSV, Rand::randFloat(), 1, 1);
-        mActivePoints.insert(make_pair(touchIt->getId(), TouchPoint(touchIt->getPos(), newColor)));
-    }
 }
 
 void ClimaxApp::touchesMoved(TouchEvent event)
 {
-    for(vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt){
-        mActivePoints[touchIt->getId()].addPoint(touchIt->getPos());
-    }
-    
     if (mPaintWithTouchEnabled)
         switch (event.getTouches().size()) {
             case 2:
             {
-                Vec2f avrg = Vec2f::zero();
-                for (auto touch : event.getTouches())
-                    avrg += touch.getPos();
-                avrg /= 2;
-                addNewParticleAtPosition(avrg);
+                
             }
                 break;
             default:
@@ -328,11 +310,7 @@ void ClimaxApp::touchesMoved(TouchEvent event)
 
 void ClimaxApp::touchesEnded(TouchEvent event)
 {
-    for(vector<TouchEvent::Touch>::const_iterator touchIt = event.getTouches().begin(); touchIt != event.getTouches().end(); ++touchIt) {
-        mActivePoints[touchIt->getId()].startDying();
-        mDyingPoints.push_back(mActivePoints[touchIt->getId()]);
-        mActivePoints.erase(touchIt->getId());
-    }
+
 }
 
 void ClimaxApp::mouseDrag(MouseEvent event)
@@ -361,6 +339,7 @@ void ClimaxApp::keyDown(KeyEvent event)
     {
         mParticleSystem.clear();
     }
+#ifndef CINDER_COCOA_TOUCH
     if (event.getChar() == 'S') {
         if (mParams.isMaximized()) {
             mParams.minimize();
@@ -369,6 +348,7 @@ void ClimaxApp::keyDown(KeyEvent event)
             mParams.maximize();
             showCursor();
     }
+#endif
 }
 
 
@@ -376,20 +356,6 @@ void ClimaxApp::draw()
 {
 	gl::clear();
     gl::enableAlphaBlending();
-    gl::setViewport(getWindowBounds());
-    gl::setMatricesWindow(getWindowWidth(), getWindowHeight());
-
-//  for(map<uint32_t,TouchPoint>::const_iterator activeIt = mActivePoints.begin(); activeIt != mActivePoints.end(); ++activeIt) {
-//		activeIt->second.draw();
-//	}
-//
-//	for(list<TouchPoint>::iterator dyingIt = mDyingPoints.begin(); dyingIt != mDyingPoints.end();) {
-//		dyingIt->draw();
-//		if(dyingIt->isDead())
-//			dyingIt = mDyingPoints.erase(dyingIt);
-//		else
-//			++dyingIt;
-//	}
     
     // Set up line rendering
     gl::enable(GL_LINE_SMOOTH);

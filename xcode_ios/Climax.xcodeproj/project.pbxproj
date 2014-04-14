@@ -32,8 +32,6 @@
 		20D3F18B18270D96007E78BF /* OscListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20D3F17B18270D96007E78BF /* OscListener.cpp */; };
 		20D3F18C18270D96007E78BF /* OscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20D3F17D18270D96007E78BF /* OscMessage.cpp */; };
 		20D3F18D18270D96007E78BF /* OscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20D3F17F18270D96007E78BF /* OscSender.cpp */; };
-		20D3F19018271CC3007E78BF /* Amon_Tobin_Lost_&_Found.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 20D3F18F18271CC3007E78BF /* Amon_Tobin_Lost_&_Found.m4a */; };
-		20D3F19318271D53007E78BF /* ParticleCluster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20D3F19118271D53007E78BF /* ParticleCluster.cpp */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		5113F51AD0CE41C08089ABAD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8202E4CBDC8B4C99B3FFAAC0 /* Default-568h@2x.png */; };
@@ -105,7 +103,6 @@
 		20D3F18018270D96007E78BF /* OscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscSender.h; sourceTree = "<group>"; };
 		20D3F18E18271CA1007E78BF /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		20D3F18F18271CC3007E78BF /* Amon_Tobin_Lost_&_Found.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Amon_Tobin_Lost_&_Found.m4a"; path = "../resources/Amon_Tobin_Lost_&_Found.m4a"; sourceTree = "<group>"; };
-		20D3F19118271D53007E78BF /* ParticleCluster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticleCluster.cpp; path = ../src/ParticleCluster.cpp; sourceTree = "<group>"; };
 		20D3F19218271D53007E78BF /* ParticleCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleCluster.h; path = ../src/ParticleCluster.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -187,7 +184,6 @@
 				20D3F0A518270D3D007E78BF /* Particle.cpp */,
 				20D3F0A618270D3D007E78BF /* ParticleSystem.cpp */,
 				20D3F0A718270D3D007E78BF /* Spring.cpp */,
-				20D3F19118271D53007E78BF /* ParticleCluster.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -398,7 +394,6 @@
 			files = (
 				C719A8F0BC5947DCB6BF1FBB /* CinderApp_ios.png in Resources */,
 				5113F51AD0CE41C08089ABAD /* Default-568h@2x.png in Resources */,
-				20D3F19018271CC3007E78BF /* Amon_Tobin_Lost_&_Found.m4a in Resources */,
 				20B10157180C7FC300278EA0 /* particle.png in Resources */,
 				20D3F14918270D72007E78BF /* CMakeLists.txt in Resources */,
 			);
@@ -413,7 +408,6 @@
 			files = (
 				20D3F14B18270D72007E78BF /* kiss_fftr.c in Sources */,
 				20D3F18C18270D96007E78BF /* OscMessage.cpp in Sources */,
-				20D3F19318271D53007E78BF /* ParticleCluster.cpp in Sources */,
 				20D3F18818270D96007E78BF /* OscReceivedElements.cpp in Sources */,
 				20D3F18718270D96007E78BF /* OscPrintReceivedElements.cpp in Sources */,
 				20D3F18218270D96007E78BF /* NetworkingUtils.cpp in Sources */,

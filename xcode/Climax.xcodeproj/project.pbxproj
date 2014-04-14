@@ -17,6 +17,130 @@
 		20B10153180C7F5E00278EA0 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20B10150180C7F5E00278EA0 /* ParticleSystem.cpp */; };
 		20B10155180C7F9000278EA0 /* particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B10154180C7F9000278EA0 /* particle.png */; };
 		20B10160180CBF3900278EA0 /* Spring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20B1015E180CBF3900278EA0 /* Spring.cpp */; };
+		20BCCC4D18FC7E2500B612E5 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB8818FC7E2500B612E5 /* .gitignore */; };
+		20BCCC4E18FC7E2500B612E5 /* cinderblock.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB8918FC7E2500B612E5 /* cinderblock.png */; };
+		20BCCC4F18FC7E2500B612E5 /* cinderblock.xml in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB8A18FC7E2500B612E5 /* cinderblock.xml */; };
+		20BCCC5018FC7E2500B612E5 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCB8D18FC7E2500B612E5 /* libLeap.dylib */; };
+		20BCCC5118FC7E2500B612E5 /* Leap.dll in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB9018FC7E2500B612E5 /* Leap.dll */; };
+		20BCCC5218FC7E2500B612E5 /* Leap.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCB9118FC7E2500B612E5 /* Leap.lib */; };
+		20BCCC5318FC7E2500B612E5 /* Leapd.dll in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB9218FC7E2500B612E5 /* Leapd.dll */; };
+		20BCCC5418FC7E2500B612E5 /* Leapd.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCB9318FC7E2500B612E5 /* Leapd.lib */; };
+		20BCCC5518FC7E2500B612E5 /* Leap.dll in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB9518FC7E2500B612E5 /* Leap.dll */; };
+		20BCCC5618FC7E2500B612E5 /* Leap.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCB9618FC7E2500B612E5 /* Leap.lib */; };
+		20BCCC5718FC7E2500B612E5 /* Leapd.dll in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB9718FC7E2500B612E5 /* Leapd.dll */; };
+		20BCCC5818FC7E2500B612E5 /* Leapd.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCB9818FC7E2500B612E5 /* Leapd.lib */; };
+		20BCCC5918FC7E2500B612E5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB9918FC7E2500B612E5 /* README */; };
+		20BCCC5A18FC7E2500B612E5 /* GestureApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCB9D18FC7E2500B612E5 /* GestureApp.cpp */; };
+		20BCCC5B18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCB9F18FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCC5C18FC7E2500B612E5 /* GestureApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA018FC7E2500B612E5 /* GestureApp.sln */; };
+		20BCCC5D18FC7E2500B612E5 /* GestureApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA118FC7E2500B612E5 /* GestureApp.vcxproj */; };
+		20BCCC5E18FC7E2500B612E5 /* GestureApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA218FC7E2500B612E5 /* GestureApp.vcxproj.filters */; };
+		20BCCC5F18FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA318FC7E2500B612E5 /* Resources.rc */; };
+		20BCCC6018FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA518FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCC6118FC7E2500B612E5 /* GestureApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA618FC7E2500B612E5 /* GestureApp.sln */; };
+		20BCCC6218FC7E2500B612E5 /* GestureApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA718FC7E2500B612E5 /* GestureApp.vcxproj */; };
+		20BCCC6318FC7E2500B612E5 /* GestureApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA818FC7E2500B612E5 /* GestureApp.vcxproj.filters */; };
+		20BCCC6418FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBA918FC7E2500B612E5 /* Resources.rc */; };
+		20BCCC6518FC7E2500B612E5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBAB18FC7E2500B612E5 /* CinderApp.icns */; };
+		20BCCC6618FC7E2500B612E5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBB018FC7E2500B612E5 /* Info.plist */; };
+		20BCCC6718FC7E2500B612E5 /* LeapApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCBB318FC7E2500B612E5 /* LeapApp.cpp */; };
+		20BCCC6818FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBB518FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCC6918FC7E2500B612E5 /* LeapApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBB618FC7E2500B612E5 /* LeapApp.sln */; };
+		20BCCC6A18FC7E2500B612E5 /* LeapApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBB718FC7E2500B612E5 /* LeapApp.vcxproj */; };
+		20BCCC6B18FC7E2500B612E5 /* LeapApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBB818FC7E2500B612E5 /* LeapApp.vcxproj.filters */; };
+		20BCCC6C18FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBB918FC7E2500B612E5 /* Resources.rc */; };
+		20BCCC6D18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBBB18FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCC6E18FC7E2500B612E5 /* LeapApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBBC18FC7E2500B612E5 /* LeapApp.sln */; };
+		20BCCC6F18FC7E2500B612E5 /* LeapApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBBD18FC7E2500B612E5 /* LeapApp.vcxproj */; };
+		20BCCC7018FC7E2500B612E5 /* LeapApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBBE18FC7E2500B612E5 /* LeapApp.vcxproj.filters */; };
+		20BCCC7118FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBBF18FC7E2500B612E5 /* Resources.rc */; };
+		20BCCC7218FC7E2500B612E5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBC118FC7E2500B612E5 /* CinderApp.icns */; };
+		20BCCC7318FC7E2500B612E5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBC218FC7E2500B612E5 /* Info.plist */; };
+		20BCCC7418FC7E2500B612E5 /* MotionApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCBC918FC7E2500B612E5 /* MotionApp.cpp */; };
+		20BCCC7518FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBCB18FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCC7618FC7E2500B612E5 /* MotionApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBCC18FC7E2500B612E5 /* MotionApp.sln */; };
+		20BCCC7718FC7E2500B612E5 /* MotionApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBCD18FC7E2500B612E5 /* MotionApp.vcxproj */; };
+		20BCCC7818FC7E2500B612E5 /* MotionApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBCE18FC7E2500B612E5 /* MotionApp.vcxproj.filters */; };
+		20BCCC7918FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBCF18FC7E2500B612E5 /* Resources.rc */; };
+		20BCCC7A18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBD118FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCC7B18FC7E2500B612E5 /* MotionApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBD218FC7E2500B612E5 /* MotionApp.sln */; };
+		20BCCC7C18FC7E2500B612E5 /* MotionApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBD318FC7E2500B612E5 /* MotionApp.vcxproj */; };
+		20BCCC7D18FC7E2500B612E5 /* MotionApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBD418FC7E2500B612E5 /* MotionApp.vcxproj.filters */; };
+		20BCCC7E18FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBD518FC7E2500B612E5 /* Resources.rc */; };
+		20BCCC7F18FC7E2500B612E5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBD718FC7E2500B612E5 /* CinderApp.icns */; };
+		20BCCC8018FC7E2500B612E5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBD818FC7E2500B612E5 /* Info.plist */; };
+		20BCCC8118FC7E2500B612E5 /* blur_x_frag.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBE218FC7E2500B612E5 /* blur_x_frag.glsl */; };
+		20BCCC8218FC7E2500B612E5 /* blur_y_frag.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBE318FC7E2500B612E5 /* blur_y_frag.glsl */; };
+		20BCCC8318FC7E2500B612E5 /* pass_through_vert.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBE418FC7E2500B612E5 /* pass_through_vert.glsl */; };
+		20BCCC8418FC7E2500B612E5 /* Ribbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCBE618FC7E2500B612E5 /* Ribbon.cpp */; };
+		20BCCC8518FC7E2500B612E5 /* TracerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCBE718FC7E2500B612E5 /* TracerApp.cpp */; };
+		20BCCC8618FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBE918FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCC8718FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBEA18FC7E2500B612E5 /* Resources.rc */; };
+		20BCCC8818FC7E2500B612E5 /* TracerApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBEB18FC7E2500B612E5 /* TracerApp.sln */; };
+		20BCCC8918FC7E2500B612E5 /* TracerApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBEC18FC7E2500B612E5 /* TracerApp.vcxproj */; };
+		20BCCC8A18FC7E2500B612E5 /* TracerApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBED18FC7E2500B612E5 /* TracerApp.vcxproj.filters */; };
+		20BCCC8B18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBEF18FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCC8C18FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBF018FC7E2500B612E5 /* Resources.rc */; };
+		20BCCC8D18FC7E2500B612E5 /* TracerApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBF118FC7E2500B612E5 /* TracerApp.sln */; };
+		20BCCC8E18FC7E2500B612E5 /* TracerApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBF218FC7E2500B612E5 /* TracerApp.vcxproj */; };
+		20BCCC8F18FC7E2500B612E5 /* TracerApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBF318FC7E2500B612E5 /* TracerApp.vcxproj.filters */; };
+		20BCCC9018FC7E2500B612E5 /* TracerApp.app in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBF718FC7E2500B612E5 /* TracerApp.app */; };
+		20BCCC9118FC7E2500B612E5 /* build-state.dat in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBFB18FC7E2500B612E5 /* build-state.dat */; };
+		20BCCC9218FC7E2500B612E5 /* Cinder-LeapMotion.d in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCBFE18FC7E2500B612E5 /* Cinder-LeapMotion.d */; };
+		20BCCC9318FC7E2500B612E5 /* Cinder-LeapMotion.dia in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCBFF18FC7E2500B612E5 /* Cinder-LeapMotion.dia */; };
+		20BCCC9418FC7E2500B612E5 /* Cinder-LeapMotion.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCC0018FC7E2500B612E5 /* Cinder-LeapMotion.o */; };
+		20BCCC9518FC7E2500B612E5 /* Ribbon.d in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCC0118FC7E2500B612E5 /* Ribbon.d */; };
+		20BCCC9618FC7E2500B612E5 /* Ribbon.dia in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC0218FC7E2500B612E5 /* Ribbon.dia */; };
+		20BCCC9718FC7E2500B612E5 /* Ribbon.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCC0318FC7E2500B612E5 /* Ribbon.o */; };
+		20BCCC9818FC7E2500B612E5 /* TracerApp in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC0418FC7E2500B612E5 /* TracerApp */; };
+		20BCCC9918FC7E2500B612E5 /* TracerApp.d in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCC0518FC7E2500B612E5 /* TracerApp.d */; };
+		20BCCC9A18FC7E2500B612E5 /* TracerApp.dia in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC0618FC7E2500B612E5 /* TracerApp.dia */; };
+		20BCCC9B18FC7E2500B612E5 /* TracerApp.LinkFileList in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC0718FC7E2500B612E5 /* TracerApp.LinkFileList */; };
+		20BCCC9C18FC7E2500B612E5 /* TracerApp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCC0818FC7E2500B612E5 /* TracerApp.o */; };
+		20BCCC9D18FC7E2500B612E5 /* TracerApp_dependency_info.dat in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC0918FC7E2500B612E5 /* TracerApp_dependency_info.dat */; };
+		20BCCC9E18FC7E2500B612E5 /* Cinder-LeapMotion.d in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCC0B18FC7E2500B612E5 /* Cinder-LeapMotion.d */; };
+		20BCCC9F18FC7E2500B612E5 /* Cinder-LeapMotion.dia in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC0C18FC7E2500B612E5 /* Cinder-LeapMotion.dia */; };
+		20BCCCA018FC7E2500B612E5 /* Cinder-LeapMotion.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCC0D18FC7E2500B612E5 /* Cinder-LeapMotion.o */; };
+		20BCCCA118FC7E2500B612E5 /* Ribbon.d in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCC0E18FC7E2500B612E5 /* Ribbon.d */; };
+		20BCCCA218FC7E2500B612E5 /* Ribbon.dia in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC0F18FC7E2500B612E5 /* Ribbon.dia */; };
+		20BCCCA318FC7E2500B612E5 /* Ribbon.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCC1018FC7E2500B612E5 /* Ribbon.o */; };
+		20BCCCA418FC7E2500B612E5 /* TracerApp in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1118FC7E2500B612E5 /* TracerApp */; };
+		20BCCCA518FC7E2500B612E5 /* TracerApp.d in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCC1218FC7E2500B612E5 /* TracerApp.d */; };
+		20BCCCA618FC7E2500B612E5 /* TracerApp.dia in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1318FC7E2500B612E5 /* TracerApp.dia */; };
+		20BCCCA718FC7E2500B612E5 /* TracerApp.LinkFileList in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1418FC7E2500B612E5 /* TracerApp.LinkFileList */; };
+		20BCCCA818FC7E2500B612E5 /* TracerApp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BCCC1518FC7E2500B612E5 /* TracerApp.o */; };
+		20BCCCA918FC7E2500B612E5 /* TracerApp_dependency_info.dat in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1618FC7E2500B612E5 /* TracerApp_dependency_info.dat */; };
+		20BCCCAA18FC7E2500B612E5 /* TracerApp-all-target-headers.hmap in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1718FC7E2500B612E5 /* TracerApp-all-target-headers.hmap */; };
+		20BCCCAB18FC7E2500B612E5 /* TracerApp-generated-files.hmap in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1818FC7E2500B612E5 /* TracerApp-generated-files.hmap */; };
+		20BCCCAC18FC7E2500B612E5 /* TracerApp-own-target-headers.hmap in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1918FC7E2500B612E5 /* TracerApp-own-target-headers.hmap */; };
+		20BCCCAD18FC7E2500B612E5 /* TracerApp-project-headers.hmap in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1A18FC7E2500B612E5 /* TracerApp-project-headers.hmap */; };
+		20BCCCAE18FC7E2500B612E5 /* TracerApp.dep in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1B18FC7E2500B612E5 /* TracerApp.dep */; };
+		20BCCCAF18FC7E2500B612E5 /* TracerApp.hmap in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1C18FC7E2500B612E5 /* TracerApp.hmap */; };
+		20BCCCB018FC7E2500B612E5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1D18FC7E2500B612E5 /* CinderApp.icns */; };
+		20BCCCB118FC7E2500B612E5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC1E18FC7E2500B612E5 /* Info.plist */; };
+		20BCCCB218FC7E2500B612E5 /* button_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC2718FC7E2500B612E5 /* button_off.png */; };
+		20BCCCB318FC7E2500B612E5 /* button_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC2818FC7E2500B612E5 /* button_on.png */; };
+		20BCCCB418FC7E2500B612E5 /* grab.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC2918FC7E2500B612E5 /* grab.png */; };
+		20BCCCB518FC7E2500B612E5 /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC2A18FC7E2500B612E5 /* hand.png */; };
+		20BCCCB618FC7E2500B612E5 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC2B18FC7E2500B612E5 /* slider.png */; };
+		20BCCCB718FC7E2500B612E5 /* touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC2C18FC7E2500B612E5 /* touch.png */; };
+		20BCCCB818FC7E2500B612E5 /* track.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC2D18FC7E2500B612E5 /* track.png */; };
+		20BCCCB918FC7E2500B612E5 /* UiApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCC2F18FC7E2500B612E5 /* UiApp.cpp */; };
+		20BCCCBA18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3118FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCCBB18FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3218FC7E2500B612E5 /* Resources.rc */; };
+		20BCCCBC18FC7E2500B612E5 /* UiApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3318FC7E2500B612E5 /* UiApp.sln */; };
+		20BCCCBD18FC7E2500B612E5 /* UiApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3418FC7E2500B612E5 /* UiApp.vcxproj */; };
+		20BCCCBE18FC7E2500B612E5 /* UiApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3518FC7E2500B612E5 /* UiApp.vcxproj.filters */; };
+		20BCCCBF18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3718FC7E2500B612E5 /* cinder_app_icon.ico */; };
+		20BCCCC018FC7E2500B612E5 /* Resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3818FC7E2500B612E5 /* Resources.rc */; };
+		20BCCCC118FC7E2500B612E5 /* UiApp.sln in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3918FC7E2500B612E5 /* UiApp.sln */; };
+		20BCCCC218FC7E2500B612E5 /* UiApp.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3A18FC7E2500B612E5 /* UiApp.vcxproj */; };
+		20BCCCC318FC7E2500B612E5 /* UiApp.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3B18FC7E2500B612E5 /* UiApp.vcxproj.filters */; };
+		20BCCCC418FC7E2500B612E5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3D18FC7E2500B612E5 /* CinderApp.icns */; };
+		20BCCCC518FC7E2500B612E5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC3E18FC7E2500B612E5 /* Info.plist */; };
+		20BCCCC618FC7E2500B612E5 /* Cinder-LeapMotion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCC4418FC7E2500B612E5 /* Cinder-LeapMotion.cpp */; };
+		20BCCCC718FC7E2500B612E5 /* _TBOX_PREFIX_App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20BCCC4B18FC7E2500B612E5 /* _TBOX_PREFIX_App.cpp */; };
+		20BCCCC818FC7E2500B612E5 /* template.xml in Resources */ = {isa = PBXBuildFile; fileRef = 20BCCC4C18FC7E2500B612E5 /* template.xml */; };
 		20CAAD6A1826D1B500F6EA90 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20CAAD691826D1B500F6EA90 /* QuickTime.framework */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
@@ -24,6 +148,44 @@
 		D44E5FADF45243839ACAD164 /* ClimaxApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7489FCF94645410EB2DBDCE8 /* ClimaxApp.cpp */; };
 		F6AAEF8D0D9A4499B1055E67 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 074A3FCF0DEA425FA5A056EC /* CinderApp.icns */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		20BCCCCA18FC7E2500B612E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 20BCCBAC18FC7E2500B612E5 /* GestureApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = GestureApp;
+		};
+		20BCCCCD18FC7E2500B612E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 20BCCBC318FC7E2500B612E5 /* LeapApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = LeapApp;
+		};
+		20BCCCD018FC7E2500B612E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 20BCCBD918FC7E2500B612E5 /* MotionApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = MotionApp;
+		};
+		20BCCCD318FC7E2500B612E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 20BCCC1F18FC7E2500B612E5 /* TracerApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = TracerApp;
+		};
+		20BCCCD618FC7E2500B612E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 20BCCC3F18FC7E2500B612E5 /* UiApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = UiApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0091D8F80E81B9330029341E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -45,6 +207,146 @@
 		20B10154180C7F9000278EA0 /* particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle.png; sourceTree = "<group>"; };
 		20B1015E180CBF3900278EA0 /* Spring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spring.cpp; path = ../src/Spring.cpp; sourceTree = "<group>"; };
 		20B1015F180CBF3900278EA0 /* Spring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spring.h; path = ../src/Spring.h; sourceTree = "<group>"; };
+		20BCCB8818FC7E2500B612E5 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		20BCCB8918FC7E2500B612E5 /* cinderblock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cinderblock.png; sourceTree = "<group>"; };
+		20BCCB8A18FC7E2500B612E5 /* cinderblock.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = cinderblock.xml; sourceTree = "<group>"; };
+		20BCCB8D18FC7E2500B612E5 /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libLeap.dylib; sourceTree = "<group>"; };
+		20BCCB9018FC7E2500B612E5 /* Leap.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = Leap.dll; sourceTree = "<group>"; };
+		20BCCB9118FC7E2500B612E5 /* Leap.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = Leap.lib; sourceTree = "<group>"; };
+		20BCCB9218FC7E2500B612E5 /* Leapd.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = Leapd.dll; sourceTree = "<group>"; };
+		20BCCB9318FC7E2500B612E5 /* Leapd.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = Leapd.lib; sourceTree = "<group>"; };
+		20BCCB9518FC7E2500B612E5 /* Leap.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = Leap.dll; sourceTree = "<group>"; };
+		20BCCB9618FC7E2500B612E5 /* Leap.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = Leap.lib; sourceTree = "<group>"; };
+		20BCCB9718FC7E2500B612E5 /* Leapd.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = Leapd.dll; sourceTree = "<group>"; };
+		20BCCB9818FC7E2500B612E5 /* Leapd.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = Leapd.lib; sourceTree = "<group>"; };
+		20BCCB9918FC7E2500B612E5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		20BCCB9D18FC7E2500B612E5 /* GestureApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GestureApp.cpp; sourceTree = "<group>"; };
+		20BCCB9F18FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCBA018FC7E2500B612E5 /* GestureApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GestureApp.sln; sourceTree = "<group>"; };
+		20BCCBA118FC7E2500B612E5 /* GestureApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = GestureApp.vcxproj; sourceTree = "<group>"; };
+		20BCCBA218FC7E2500B612E5 /* GestureApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = GestureApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCBA318FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCBA518FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCBA618FC7E2500B612E5 /* GestureApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GestureApp.sln; sourceTree = "<group>"; };
+		20BCCBA718FC7E2500B612E5 /* GestureApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = GestureApp.vcxproj; sourceTree = "<group>"; };
+		20BCCBA818FC7E2500B612E5 /* GestureApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = GestureApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCBA918FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCBAB18FC7E2500B612E5 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CinderApp.icns; sourceTree = "<group>"; };
+		20BCCBAC18FC7E2500B612E5 /* GestureApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = GestureApp.xcodeproj; sourceTree = "<group>"; };
+		20BCCBAF18FC7E2500B612E5 /* GestureApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureApp_Prefix.pch; sourceTree = "<group>"; };
+		20BCCBB018FC7E2500B612E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20BCCBB318FC7E2500B612E5 /* LeapApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LeapApp.cpp; sourceTree = "<group>"; };
+		20BCCBB518FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCBB618FC7E2500B612E5 /* LeapApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LeapApp.sln; sourceTree = "<group>"; };
+		20BCCBB718FC7E2500B612E5 /* LeapApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LeapApp.vcxproj; sourceTree = "<group>"; };
+		20BCCBB818FC7E2500B612E5 /* LeapApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LeapApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCBB918FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCBBB18FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCBBC18FC7E2500B612E5 /* LeapApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LeapApp.sln; sourceTree = "<group>"; };
+		20BCCBBD18FC7E2500B612E5 /* LeapApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LeapApp.vcxproj; sourceTree = "<group>"; };
+		20BCCBBE18FC7E2500B612E5 /* LeapApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LeapApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCBBF18FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCBC118FC7E2500B612E5 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CinderApp.icns; sourceTree = "<group>"; };
+		20BCCBC218FC7E2500B612E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20BCCBC318FC7E2500B612E5 /* LeapApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = LeapApp.xcodeproj; sourceTree = "<group>"; };
+		20BCCBC618FC7E2500B612E5 /* LeapApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapApp_Prefix.pch; sourceTree = "<group>"; };
+		20BCCBC918FC7E2500B612E5 /* MotionApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MotionApp.cpp; sourceTree = "<group>"; };
+		20BCCBCB18FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCBCC18FC7E2500B612E5 /* MotionApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MotionApp.sln; sourceTree = "<group>"; };
+		20BCCBCD18FC7E2500B612E5 /* MotionApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MotionApp.vcxproj; sourceTree = "<group>"; };
+		20BCCBCE18FC7E2500B612E5 /* MotionApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MotionApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCBCF18FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCBD118FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCBD218FC7E2500B612E5 /* MotionApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MotionApp.sln; sourceTree = "<group>"; };
+		20BCCBD318FC7E2500B612E5 /* MotionApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MotionApp.vcxproj; sourceTree = "<group>"; };
+		20BCCBD418FC7E2500B612E5 /* MotionApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MotionApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCBD518FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCBD718FC7E2500B612E5 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CinderApp.icns; sourceTree = "<group>"; };
+		20BCCBD818FC7E2500B612E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20BCCBD918FC7E2500B612E5 /* MotionApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = MotionApp.xcodeproj; sourceTree = "<group>"; };
+		20BCCBDC18FC7E2500B612E5 /* MotionApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionApp_Prefix.pch; sourceTree = "<group>"; };
+		20BCCBDF18FC7E2500B612E5 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
+		20BCCBE018FC7E2500B612E5 /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
+		20BCCBE218FC7E2500B612E5 /* blur_x_frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blur_x_frag.glsl; sourceTree = "<group>"; };
+		20BCCBE318FC7E2500B612E5 /* blur_y_frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blur_y_frag.glsl; sourceTree = "<group>"; };
+		20BCCBE418FC7E2500B612E5 /* pass_through_vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pass_through_vert.glsl; sourceTree = "<group>"; };
+		20BCCBE618FC7E2500B612E5 /* Ribbon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ribbon.cpp; sourceTree = "<group>"; };
+		20BCCBE718FC7E2500B612E5 /* TracerApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TracerApp.cpp; sourceTree = "<group>"; };
+		20BCCBE918FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCBEA18FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCBEB18FC7E2500B612E5 /* TracerApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TracerApp.sln; sourceTree = "<group>"; };
+		20BCCBEC18FC7E2500B612E5 /* TracerApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TracerApp.vcxproj; sourceTree = "<group>"; };
+		20BCCBED18FC7E2500B612E5 /* TracerApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TracerApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCBEF18FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCBF018FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCBF118FC7E2500B612E5 /* TracerApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TracerApp.sln; sourceTree = "<group>"; };
+		20BCCBF218FC7E2500B612E5 /* TracerApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TracerApp.vcxproj; sourceTree = "<group>"; };
+		20BCCBF318FC7E2500B612E5 /* TracerApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TracerApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCBF718FC7E2500B612E5 /* TracerApp.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = TracerApp.app; sourceTree = "<group>"; };
+		20BCCBFB18FC7E2500B612E5 /* build-state.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "build-state.dat"; sourceTree = "<group>"; };
+		20BCCBFE18FC7E2500B612E5 /* Cinder-LeapMotion.d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.dtrace; path = "Cinder-LeapMotion.d"; sourceTree = "<group>"; };
+		20BCCBFF18FC7E2500B612E5 /* Cinder-LeapMotion.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinder-LeapMotion.dia"; sourceTree = "<group>"; };
+		20BCCC0018FC7E2500B612E5 /* Cinder-LeapMotion.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "Cinder-LeapMotion.o"; sourceTree = "<group>"; };
+		20BCCC0118FC7E2500B612E5 /* Ribbon.d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.dtrace; path = Ribbon.d; sourceTree = "<group>"; };
+		20BCCC0218FC7E2500B612E5 /* Ribbon.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ribbon.dia; sourceTree = "<group>"; };
+		20BCCC0318FC7E2500B612E5 /* Ribbon.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Ribbon.o; sourceTree = "<group>"; };
+		20BCCC0418FC7E2500B612E5 /* TracerApp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = TracerApp; sourceTree = "<group>"; };
+		20BCCC0518FC7E2500B612E5 /* TracerApp.d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.dtrace; path = TracerApp.d; sourceTree = "<group>"; };
+		20BCCC0618FC7E2500B612E5 /* TracerApp.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = TracerApp.dia; sourceTree = "<group>"; };
+		20BCCC0718FC7E2500B612E5 /* TracerApp.LinkFileList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TracerApp.LinkFileList; sourceTree = "<group>"; };
+		20BCCC0818FC7E2500B612E5 /* TracerApp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = TracerApp.o; sourceTree = "<group>"; };
+		20BCCC0918FC7E2500B612E5 /* TracerApp_dependency_info.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = TracerApp_dependency_info.dat; sourceTree = "<group>"; };
+		20BCCC0B18FC7E2500B612E5 /* Cinder-LeapMotion.d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.dtrace; path = "Cinder-LeapMotion.d"; sourceTree = "<group>"; };
+		20BCCC0C18FC7E2500B612E5 /* Cinder-LeapMotion.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinder-LeapMotion.dia"; sourceTree = "<group>"; };
+		20BCCC0D18FC7E2500B612E5 /* Cinder-LeapMotion.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "Cinder-LeapMotion.o"; sourceTree = "<group>"; };
+		20BCCC0E18FC7E2500B612E5 /* Ribbon.d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.dtrace; path = Ribbon.d; sourceTree = "<group>"; };
+		20BCCC0F18FC7E2500B612E5 /* Ribbon.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ribbon.dia; sourceTree = "<group>"; };
+		20BCCC1018FC7E2500B612E5 /* Ribbon.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Ribbon.o; sourceTree = "<group>"; };
+		20BCCC1118FC7E2500B612E5 /* TracerApp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = TracerApp; sourceTree = "<group>"; };
+		20BCCC1218FC7E2500B612E5 /* TracerApp.d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.dtrace; path = TracerApp.d; sourceTree = "<group>"; };
+		20BCCC1318FC7E2500B612E5 /* TracerApp.dia */ = {isa = PBXFileReference; lastKnownFileType = file; path = TracerApp.dia; sourceTree = "<group>"; };
+		20BCCC1418FC7E2500B612E5 /* TracerApp.LinkFileList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TracerApp.LinkFileList; sourceTree = "<group>"; };
+		20BCCC1518FC7E2500B612E5 /* TracerApp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = TracerApp.o; sourceTree = "<group>"; };
+		20BCCC1618FC7E2500B612E5 /* TracerApp_dependency_info.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = TracerApp_dependency_info.dat; sourceTree = "<group>"; };
+		20BCCC1718FC7E2500B612E5 /* TracerApp-all-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TracerApp-all-target-headers.hmap"; sourceTree = "<group>"; };
+		20BCCC1818FC7E2500B612E5 /* TracerApp-generated-files.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TracerApp-generated-files.hmap"; sourceTree = "<group>"; };
+		20BCCC1918FC7E2500B612E5 /* TracerApp-own-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TracerApp-own-target-headers.hmap"; sourceTree = "<group>"; };
+		20BCCC1A18FC7E2500B612E5 /* TracerApp-project-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TracerApp-project-headers.hmap"; sourceTree = "<group>"; };
+		20BCCC1B18FC7E2500B612E5 /* TracerApp.dep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TracerApp.dep; sourceTree = "<group>"; };
+		20BCCC1C18FC7E2500B612E5 /* TracerApp.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = TracerApp.hmap; sourceTree = "<group>"; };
+		20BCCC1D18FC7E2500B612E5 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CinderApp.icns; sourceTree = "<group>"; };
+		20BCCC1E18FC7E2500B612E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20BCCC1F18FC7E2500B612E5 /* TracerApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = TracerApp.xcodeproj; sourceTree = "<group>"; };
+		20BCCC2218FC7E2500B612E5 /* TracerApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TracerApp_Prefix.pch; sourceTree = "<group>"; };
+		20BCCC2518FC7E2500B612E5 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
+		20BCCC2718FC7E2500B612E5 /* button_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_off.png; sourceTree = "<group>"; };
+		20BCCC2818FC7E2500B612E5 /* button_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_on.png; sourceTree = "<group>"; };
+		20BCCC2918FC7E2500B612E5 /* grab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grab.png; sourceTree = "<group>"; };
+		20BCCC2A18FC7E2500B612E5 /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand.png; sourceTree = "<group>"; };
+		20BCCC2B18FC7E2500B612E5 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
+		20BCCC2C18FC7E2500B612E5 /* touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touch.png; sourceTree = "<group>"; };
+		20BCCC2D18FC7E2500B612E5 /* track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = track.png; sourceTree = "<group>"; };
+		20BCCC2F18FC7E2500B612E5 /* UiApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UiApp.cpp; sourceTree = "<group>"; };
+		20BCCC3118FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCC3218FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCC3318FC7E2500B612E5 /* UiApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UiApp.sln; sourceTree = "<group>"; };
+		20BCCC3418FC7E2500B612E5 /* UiApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UiApp.vcxproj; sourceTree = "<group>"; };
+		20BCCC3518FC7E2500B612E5 /* UiApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UiApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCC3718FC7E2500B612E5 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = cinder_app_icon.ico; sourceTree = "<group>"; };
+		20BCCC3818FC7E2500B612E5 /* Resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Resources.rc; sourceTree = "<group>"; };
+		20BCCC3918FC7E2500B612E5 /* UiApp.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UiApp.sln; sourceTree = "<group>"; };
+		20BCCC3A18FC7E2500B612E5 /* UiApp.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UiApp.vcxproj; sourceTree = "<group>"; };
+		20BCCC3B18FC7E2500B612E5 /* UiApp.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UiApp.vcxproj.filters; sourceTree = "<group>"; };
+		20BCCC3D18FC7E2500B612E5 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CinderApp.icns; sourceTree = "<group>"; };
+		20BCCC3E18FC7E2500B612E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20BCCC3F18FC7E2500B612E5 /* UiApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = UiApp.xcodeproj; sourceTree = "<group>"; };
+		20BCCC4218FC7E2500B612E5 /* UiApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UiApp_Prefix.pch; sourceTree = "<group>"; };
+		20BCCC4418FC7E2500B612E5 /* Cinder-LeapMotion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Cinder-LeapMotion.cpp"; sourceTree = "<group>"; };
+		20BCCC4518FC7E2500B612E5 /* Cinder-LeapMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Cinder-LeapMotion.h"; sourceTree = "<group>"; };
+		20BCCC4618FC7E2500B612E5 /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leap.h; sourceTree = "<group>"; };
+		20BCCC4718FC7E2500B612E5 /* LeapMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapMath.h; sourceTree = "<group>"; };
+		20BCCC4B18FC7E2500B612E5 /* _TBOX_PREFIX_App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = _TBOX_PREFIX_App.cpp; sourceTree = "<group>"; };
+		20BCCC4C18FC7E2500B612E5 /* template.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = template.xml; sourceTree = "<group>"; };
 		20CAAD691826D1B500F6EA90 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -62,14 +364,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20BCCCA018FC7E2500B612E5 /* Cinder-LeapMotion.o in Frameworks */,
+				20BCCC5418FC7E2500B612E5 /* Leapd.lib in Frameworks */,
+				20BCCC9718FC7E2500B612E5 /* Ribbon.o in Frameworks */,
+				20BCCCA318FC7E2500B612E5 /* Ribbon.o in Frameworks */,
+				20BCCC9C18FC7E2500B612E5 /* TracerApp.o in Frameworks */,
 				20CAAD6A1826D1B500F6EA90 /* QuickTime.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				20BCCC5618FC7E2500B612E5 /* Leap.lib in Frameworks */,
+				20BCCC5018FC7E2500B612E5 /* libLeap.dylib in Frameworks */,
 				0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */,
+				20BCCC9418FC7E2500B612E5 /* Cinder-LeapMotion.o in Frameworks */,
 				5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */,
 				5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */,
+				20BCCC5218FC7E2500B612E5 /* Leap.lib in Frameworks */,
+				20BCCCA818FC7E2500B612E5 /* TracerApp.o in Frameworks */,
 				00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */,
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
+				20BCCC5818FC7E2500B612E5 /* Leapd.lib in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,6 +393,7 @@
 		01B97315FEAEA392516A2CEA /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
+				20BCCB8718FC7E2500B612E5 /* Cinder-LeapMotion */,
 				20ABCDEA1810871700FA26C7 /* Config */,
 			);
 			name = Blocks;
@@ -155,6 +469,570 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		20BCCB8718FC7E2500B612E5 /* Cinder-LeapMotion */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB8818FC7E2500B612E5 /* .gitignore */,
+				20BCCB8918FC7E2500B612E5 /* cinderblock.png */,
+				20BCCB8A18FC7E2500B612E5 /* cinderblock.xml */,
+				20BCCB8B18FC7E2500B612E5 /* lib */,
+				20BCCB9918FC7E2500B612E5 /* README */,
+				20BCCB9A18FC7E2500B612E5 /* samples */,
+				20BCCC4318FC7E2500B612E5 /* src */,
+				20BCCC4818FC7E2500B612E5 /* templates */,
+			);
+			name = "Cinder-LeapMotion";
+			path = "../../../Cinder_0.8.5/blocks/Cinder-LeapMotion";
+			sourceTree = "<group>";
+		};
+		20BCCB8B18FC7E2500B612E5 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB8C18FC7E2500B612E5 /* macosx */,
+				20BCCB8E18FC7E2500B612E5 /* msw */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		20BCCB8C18FC7E2500B612E5 /* macosx */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB8D18FC7E2500B612E5 /* libLeap.dylib */,
+			);
+			path = macosx;
+			sourceTree = "<group>";
+		};
+		20BCCB8E18FC7E2500B612E5 /* msw */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB8F18FC7E2500B612E5 /* x64 */,
+				20BCCB9418FC7E2500B612E5 /* x86 */,
+			);
+			path = msw;
+			sourceTree = "<group>";
+		};
+		20BCCB8F18FC7E2500B612E5 /* x64 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB9018FC7E2500B612E5 /* Leap.dll */,
+				20BCCB9118FC7E2500B612E5 /* Leap.lib */,
+				20BCCB9218FC7E2500B612E5 /* Leapd.dll */,
+				20BCCB9318FC7E2500B612E5 /* Leapd.lib */,
+			);
+			path = x64;
+			sourceTree = "<group>";
+		};
+		20BCCB9418FC7E2500B612E5 /* x86 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB9518FC7E2500B612E5 /* Leap.dll */,
+				20BCCB9618FC7E2500B612E5 /* Leap.lib */,
+				20BCCB9718FC7E2500B612E5 /* Leapd.dll */,
+				20BCCB9818FC7E2500B612E5 /* Leapd.lib */,
+			);
+			path = x86;
+			sourceTree = "<group>";
+		};
+		20BCCB9A18FC7E2500B612E5 /* samples */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB9B18FC7E2500B612E5 /* GestureApp */,
+				20BCCBB118FC7E2500B612E5 /* LeapApp */,
+				20BCCBC718FC7E2500B612E5 /* MotionApp */,
+				20BCCBDD18FC7E2500B612E5 /* TracerApp */,
+				20BCCC2318FC7E2500B612E5 /* UiApp */,
+			);
+			path = samples;
+			sourceTree = "<group>";
+		};
+		20BCCB9B18FC7E2500B612E5 /* GestureApp */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB9C18FC7E2500B612E5 /* src */,
+				20BCCB9E18FC7E2500B612E5 /* vc10 */,
+				20BCCBA418FC7E2500B612E5 /* vc11 */,
+				20BCCBAA18FC7E2500B612E5 /* xcode */,
+			);
+			path = GestureApp;
+			sourceTree = "<group>";
+		};
+		20BCCB9C18FC7E2500B612E5 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB9D18FC7E2500B612E5 /* GestureApp.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		20BCCB9E18FC7E2500B612E5 /* vc10 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCB9F18FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCBA018FC7E2500B612E5 /* GestureApp.sln */,
+				20BCCBA118FC7E2500B612E5 /* GestureApp.vcxproj */,
+				20BCCBA218FC7E2500B612E5 /* GestureApp.vcxproj.filters */,
+				20BCCBA318FC7E2500B612E5 /* Resources.rc */,
+			);
+			path = vc10;
+			sourceTree = "<group>";
+		};
+		20BCCBA418FC7E2500B612E5 /* vc11 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBA518FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCBA618FC7E2500B612E5 /* GestureApp.sln */,
+				20BCCBA718FC7E2500B612E5 /* GestureApp.vcxproj */,
+				20BCCBA818FC7E2500B612E5 /* GestureApp.vcxproj.filters */,
+				20BCCBA918FC7E2500B612E5 /* Resources.rc */,
+			);
+			path = vc11;
+			sourceTree = "<group>";
+		};
+		20BCCBAA18FC7E2500B612E5 /* xcode */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBAB18FC7E2500B612E5 /* CinderApp.icns */,
+				20BCCBAC18FC7E2500B612E5 /* GestureApp.xcodeproj */,
+				20BCCBAF18FC7E2500B612E5 /* GestureApp_Prefix.pch */,
+				20BCCBB018FC7E2500B612E5 /* Info.plist */,
+			);
+			path = xcode;
+			sourceTree = "<group>";
+		};
+		20BCCBAD18FC7E2500B612E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCCCB18FC7E2500B612E5 /* MotionApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20BCCBB118FC7E2500B612E5 /* LeapApp */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBB218FC7E2500B612E5 /* src */,
+				20BCCBB418FC7E2500B612E5 /* vc10 */,
+				20BCCBBA18FC7E2500B612E5 /* vc11 */,
+				20BCCBC018FC7E2500B612E5 /* xcode */,
+			);
+			path = LeapApp;
+			sourceTree = "<group>";
+		};
+		20BCCBB218FC7E2500B612E5 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBB318FC7E2500B612E5 /* LeapApp.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		20BCCBB418FC7E2500B612E5 /* vc10 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBB518FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCBB618FC7E2500B612E5 /* LeapApp.sln */,
+				20BCCBB718FC7E2500B612E5 /* LeapApp.vcxproj */,
+				20BCCBB818FC7E2500B612E5 /* LeapApp.vcxproj.filters */,
+				20BCCBB918FC7E2500B612E5 /* Resources.rc */,
+			);
+			path = vc10;
+			sourceTree = "<group>";
+		};
+		20BCCBBA18FC7E2500B612E5 /* vc11 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBBB18FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCBBC18FC7E2500B612E5 /* LeapApp.sln */,
+				20BCCBBD18FC7E2500B612E5 /* LeapApp.vcxproj */,
+				20BCCBBE18FC7E2500B612E5 /* LeapApp.vcxproj.filters */,
+				20BCCBBF18FC7E2500B612E5 /* Resources.rc */,
+			);
+			path = vc11;
+			sourceTree = "<group>";
+		};
+		20BCCBC018FC7E2500B612E5 /* xcode */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBC118FC7E2500B612E5 /* CinderApp.icns */,
+				20BCCBC218FC7E2500B612E5 /* Info.plist */,
+				20BCCBC318FC7E2500B612E5 /* LeapApp.xcodeproj */,
+				20BCCBC618FC7E2500B612E5 /* LeapApp_Prefix.pch */,
+			);
+			path = xcode;
+			sourceTree = "<group>";
+		};
+		20BCCBC418FC7E2500B612E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCCCE18FC7E2500B612E5 /* LeapApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20BCCBC718FC7E2500B612E5 /* MotionApp */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBC818FC7E2500B612E5 /* src */,
+				20BCCBCA18FC7E2500B612E5 /* vc10 */,
+				20BCCBD018FC7E2500B612E5 /* vc11 */,
+				20BCCBD618FC7E2500B612E5 /* xcode */,
+			);
+			path = MotionApp;
+			sourceTree = "<group>";
+		};
+		20BCCBC818FC7E2500B612E5 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBC918FC7E2500B612E5 /* MotionApp.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		20BCCBCA18FC7E2500B612E5 /* vc10 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBCB18FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCBCC18FC7E2500B612E5 /* MotionApp.sln */,
+				20BCCBCD18FC7E2500B612E5 /* MotionApp.vcxproj */,
+				20BCCBCE18FC7E2500B612E5 /* MotionApp.vcxproj.filters */,
+				20BCCBCF18FC7E2500B612E5 /* Resources.rc */,
+			);
+			path = vc10;
+			sourceTree = "<group>";
+		};
+		20BCCBD018FC7E2500B612E5 /* vc11 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBD118FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCBD218FC7E2500B612E5 /* MotionApp.sln */,
+				20BCCBD318FC7E2500B612E5 /* MotionApp.vcxproj */,
+				20BCCBD418FC7E2500B612E5 /* MotionApp.vcxproj.filters */,
+				20BCCBD518FC7E2500B612E5 /* Resources.rc */,
+			);
+			path = vc11;
+			sourceTree = "<group>";
+		};
+		20BCCBD618FC7E2500B612E5 /* xcode */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBD718FC7E2500B612E5 /* CinderApp.icns */,
+				20BCCBD818FC7E2500B612E5 /* Info.plist */,
+				20BCCBD918FC7E2500B612E5 /* MotionApp.xcodeproj */,
+				20BCCBDC18FC7E2500B612E5 /* MotionApp_Prefix.pch */,
+			);
+			path = xcode;
+			sourceTree = "<group>";
+		};
+		20BCCBDA18FC7E2500B612E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCCD118FC7E2500B612E5 /* MotionApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20BCCBDD18FC7E2500B612E5 /* TracerApp */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBDE18FC7E2500B612E5 /* include */,
+				20BCCBE118FC7E2500B612E5 /* resources */,
+				20BCCBE518FC7E2500B612E5 /* src */,
+				20BCCBE818FC7E2500B612E5 /* vc10 */,
+				20BCCBEE18FC7E2500B612E5 /* vc11 */,
+				20BCCBF418FC7E2500B612E5 /* xcode */,
+			);
+			path = TracerApp;
+			sourceTree = "<group>";
+		};
+		20BCCBDE18FC7E2500B612E5 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBDF18FC7E2500B612E5 /* Resources.h */,
+				20BCCBE018FC7E2500B612E5 /* Ribbon.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		20BCCBE118FC7E2500B612E5 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBE218FC7E2500B612E5 /* blur_x_frag.glsl */,
+				20BCCBE318FC7E2500B612E5 /* blur_y_frag.glsl */,
+				20BCCBE418FC7E2500B612E5 /* pass_through_vert.glsl */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		20BCCBE518FC7E2500B612E5 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBE618FC7E2500B612E5 /* Ribbon.cpp */,
+				20BCCBE718FC7E2500B612E5 /* TracerApp.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		20BCCBE818FC7E2500B612E5 /* vc10 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBE918FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCBEA18FC7E2500B612E5 /* Resources.rc */,
+				20BCCBEB18FC7E2500B612E5 /* TracerApp.sln */,
+				20BCCBEC18FC7E2500B612E5 /* TracerApp.vcxproj */,
+				20BCCBED18FC7E2500B612E5 /* TracerApp.vcxproj.filters */,
+			);
+			path = vc10;
+			sourceTree = "<group>";
+		};
+		20BCCBEE18FC7E2500B612E5 /* vc11 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBEF18FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCBF018FC7E2500B612E5 /* Resources.rc */,
+				20BCCBF118FC7E2500B612E5 /* TracerApp.sln */,
+				20BCCBF218FC7E2500B612E5 /* TracerApp.vcxproj */,
+				20BCCBF318FC7E2500B612E5 /* TracerApp.vcxproj.filters */,
+			);
+			path = vc11;
+			sourceTree = "<group>";
+		};
+		20BCCBF418FC7E2500B612E5 /* xcode */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBF518FC7E2500B612E5 /* build */,
+				20BCCC1D18FC7E2500B612E5 /* CinderApp.icns */,
+				20BCCC1E18FC7E2500B612E5 /* Info.plist */,
+				20BCCC1F18FC7E2500B612E5 /* TracerApp.xcodeproj */,
+				20BCCC2218FC7E2500B612E5 /* TracerApp_Prefix.pch */,
+			);
+			path = xcode;
+			sourceTree = "<group>";
+		};
+		20BCCBF518FC7E2500B612E5 /* build */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBF618FC7E2500B612E5 /* Debug */,
+				20BCCBF818FC7E2500B612E5 /* TracerApp.build */,
+			);
+			path = build;
+			sourceTree = "<group>";
+		};
+		20BCCBF618FC7E2500B612E5 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBF718FC7E2500B612E5 /* TracerApp.app */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		20BCCBF818FC7E2500B612E5 /* TracerApp.build */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBF918FC7E2500B612E5 /* Debug */,
+			);
+			path = TracerApp.build;
+			sourceTree = "<group>";
+		};
+		20BCCBF918FC7E2500B612E5 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBFA18FC7E2500B612E5 /* TracerApp.build */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		20BCCBFA18FC7E2500B612E5 /* TracerApp.build */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBFB18FC7E2500B612E5 /* build-state.dat */,
+				20BCCBFC18FC7E2500B612E5 /* Objects-normal */,
+				20BCCC1718FC7E2500B612E5 /* TracerApp-all-target-headers.hmap */,
+				20BCCC1818FC7E2500B612E5 /* TracerApp-generated-files.hmap */,
+				20BCCC1918FC7E2500B612E5 /* TracerApp-own-target-headers.hmap */,
+				20BCCC1A18FC7E2500B612E5 /* TracerApp-project-headers.hmap */,
+				20BCCC1B18FC7E2500B612E5 /* TracerApp.dep */,
+				20BCCC1C18FC7E2500B612E5 /* TracerApp.hmap */,
+			);
+			path = TracerApp.build;
+			sourceTree = "<group>";
+		};
+		20BCCBFC18FC7E2500B612E5 /* Objects-normal */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBFD18FC7E2500B612E5 /* i386 */,
+				20BCCC0A18FC7E2500B612E5 /* x86_64 */,
+			);
+			path = "Objects-normal";
+			sourceTree = "<group>";
+		};
+		20BCCBFD18FC7E2500B612E5 /* i386 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCBFE18FC7E2500B612E5 /* Cinder-LeapMotion.d */,
+				20BCCBFF18FC7E2500B612E5 /* Cinder-LeapMotion.dia */,
+				20BCCC0018FC7E2500B612E5 /* Cinder-LeapMotion.o */,
+				20BCCC0118FC7E2500B612E5 /* Ribbon.d */,
+				20BCCC0218FC7E2500B612E5 /* Ribbon.dia */,
+				20BCCC0318FC7E2500B612E5 /* Ribbon.o */,
+				20BCCC0418FC7E2500B612E5 /* TracerApp */,
+				20BCCC0518FC7E2500B612E5 /* TracerApp.d */,
+				20BCCC0618FC7E2500B612E5 /* TracerApp.dia */,
+				20BCCC0718FC7E2500B612E5 /* TracerApp.LinkFileList */,
+				20BCCC0818FC7E2500B612E5 /* TracerApp.o */,
+				20BCCC0918FC7E2500B612E5 /* TracerApp_dependency_info.dat */,
+			);
+			path = i386;
+			sourceTree = "<group>";
+		};
+		20BCCC0A18FC7E2500B612E5 /* x86_64 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC0B18FC7E2500B612E5 /* Cinder-LeapMotion.d */,
+				20BCCC0C18FC7E2500B612E5 /* Cinder-LeapMotion.dia */,
+				20BCCC0D18FC7E2500B612E5 /* Cinder-LeapMotion.o */,
+				20BCCC0E18FC7E2500B612E5 /* Ribbon.d */,
+				20BCCC0F18FC7E2500B612E5 /* Ribbon.dia */,
+				20BCCC1018FC7E2500B612E5 /* Ribbon.o */,
+				20BCCC1118FC7E2500B612E5 /* TracerApp */,
+				20BCCC1218FC7E2500B612E5 /* TracerApp.d */,
+				20BCCC1318FC7E2500B612E5 /* TracerApp.dia */,
+				20BCCC1418FC7E2500B612E5 /* TracerApp.LinkFileList */,
+				20BCCC1518FC7E2500B612E5 /* TracerApp.o */,
+				20BCCC1618FC7E2500B612E5 /* TracerApp_dependency_info.dat */,
+			);
+			path = x86_64;
+			sourceTree = "<group>";
+		};
+		20BCCC2018FC7E2500B612E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCCD418FC7E2500B612E5 /* LeapApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20BCCC2318FC7E2500B612E5 /* UiApp */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC2418FC7E2500B612E5 /* include */,
+				20BCCC2618FC7E2500B612E5 /* resources */,
+				20BCCC2E18FC7E2500B612E5 /* src */,
+				20BCCC3018FC7E2500B612E5 /* vc10 */,
+				20BCCC3618FC7E2500B612E5 /* vc11 */,
+				20BCCC3C18FC7E2500B612E5 /* xcode */,
+			);
+			path = UiApp;
+			sourceTree = "<group>";
+		};
+		20BCCC2418FC7E2500B612E5 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC2518FC7E2500B612E5 /* Resources.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		20BCCC2618FC7E2500B612E5 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC2718FC7E2500B612E5 /* button_off.png */,
+				20BCCC2818FC7E2500B612E5 /* button_on.png */,
+				20BCCC2918FC7E2500B612E5 /* grab.png */,
+				20BCCC2A18FC7E2500B612E5 /* hand.png */,
+				20BCCC2B18FC7E2500B612E5 /* slider.png */,
+				20BCCC2C18FC7E2500B612E5 /* touch.png */,
+				20BCCC2D18FC7E2500B612E5 /* track.png */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		20BCCC2E18FC7E2500B612E5 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC2F18FC7E2500B612E5 /* UiApp.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		20BCCC3018FC7E2500B612E5 /* vc10 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC3118FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCC3218FC7E2500B612E5 /* Resources.rc */,
+				20BCCC3318FC7E2500B612E5 /* UiApp.sln */,
+				20BCCC3418FC7E2500B612E5 /* UiApp.vcxproj */,
+				20BCCC3518FC7E2500B612E5 /* UiApp.vcxproj.filters */,
+			);
+			path = vc10;
+			sourceTree = "<group>";
+		};
+		20BCCC3618FC7E2500B612E5 /* vc11 */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC3718FC7E2500B612E5 /* cinder_app_icon.ico */,
+				20BCCC3818FC7E2500B612E5 /* Resources.rc */,
+				20BCCC3918FC7E2500B612E5 /* UiApp.sln */,
+				20BCCC3A18FC7E2500B612E5 /* UiApp.vcxproj */,
+				20BCCC3B18FC7E2500B612E5 /* UiApp.vcxproj.filters */,
+			);
+			path = vc11;
+			sourceTree = "<group>";
+		};
+		20BCCC3C18FC7E2500B612E5 /* xcode */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC3D18FC7E2500B612E5 /* CinderApp.icns */,
+				20BCCC3E18FC7E2500B612E5 /* Info.plist */,
+				20BCCC3F18FC7E2500B612E5 /* UiApp.xcodeproj */,
+				20BCCC4218FC7E2500B612E5 /* UiApp_Prefix.pch */,
+			);
+			path = xcode;
+			sourceTree = "<group>";
+		};
+		20BCCC4018FC7E2500B612E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCCD718FC7E2500B612E5 /* UiApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20BCCC4318FC7E2500B612E5 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC4418FC7E2500B612E5 /* Cinder-LeapMotion.cpp */,
+				20BCCC4518FC7E2500B612E5 /* Cinder-LeapMotion.h */,
+				20BCCC4618FC7E2500B612E5 /* Leap.h */,
+				20BCCC4718FC7E2500B612E5 /* LeapMath.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		20BCCC4818FC7E2500B612E5 /* templates */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC4918FC7E2500B612E5 /* Basic GL */,
+			);
+			path = templates;
+			sourceTree = "<group>";
+		};
+		20BCCC4918FC7E2500B612E5 /* Basic GL */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC4A18FC7E2500B612E5 /* src */,
+				20BCCC4C18FC7E2500B612E5 /* template.xml */,
+			);
+			path = "Basic GL";
+			sourceTree = "<group>";
+		};
+		20BCCC4A18FC7E2500B612E5 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				20BCCC4B18FC7E2500B612E5 /* _TBOX_PREFIX_App.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* ParticleSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,13 +1049,13 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				209D8E1918208F2F003332B0 /* BpmTapper.h */,
 				20A9EB52185A412F00933C0B /* ParticleCluster.h */,
 				C6AB8CB550114E3F804CEB63 /* Resources.h */,
 				77958FA3D4224CA8B6FA4DC9 /* Climax_Prefix.pch */,
 				20B10151180C7F5E00278EA0 /* ParticleSystem.h */,
 				20B1014F180C7F5E00278EA0 /* Particle.h */,
 				20B1015F180CBF3900278EA0 /* Spring.h */,
-				209D8E1918208F2F003332B0 /* BpmTapper.h */,
 				20282CFE186A30B0009D34BD /* TouchPoint.h */,
 			);
 			name = Headers;
@@ -243,6 +1121,28 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* ParticleSystem */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 20BCCBAD18FC7E2500B612E5 /* Products */;
+					ProjectRef = 20BCCBAC18FC7E2500B612E5 /* GestureApp.xcodeproj */;
+				},
+				{
+					ProductGroup = 20BCCBC418FC7E2500B612E5 /* Products */;
+					ProjectRef = 20BCCBC318FC7E2500B612E5 /* LeapApp.xcodeproj */;
+				},
+				{
+					ProductGroup = 20BCCBDA18FC7E2500B612E5 /* Products */;
+					ProjectRef = 20BCCBD918FC7E2500B612E5 /* MotionApp.xcodeproj */;
+				},
+				{
+					ProductGroup = 20BCCC2018FC7E2500B612E5 /* Products */;
+					ProjectRef = 20BCCC1F18FC7E2500B612E5 /* TracerApp.xcodeproj */;
+				},
+				{
+					ProductGroup = 20BCCC4018FC7E2500B612E5 /* Products */;
+					ProjectRef = 20BCCC3F18FC7E2500B612E5 /* UiApp.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Climax */,
@@ -250,13 +1150,152 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		20BCCCCB18FC7E2500B612E5 /* MotionApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			name = MotionApp.app;
+			path = GestureApp.app;
+			remoteRef = 20BCCCCA18FC7E2500B612E5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20BCCCCE18FC7E2500B612E5 /* LeapApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LeapApp.app;
+			remoteRef = 20BCCCCD18FC7E2500B612E5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20BCCCD118FC7E2500B612E5 /* MotionApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MotionApp.app;
+			remoteRef = 20BCCCD018FC7E2500B612E5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20BCCCD418FC7E2500B612E5 /* LeapApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			name = LeapApp.app;
+			path = TracerApp.app;
+			remoteRef = 20BCCCD318FC7E2500B612E5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		20BCCCD718FC7E2500B612E5 /* UiApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = UiApp.app;
+			remoteRef = 20BCCCD618FC7E2500B612E5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20BCCCA718FC7E2500B612E5 /* TracerApp.LinkFileList in Resources */,
+				20BCCC5918FC7E2500B612E5 /* README in Resources */,
+				20BCCCA918FC7E2500B612E5 /* TracerApp_dependency_info.dat in Resources */,
+				20BCCC8E18FC7E2500B612E5 /* TracerApp.vcxproj in Resources */,
+				20BCCCA218FC7E2500B612E5 /* Ribbon.dia in Resources */,
+				20BCCC9018FC7E2500B612E5 /* TracerApp.app in Resources */,
+				20BCCC8718FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCC6318FC7E2500B612E5 /* GestureApp.vcxproj.filters in Resources */,
+				20BCCC9618FC7E2500B612E5 /* Ribbon.dia in Resources */,
+				20BCCC9A18FC7E2500B612E5 /* TracerApp.dia in Resources */,
+				20BCCC7D18FC7E2500B612E5 /* MotionApp.vcxproj.filters in Resources */,
+				20BCCC5E18FC7E2500B612E5 /* GestureApp.vcxproj.filters in Resources */,
+				20BCCC8918FC7E2500B612E5 /* TracerApp.vcxproj in Resources */,
+				20BCCC5C18FC7E2500B612E5 /* GestureApp.sln in Resources */,
+				20BCCC5718FC7E2500B612E5 /* Leapd.dll in Resources */,
+				20BCCCAC18FC7E2500B612E5 /* TracerApp-own-target-headers.hmap in Resources */,
+				20BCCC9818FC7E2500B612E5 /* TracerApp in Resources */,
+				20BCCCAA18FC7E2500B612E5 /* TracerApp-all-target-headers.hmap in Resources */,
+				20BCCC6D18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC8318FC7E2500B612E5 /* pass_through_vert.glsl in Resources */,
+				20BCCCB118FC7E2500B612E5 /* Info.plist in Resources */,
+				20BCCCAD18FC7E2500B612E5 /* TracerApp-project-headers.hmap in Resources */,
 				F6AAEF8D0D9A4499B1055E67 /* CinderApp.icns in Resources */,
+				20BCCC4F18FC7E2500B612E5 /* cinderblock.xml in Resources */,
+				20BCCC8118FC7E2500B612E5 /* blur_x_frag.glsl in Resources */,
+				20BCCCAB18FC7E2500B612E5 /* TracerApp-generated-files.hmap in Resources */,
+				20BCCC9D18FC7E2500B612E5 /* TracerApp_dependency_info.dat in Resources */,
+				20BCCCBF18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC9B18FC7E2500B612E5 /* TracerApp.LinkFileList in Resources */,
+				20BCCCB618FC7E2500B612E5 /* slider.png in Resources */,
+				20BCCC6C18FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCCBC18FC7E2500B612E5 /* UiApp.sln in Resources */,
+				20BCCC8018FC7E2500B612E5 /* Info.plist in Resources */,
+				20BCCCA418FC7E2500B612E5 /* TracerApp in Resources */,
+				20BCCC9318FC7E2500B612E5 /* Cinder-LeapMotion.dia in Resources */,
+				20BCCCB318FC7E2500B612E5 /* button_on.png in Resources */,
+				20BCCC8218FC7E2500B612E5 /* blur_y_frag.glsl in Resources */,
+				20BCCCB218FC7E2500B612E5 /* button_off.png in Resources */,
+				20BCCC8F18FC7E2500B612E5 /* TracerApp.vcxproj.filters in Resources */,
+				20BCCCC818FC7E2500B612E5 /* template.xml in Resources */,
+				20BCCC5118FC7E2500B612E5 /* Leap.dll in Resources */,
+				20BCCCB718FC7E2500B612E5 /* touch.png in Resources */,
+				20BCCC8B18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC7318FC7E2500B612E5 /* Info.plist in Resources */,
+				20BCCC7818FC7E2500B612E5 /* MotionApp.vcxproj.filters in Resources */,
+				20BCCC7118FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCC7518FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC7C18FC7E2500B612E5 /* MotionApp.vcxproj in Resources */,
+				20BCCC6618FC7E2500B612E5 /* Info.plist in Resources */,
+				20BCCCC518FC7E2500B612E5 /* Info.plist in Resources */,
+				20BCCC6918FC7E2500B612E5 /* LeapApp.sln in Resources */,
+				20BCCC8A18FC7E2500B612E5 /* TracerApp.vcxproj.filters in Resources */,
+				20BCCC4D18FC7E2500B612E5 /* .gitignore in Resources */,
+				20BCCCC318FC7E2500B612E5 /* UiApp.vcxproj.filters in Resources */,
+				20BCCCB418FC7E2500B612E5 /* grab.png in Resources */,
+				20BCCC7A18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC5B18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC6518FC7E2500B612E5 /* CinderApp.icns in Resources */,
+				20BCCCBD18FC7E2500B612E5 /* UiApp.vcxproj in Resources */,
+				20BCCCC218FC7E2500B612E5 /* UiApp.vcxproj in Resources */,
+				20BCCC6B18FC7E2500B612E5 /* LeapApp.vcxproj.filters in Resources */,
+				20BCCC6018FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC6E18FC7E2500B612E5 /* LeapApp.sln in Resources */,
+				20BCCCAF18FC7E2500B612E5 /* TracerApp.hmap in Resources */,
+				20BCCCB818FC7E2500B612E5 /* track.png in Resources */,
+				20BCCC6118FC7E2500B612E5 /* GestureApp.sln in Resources */,
+				20BCCCC418FC7E2500B612E5 /* CinderApp.icns in Resources */,
+				20BCCCB518FC7E2500B612E5 /* hand.png in Resources */,
+				20BCCC7E18FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCC5518FC7E2500B612E5 /* Leap.dll in Resources */,
+				20BCCC7F18FC7E2500B612E5 /* CinderApp.icns in Resources */,
+				20BCCC7718FC7E2500B612E5 /* MotionApp.vcxproj in Resources */,
+				20BCCCC118FC7E2500B612E5 /* UiApp.sln in Resources */,
+				20BCCC7618FC7E2500B612E5 /* MotionApp.sln in Resources */,
+				20BCCC4E18FC7E2500B612E5 /* cinderblock.png in Resources */,
+				20BCCC7B18FC7E2500B612E5 /* MotionApp.sln in Resources */,
+				20BCCC8618FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC6A18FC7E2500B612E5 /* LeapApp.vcxproj in Resources */,
+				20BCCC7918FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCCBE18FC7E2500B612E5 /* UiApp.vcxproj.filters in Resources */,
+				20BCCC6F18FC7E2500B612E5 /* LeapApp.vcxproj in Resources */,
+				20BCCCB018FC7E2500B612E5 /* CinderApp.icns in Resources */,
+				20BCCC5318FC7E2500B612E5 /* Leapd.dll in Resources */,
+				20BCCC6218FC7E2500B612E5 /* GestureApp.vcxproj in Resources */,
+				20BCCCC018FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCC5D18FC7E2500B612E5 /* GestureApp.vcxproj in Resources */,
+				20BCCC5F18FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCC8818FC7E2500B612E5 /* TracerApp.sln in Resources */,
+				20BCCC9F18FC7E2500B612E5 /* Cinder-LeapMotion.dia in Resources */,
+				20BCCC8C18FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCCBA18FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCCA618FC7E2500B612E5 /* TracerApp.dia in Resources */,
+				20BCCC6418FC7E2500B612E5 /* Resources.rc in Resources */,
 				20B10155180C7F9000278EA0 /* particle.png in Resources */,
+				20BCCC8D18FC7E2500B612E5 /* TracerApp.sln in Resources */,
+				20BCCC9118FC7E2500B612E5 /* build-state.dat in Resources */,
+				20BCCCAE18FC7E2500B612E5 /* TracerApp.dep in Resources */,
+				20BCCC6818FC7E2500B612E5 /* cinder_app_icon.ico in Resources */,
+				20BCCC7218FC7E2500B612E5 /* CinderApp.icns in Resources */,
+				20BCCCBB18FC7E2500B612E5 /* Resources.rc in Resources */,
+				20BCCC7018FC7E2500B612E5 /* LeapApp.vcxproj.filters in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,11 +1306,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20BCCC9218FC7E2500B612E5 /* Cinder-LeapMotion.d in Sources */,
 				20ABCE1F1810871700FA26C7 /* CinderConfig.cpp in Sources */,
+				20BCCC5A18FC7E2500B612E5 /* GestureApp.cpp in Sources */,
 				D44E5FADF45243839ACAD164 /* ClimaxApp.cpp in Sources */,
+				20BCCC6718FC7E2500B612E5 /* LeapApp.cpp in Sources */,
 				20B10152180C7F5E00278EA0 /* Particle.cpp in Sources */,
+				20BCCCC618FC7E2500B612E5 /* Cinder-LeapMotion.cpp in Sources */,
+				20BCCC9518FC7E2500B612E5 /* Ribbon.d in Sources */,
+				20BCCCB918FC7E2500B612E5 /* UiApp.cpp in Sources */,
+				20BCCC7418FC7E2500B612E5 /* MotionApp.cpp in Sources */,
+				20BCCC8518FC7E2500B612E5 /* TracerApp.cpp in Sources */,
+				20BCCCA118FC7E2500B612E5 /* Ribbon.d in Sources */,
 				20B10160180CBF3900278EA0 /* Spring.cpp in Sources */,
+				20BCCCC718FC7E2500B612E5 /* _TBOX_PREFIX_App.cpp in Sources */,
+				20BCCC9918FC7E2500B612E5 /* TracerApp.d in Sources */,
+				20BCCC9E18FC7E2500B612E5 /* Cinder-LeapMotion.d in Sources */,
+				20BCCC8418FC7E2500B612E5 /* Ribbon.cpp in Sources */,
 				20B10153180C7F5E00278EA0 /* ParticleSystem.cpp in Sources */,
+				20BCCCA518FC7E2500B612E5 /* TracerApp.d in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +1354,9 @@
 					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-KissFft/lib/msw",
 					/Users/serkansokmen/Documents/Cinder/Maximilian/ofxMaxim/ofMaximExampleVS2010/bin,
 					"/Users/serkansokmen/Documents/Cinder/irrKlang-1.4.0b/irrKlang-1.4.0/bin/macosx-gcc",
+					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-LeapMotion/lib/macosx",
+					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-LeapMotion/lib/msw/x64",
+					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-LeapMotion/lib/msw/x86",
 				);
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
 				PRODUCT_NAME = Climax;
@@ -329,6 +1385,9 @@
 					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-KissFft/lib/msw",
 					/Users/serkansokmen/Documents/Cinder/Maximilian/ofxMaxim/ofMaximExampleVS2010/bin,
 					"/Users/serkansokmen/Documents/Cinder/irrKlang-1.4.0b/irrKlang-1.4.0/bin/macosx-gcc",
+					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-LeapMotion/lib/macosx",
+					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-LeapMotion/lib/msw/x64",
+					"/Users/serkansokmen/Documents/Cinder/Cinder_0.8.5/blocks/Cinder-LeapMotion/lib/msw/x86",
 				);
 				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
 				PRODUCT_NAME = Climax;
