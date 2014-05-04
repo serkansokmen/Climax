@@ -93,7 +93,7 @@ public:
 void ClimaxApp::prepareSettings(Settings * settings)
 {
 #if defined( CINDER_COCOA_TOUCH )
-    settings->enableHighDensityDisplay();
+    // settings->enableHighDensityDisplay();
 #else
     settings->setWindowSize(1280, 720);
     settings->setFullScreen(true);
@@ -116,6 +116,14 @@ void ClimaxApp::setup()
     mParticleRadiusMax = 1.6f;
 #if defined( CINDER_COCOA_TOUCH )
     mPaintWithTouchEnabled = true;
+    mParticleRadiusMin = 1.6f;
+    mParticleRadiusMax = 2.4f;
+    mUseFlocking = true;
+    mTargetSeparation = 20.f;
+    mNeighboringDistance = 50.f;
+    mSeparationFactor = 1.2f;
+    mAlignmentFactor = .9f;
+    mCohesionFactor = .4f;
 #else
     mPaintWithTouchEnabled = false;
 #endif
@@ -125,13 +133,6 @@ void ClimaxApp::setup()
     bpmTapper = new BpmTapper();
     bpmTapper->isEnabled = true;
     bpmTapper->start();
-
-    mUseFlocking = true;
-    mTargetSeparation = 20.f;
-    mNeighboringDistance = 50.f;
-    mSeparationFactor = 1.2f;
-    mAlignmentFactor = .9f;
-    mCohesionFactor = .4f;
 
     mForceCenter = getWindowCenter();
     mAttractionCenter = getWindowCenter();
@@ -220,28 +221,22 @@ void ClimaxApp::update()
         it->cohesionEnabled = mUseFlocking;
         it->cohesionFactor = mCohesionFactor;
 
-//        if (mPullParticles){
-//            Vec2f force = (getWindowCenter() - it->position) * .01f;
-//            it->forces += force;
-//        }
-//
-//        if (mUseAttraction){
-//            Vec2f attrForce = mAttractionCenter - it->position;
-//            attrForce.normalize();
-//            attrForce *= math<float>::max(0.f, mAttrFactor - attrForce.length());
-//            it->forces += attrForce;
-//        }
-//
-//        if (mUseRepulsion && it->position.distance(mAttractionCenter) > mRepulsionRadius){
-//            Vec2f repForce = it->position - mAttractionCenter;
-//            repForce = repForce.normalized() * math<float>::max(0.f, mRepulsionRadius - repForce.length());
-//            it->forces += repForce;
-//        }
+        float mAttrFactor = 2.7f;
+        Vec2f attrForce = mAttractionCenter - it->position;
+        attrForce.normalize();
+        attrForce *= math<float>::max(0.f, mAttrFactor - attrForce.length());
+        it->forces += attrForce;
+        
+        float mRepulsionRadius = 200.f;
+        float mRepulsionFactor = .8f;
+        if (it->position.distance(mAttractionCenter) > mRepulsionRadius){
+            Vec2f repForce = it->position - mAttractionCenter;
+            repForce = repForce.normalized() * math<float>::max( 0.f, mRepulsionFactor * ( mRepulsionRadius - repForce.length() ) );
+            it->forces += repForce;
+        }
     }
     mParticleSystem.maxParticles = mMaxParticles;
     mParticleSystem.update();
-
-    mForceCenter = getWindowCenter();
 }
 
 void ClimaxApp::addNewParticleAtPosition(const Vec2f & position)
@@ -279,8 +274,8 @@ void ClimaxApp::setHighNeighboring()
 void ClimaxApp::randomizeParticleProperties()
 {
     mParticleColor = Color(randFloat(), randFloat(), randFloat());
-    mParticleRadiusMin = ci::randFloat();
-    mParticleRadiusMax = ci::randFloat() * .8f;
+    // mParticleRadiusMin *= ci::randFloat();
+    // mParticleRadiusMax *= ci::randFloat() * 1.4f;
 }
 
 void ClimaxApp::randomizeFlockingProperties()
@@ -292,25 +287,44 @@ void ClimaxApp::randomizeFlockingProperties()
 
 void ClimaxApp::touchesBegan(TouchEvent event)
 {
+    switch (event.getTouches().size()) {
+        case 2:
+        {
+            randomizeParticleProperties();
+            randomizeFlockingProperties();
+        }
+            break;
+        case 3:
+        {
+            mParticleSystem.clear();
+        }
+        case 4:
+        {
+            mUseFlocking = !mUseFlocking;
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 void ClimaxApp::touchesMoved(TouchEvent event)
 {
     if (mPaintWithTouchEnabled)
-        switch (event.getTouches().size()) {
-            case 2:
-            {
-                
-            }
-                break;
-            default:
-                break;
+        for (auto touch : event.getTouches()) {
+            addNewParticleAtPosition(touch.getPos());
         }
 }
 
 void ClimaxApp::touchesEnded(TouchEvent event)
 {
-
+    Vec2f average = ci::Vec2f();
+    for (auto touch : event.getTouches()) {
+        average += touch.getPos();
+    }
+    average = average / event.getTouches().size();
+    mAttractionCenter = average;
+    mForceCenter = average;
 }
 
 void ClimaxApp::mouseDrag(MouseEvent event)
@@ -361,7 +375,7 @@ void ClimaxApp::draw()
     gl::enable(GL_LINE_SMOOTH);
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
     gl::color(ColorA::white());
-    gl::lineWidth( .2f );
+    gl::lineWidth( .6f );
     mParticleSystem.draw();
 
 #ifndef CINDER_COCOA_TOUCH
