@@ -93,7 +93,7 @@ public:
 void ClimaxApp::prepareSettings(Settings * settings)
 {
 #if defined( CINDER_COCOA_TOUCH )
-    // settings->enableHighDensityDisplay();
+    settings->enableHighDensityDisplay();
 #else
     settings->setWindowSize(1280, 720);
     settings->setFullScreen(true);
@@ -274,15 +274,15 @@ void ClimaxApp::setHighNeighboring()
 void ClimaxApp::randomizeParticleProperties()
 {
     mParticleColor = Color(randFloat(), randFloat(), randFloat());
-    // mParticleRadiusMin *= ci::randFloat();
-    // mParticleRadiusMax *= ci::randFloat() * 1.4f;
+    //mParticleRadiusMin = ci::randFloat() * .8f;
+    //mParticleRadiusMax = ci::randFloat() * 1.4f;
 }
 
 void ClimaxApp::randomizeFlockingProperties()
 {
-    mSeparationFactor = randFloat();
-    mAlignmentFactor = randFloat();
-    mCohesionFactor = randFloat();
+    mSeparationFactor *= (1.f - randFloat());
+    mAlignmentFactor *= (1.f - randFloat());
+    mCohesionFactor *= (1.f - randFloat());
 }
 
 void ClimaxApp::touchesBegan(TouchEvent event)
@@ -292,15 +292,12 @@ void ClimaxApp::touchesBegan(TouchEvent event)
         {
             randomizeParticleProperties();
             randomizeFlockingProperties();
+            // setHighSeperation();
         }
             break;
         case 3:
         {
             mParticleSystem.clear();
-        }
-        case 4:
-        {
-            mUseFlocking = !mUseFlocking;
         }
             break;
         default:
@@ -375,7 +372,6 @@ void ClimaxApp::draw()
     gl::enable(GL_LINE_SMOOTH);
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
     gl::color(ColorA::white());
-    gl::lineWidth( .6f );
     mParticleSystem.draw();
 
 #ifndef CINDER_COCOA_TOUCH

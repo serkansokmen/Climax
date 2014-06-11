@@ -49,6 +49,7 @@ void ParticleSystem::draw()
                 ci::gl::color(ci::ColorA( colorFirst, distancePercent * .8f));
                 ci::Vec2f conVec = particleB->position - particleA->position;
                 conVec.normalize();
+                ci::gl::lineWidth( distancePercent );
                 ci::gl::drawLine(particleA->position + conVec * (particleA->radius + .5f),
                                  particleB->position - conVec * (particleB->radius + .5f));
             }
