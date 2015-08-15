@@ -146,13 +146,13 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		2032E0F61B7F86E8009E17D7 /* Cinder-Config */ = {
+		2032E0F61B7F86E8009E17D7 /* Config */ = {
 			isa = PBXGroup;
 			children = (
 				2032E0F91B7F86E8009E17D7 /* include */,
 				2032E1231B7F86E9009E17D7 /* src */,
 			);
-			name = "Cinder-Config";
+			name = Config;
 			path = "../../../blocks/Cinder-Config";
 			sourceTree = "<group>";
 		};
@@ -189,7 +189,7 @@
 		99692BD914FF149000DFFFFF /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				2032E0F61B7F86E8009E17D7 /* Cinder-Config */,
+				2032E0F61B7F86E8009E17D7 /* Config */,
 			);
 			name = Blocks;
 			sourceTree = "<group>";
