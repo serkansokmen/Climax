@@ -12,7 +12,6 @@
 #include "Resources.h"
 #include "ParticleCluster.h"
 #include "ParticleSystem.h"
-#include "BpmTapper.h"
 
 #include <vector>
 #include <map>
@@ -20,6 +19,11 @@
 
 
 #define GUI_WIDTH   320
+
+using namespace cinder;
+using namespace cinder::app;
+using namespace std;
+
 
 
 class ClimaxApp : public AppNative {
@@ -41,7 +45,6 @@ public:
     void resize();
 
     void addNewParticleAtPosition(const Vec2f & position);
-    void addNewParticlesOnPolyLine(const PolyLine<Vec2f> & line);
     void randomizeParticleProperties();
     void setHighSeperation();
     void setHighNeighboring();
@@ -53,7 +56,6 @@ public:
     void shutdown();
     
     ParticleSystem  mParticleSystem;
-    BpmTapper       * bpmTapper;
 
 #ifndef CINDER_COCOA_TOUCH
     params::InterfaceGl mParams;
@@ -73,7 +75,6 @@ public:
     float   mSeparationFactor;
     float   mAlignmentFactor;
     float   mCohesionFactor;
-    float   mBpm;
 
     int     mMaxParticles;
     int     mEmitRes;
@@ -124,10 +125,6 @@ void ClimaxApp::setup()
 #endif
 
     mAutoRandParticleProperties = false;
-    mBpm = 124.f;
-    bpmTapper = new BpmTapper();
-    bpmTapper->isEnabled = true;
-    bpmTapper->start();
 
     mForceCenter = getWindowCenter();
     mAttractionCenter = getWindowCenter();
@@ -199,14 +196,6 @@ void ClimaxApp::update()
     mNumParticles = mParticleSystem.particles.size();
     mNumSprings = mParticleSystem.springs.size();
 
-    bpmTapper->setBpm(mBpm);
-    bpmTapper->update();
-
-    if (mAutoRandParticleProperties && bpmTapper->onBeat()){
-        bpmTapper->start();
-        randomizeParticleProperties();
-    }
-
     for (auto it : mParticleSystem.particles){
 
         it->separationEnabled = mUseFlocking;
@@ -244,14 +233,6 @@ void ClimaxApp::addNewParticleAtPosition(const Vec2f & position)
         Particle * particle = new Particle(position, radius, mass, drag, mTargetSeparation, mNeighboringDistance, mParticleColor);
         mParticleSystem.addParticle(particle);
     }
-}
-
-void ClimaxApp::addNewParticlesOnPolyLine(const PolyLine<Vec2f> & line)
-{
-    if (line.size() == 0) return;
-    if (bpmTapper->onBeat())
-        for (auto it : line)
-            addNewParticleAtPosition(it);
 }
 
 void ClimaxApp::setHighSeperation()
