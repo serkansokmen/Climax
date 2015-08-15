@@ -22,11 +22,6 @@
 #define GUI_WIDTH   320
 
 
-using namespace ci;
-using namespace ci::app;
-using namespace std;
-
-
 class ClimaxApp : public AppNative {
 
 public:
@@ -261,28 +256,28 @@ void ClimaxApp::addNewParticlesOnPolyLine(const PolyLine<Vec2f> & line)
 
 void ClimaxApp::setHighSeperation()
 {
-    mTargetSeparation = randFloat(50.f, 100.f);
-    mNeighboringDistance = randFloat(10.f, 50.f);
+    mTargetSeparation = ci::randFloat(50.f, 100.f);
+    mNeighboringDistance = ci::randFloat(10.f, 50.f);
 }
 
 void ClimaxApp::setHighNeighboring()
 {
-    mTargetSeparation = randFloat(10.f, 50.f);
-    mNeighboringDistance = randFloat(50.f, 100.f);
+    mTargetSeparation = ci::randFloat(10.f, 50.f);
+    mNeighboringDistance = ci::randFloat(50.f, 100.f);
 }
 
 void ClimaxApp::randomizeParticleProperties()
 {
-    mParticleColor = Color(randFloat(), randFloat(), randFloat());
+    mParticleColor = Color(ci::randFloat(), ci::randFloat(), ci::randFloat());
     //mParticleRadiusMin = ci::randFloat() * .8f;
     //mParticleRadiusMax = ci::randFloat() * 1.4f;
 }
 
 void ClimaxApp::randomizeFlockingProperties()
 {
-    mSeparationFactor *= (1.f - randFloat());
-    mAlignmentFactor *= (1.f - randFloat());
-    mCohesionFactor *= (1.f - randFloat());
+    mSeparationFactor *= (1.f - ci::randFloat());
+    mAlignmentFactor *= (1.f - ci::randFloat());
+    mCohesionFactor *= (1.f - ci::randFloat());
 }
 
 void ClimaxApp::touchesBegan(TouchEvent event)
