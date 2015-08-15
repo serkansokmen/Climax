@@ -13,6 +13,7 @@
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		2032E0EE1B7F867E009E17D7 /* CinderConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2032E0D41B7F867E009E17D7 /* CinderConfig.cpp */; };
+		2032E1481B7F893F009E17D7 /* ClimaxApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2032E1471B7F893F009E17D7 /* ClimaxApp.icns */; };
 		20B10152180C7F5E00278EA0 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20B1014E180C7F5E00278EA0 /* Particle.cpp */; };
 		20B10153180C7F5E00278EA0 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20B10150180C7F5E00278EA0 /* ParticleSystem.cpp */; };
 		20B10155180C7F9000278EA0 /* particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B10154180C7F9000278EA0 /* particle.png */; };
@@ -22,7 +23,6 @@
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D44E5FADF45243839ACAD164 /* ClimaxApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7489FCF94645410EB2DBDCE8 /* ClimaxApp.cpp */; };
-		F6AAEF8D0D9A4499B1055E67 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 074A3FCF0DEA425FA5A056EC /* CinderApp.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,11 +31,11 @@
 		00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		074A3FCF0DEA425FA5A056EC /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		20282CFE186A30B0009D34BD /* TouchPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TouchPoint.h; path = ../src/TouchPoint.h; sourceTree = "<group>"; };
 		2032E0D41B7F867E009E17D7 /* CinderConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderConfig.cpp; sourceTree = "<group>"; };
 		2032E0F51B7F8694009E17D7 /* CinderConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderConfig.h; sourceTree = "<group>"; };
+		2032E1471B7F893F009E17D7 /* ClimaxApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ClimaxApp.icns; path = ../resources/ClimaxApp.icns; sourceTree = "<group>"; };
 		209D8E1918208F2F003332B0 /* BpmTapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BpmTapper.h; path = ../src/BpmTapper.h; sourceTree = "<group>"; };
 		20A9EB52185A412F00933C0B /* ParticleCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleCluster.h; path = ../src/ParticleCluster.h; sourceTree = "<group>"; };
 		20B1014E180C7F5E00278EA0 /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle.cpp; path = ../src/Particle.cpp; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				20B10154180C7F9000278EA0 /* particle.png */,
-				074A3FCF0DEA425FA5A056EC /* CinderApp.icns */,
+				2032E1471B7F893F009E17D7 /* ClimaxApp.icns */,
 				3A19A0DE3E2E4D25895E0DD6 /* Info.plist */,
 			);
 			name = Resources;
@@ -255,8 +255,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6AAEF8D0D9A4499B1055E67 /* CinderApp.icns in Resources */,
 				20B10155180C7F9000278EA0 /* particle.png in Resources */,
+				2032E1481B7F893F009E17D7 /* ClimaxApp.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
