@@ -286,8 +286,6 @@ void ClimaxApp::touchesBegan(TouchEvent event)
         case 2:
         {
             randomizeParticleProperties();
-            randomizeFlockingProperties();
-            // setHighSeperation();
         }
             break;
         case 3:
